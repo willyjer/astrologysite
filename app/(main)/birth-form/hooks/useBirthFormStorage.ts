@@ -10,12 +10,15 @@ const STORAGE_KEY = 'birthForm';
  * @returns True if localStorage can be used
  */
 const isLocalStorageAvailable = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
   try {
-    const testKey = '__storage_test__';
-    localStorage.setItem(testKey, testKey);
-    localStorage.removeItem(testKey);
+    const storageTestKey = '__storage_test__';
+    window.localStorage.setItem(storageTestKey, storageTestKey);
+    window.localStorage.removeItem(storageTestKey);
     return true;
-  } catch (e) {
+  } catch (storageError) {
     return false;
   }
 };
@@ -44,22 +47,21 @@ export function useBirthFormStorage() {
     setReadings(urlReadings);
     
     // Get form data from localStorage if available
-    if (storageAvailable) {
+    if (storageAvailable && typeof window !== 'undefined') {
       try {
-        const storedData = localStorage.getItem(STORAGE_KEY);
+        const storedData = window.localStorage.getItem(STORAGE_KEY);
         if (storedData) {
           try {
             const parsedData = JSON.parse(storedData);
             setFormData(parsedData);
-            console.log('Loaded form data from storage:', parsedData);
-          } catch (e) {
-            console.error('Error parsing stored form data:', e);
+          } catch (parseError) {
+            // Error parsing stored form data
             // Remove corrupted data
-            localStorage.removeItem(STORAGE_KEY);
+            window.localStorage.removeItem(STORAGE_KEY);
           }
         }
-      } catch (e) {
-        console.error('Error accessing localStorage:', e);
+      } catch (storageAccessError) {
+        // Error accessing localStorage
         setStorageAvailable(false);
       }
     }
@@ -80,21 +82,30 @@ export function useBirthFormStorage() {
     
     setFormData(newData);
     
-    // Persist to localStorage if available
-    if (storageAvailable) {
+              // Persist to localStorage if available
+    if (storageAvailable && typeof window !== 'undefined') {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-        console.log('Updated form data in storage:', newData);
-      } catch (e) {
-        console.error('Error saving to localStorage:', e);
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+      } catch (saveError) {
+        // Error saving to localStorage
         
         // Try to save without readings which could be large
         try {
           const { readings: _, ...essentialData } = newData;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(essentialData));
-        } catch (innerE) {
-          console.error('Failed to save even minimal data to localStorage:', innerE);
-          setStorageAvailable(false);
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(essentialData));
+        } catch (minimalSaveError) {
+          // Failed to save even minimal data to localStorage
+          
+          // Try to clear some space and retry
+          try {
+            const { readings: _, ...essentialData } = newData;
+            window.localStorage.clear();
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(essentialData));
+          } catch (clearStorageError) {
+            // Failed to save after clearing storage
+            setStorageAvailable(false);
+            throw new Error('Unable to save form data. Please try refreshing the page.');
+          }
         }
       }
     }
@@ -106,16 +117,15 @@ export function useBirthFormStorage() {
    * Clear form data from state and localStorage
    */
   const clearFormData = () => {
-    if (storageAvailable) {
+    if (storageAvailable && typeof window !== 'undefined') {
       try {
-        localStorage.removeItem(STORAGE_KEY);
-      } catch (e) {
-        console.error('Error clearing localStorage:', e);
+        window.localStorage.removeItem(STORAGE_KEY);
+      } catch (clearError) {
+        // Error clearing localStorage
       }
     }
     
     setFormData({});
-    console.log('Cleared form data from storage');
   };
   
   /**
@@ -129,7 +139,6 @@ export function useBirthFormStorage() {
     });
     const queryString = params.toString();
     const nextPath = queryString ? `${path}?${queryString}` : path;
-    console.log(`Navigating to: ${nextPath}`);
     router.push(nextPath);
   };
   

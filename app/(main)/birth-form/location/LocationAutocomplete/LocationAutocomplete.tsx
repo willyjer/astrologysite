@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { DateTime } from 'luxon';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Input } from '../../../../components/ui/Input';
-import { Search } from 'lucide-react';
+import { Search } from '../../../../components/ui/icons';
 import styles from './styles.module.css';
 import { LocationAutocompleteProps } from './types';
 
@@ -39,8 +38,8 @@ export function LocationAutocomplete({
     };
   }, []);
 
-  // Search for places using Nominatim
-  const searchPlaces = async (query: string) => {
+  // Search for places using Nominatim with retry logic
+  const searchPlaces = useCallback(async (query: string) => {
     if (!query || query.length < 3 || userSelected) {
       setSuggestions([]);
       return;
@@ -48,12 +47,45 @@ export function LocationAutocomplete({
 
     setLoading(true);
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch locations: ${response.statusText}`);
+      const { fetchWithRetry, formatApiError } = await import('../../utils/apiUtils');
+      
+      const result = await fetchWithRetry(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'User-Agent': 'AstroAnon/1.0'
+          }
+        },
+        {
+          maxRetries: 2,
+          baseDelay: 500,
+          shouldRetry: (error: any) => {
+            // Retry on network errors and 5xx server errors
+            if (error.name === 'TypeError' && error.message.includes('fetch')) {
+              return true;
+            }
+            if (error.status >= 500 && error.status < 600) {
+              return true;
+            }
+            return false;
+          }
+        }
+      );
+
+      if (!result.success) {
+        // Location search failed
+        setSuggestions([]);
+        return;
       }
       
-      const data = await response.json();
+      const data = result.data;
+      
+      if (!Array.isArray(data)) {
+        // Invalid response format from location API
+        setSuggestions([]);
+        return;
+      }
       
       const formattedSuggestions = data.slice(0, 5).map((place: any) => ({
         name: place.display_name,
@@ -63,13 +95,13 @@ export function LocationAutocomplete({
       }));
       
       setSuggestions(formattedSuggestions);
-    } catch (error) {
-      console.error('Error searching places:', error);
+        } catch (searchError) {
+      // Error searching places
       setSuggestions([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, [userSelected]);
 
   // Debounce function to limit API calls
   useEffect(() => {
@@ -82,42 +114,7 @@ export function LocationAutocomplete({
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [inputValue, userSelected]);
-
-  // Calculate timezone offset using Luxon
-  const calculateTimezoneOffset = (timezoneId: string, birthDate?: {
-    day: number;
-    month: number;
-    year: number;
-    hour: number;
-    minute: number;
-  }): number | undefined => {
-    try {
-      if (!birthDate) {
-        return undefined;
-      }
-      
-      const dt = DateTime.fromObject({
-        year: birthDate.year,
-        month: birthDate.month,
-        day: birthDate.day,
-        hour: birthDate.hour ?? 0,
-        minute: birthDate.minute ?? 0,
-      }, { zone: timezoneId });
-      
-      if (!dt.isValid) {
-        return undefined;
-      }
-      
-      const offsetInMinutes = dt.offset;
-      const offsetInHours = offsetInMinutes / 60;
-      
-      return offsetInHours;
-    } catch (error) {
-      console.error('Error calculating timezone offset:', error);
-      return undefined;
-    }
-  };
+  }, [inputValue, userSelected, searchPlaces]);
 
   // Handle selecting a place
   const handleSelectPlace = async (place: { name: string; lat: number; lng: number }) => {
@@ -126,9 +123,22 @@ export function LocationAutocomplete({
     setSuggestions([]);
     
     try {
-      const response = await fetch(
-        `/api/timezone?lat=${place.lat}&lng=${place.lng}`
-      );
+      // Create timestamp for the birth date if available
+      let timezoneUrl = `/api/timezone?lat=${place.lat}&lng=${place.lng}`;
+      
+      if (birthDate) {
+        // Create a timestamp for the birth date at noon (to avoid DST edge cases)
+        const birthTimestamp = new Date(
+          birthDate.year, 
+          birthDate.month - 1, // month is 0-indexed
+          birthDate.day, 
+          12, 0, 0
+        ).getTime() / 1000; // Convert to Unix timestamp
+        
+        timezoneUrl += `&timestamp=${Math.floor(birthTimestamp)}`;
+      }
+      
+      const response = await fetch(timezoneUrl);
       
       if (!response.ok) {
         throw new Error(`API responded with status: ${response.status}`);
@@ -137,18 +147,8 @@ export function LocationAutocomplete({
       const data = await response.json();
       let timezone: number | undefined = undefined;
       
-      if (data.status === 'OK' && data.zoneName) {
-        if (birthDate) {
-          timezone = calculateTimezoneOffset(data.zoneName, birthDate);
-        }
-        
-        if (timezone === undefined && data.gmtOffset !== undefined) {
-          timezone = data.gmtOffset / 3600;
-        }
-        
-        if (timezone !== undefined) {
-          timezone = Math.round(timezone * 2) / 2;
-        }
+      if (data.status === 'OK' && data.gmtOffset !== undefined) {
+        timezone = data.gmtOffset / 3600; // Convert seconds to hours
       }
       
       onPlaceSelect({
@@ -157,8 +157,8 @@ export function LocationAutocomplete({
         lng: place.lng,
         timezone,
       });
-    } catch (error) {
-      console.error('Error in handleSelectPlace:', error);
+        } catch (timezoneError) {
+      // Error in handleSelectPlace
       onPlaceSelect({
         name: place.name,
         lat: place.lat,

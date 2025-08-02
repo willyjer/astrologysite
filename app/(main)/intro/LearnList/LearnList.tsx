@@ -1,31 +1,159 @@
-import React from 'react';
+import React, { memo, useMemo, useState, useRef, useEffect } from 'react';
+import { ErrorBoundary } from '../../../components/ui/ErrorBoundary';
 import styles from './styles.module.css';
 import { LearnListProps } from './types';
 
-const LearnList: React.FC<LearnListProps> = () => (
-  <ul className={styles.learnList}>
-    <li className={styles.learnItem}>
-      <span className={styles.learnIcon} role="img" aria-label="Compass">🧭</span>
-      <div className={styles.learnTextBlock}>
-        <div className={styles.learnHeading}>Complete Chart Insight</div>
-        <div className={styles.learnBody}>We begin with your full birth chart—interpreting placements, aspects, houses, and patterns just like a seasoned astrologer.</div>
+const LearnListContent = memo<LearnListProps>(() => {
+  const [showReadingsTooltip, setShowReadingsTooltip] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  // Analytics tracking for theme interactions
+  const trackThemeInteraction = (theme: string) => {
+    // Future: Integrate with analytics service
+    // analytics.track('theme_interaction', { theme });
+  };
+
+  const handleThemeClick = (theme: string) => {
+    trackThemeInteraction(theme);
+    if (theme === 'Self & Identity') {
+      setShowReadingsTooltip(!showReadingsTooltip);
+    }
+  };
+
+  // Close tooltip when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+        setShowReadingsTooltip(false);
+      }
+    };
+
+    if (showReadingsTooltip) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showReadingsTooltip]);
+
+  const selfIdentityReadings = [
+    'Core Self & Personality Blueprint',
+    'Your Guiding Energy',
+    'Confidence & Drive',
+    'Self-Belief & Inner Light'
+  ];
+
+  return (
+    <div className={styles.learnContainer}>
+      {/* Header Section */}
+      <div className={styles.headerSection}>
+        <h3 className={styles.headerTitle}>A Quiet Revolution in Astrology</h3>
+        <p className={styles.headerBody}>
+        Where personal astrology meets emotional depth.
+        </p>
+        <p className={styles.headerBody}>
+        AI-assisted. Soul-centered. Psychologically-attuned.
+        </p>
       </div>
-    </li>
-    <li className={styles.learnItem}>
-      <span className={styles.learnIcon} role="img" aria-label="Sparkles">✨</span>
-      <div className={styles.learnTextBlock}>
-        <div className={styles.learnHeading}>Symbolic & Structured</div>
-        <div className={styles.learnBody}>No generic templates—your reading follows real astrological principles to reveal themes, tensions, and true meaning.</div>
+
+      {/* Themes Section */}
+      <div className={styles.themesSection}>
+        <div className={styles.themesHeader}>
+          <span className={styles.themesIntro}>Themes we cover</span>
+          <span className={styles.totalCount}>About</span>
+        </div>
+        <ul className={styles.themesList}>
+          <li className={styles.themeItem}>
+            <div className={styles.themeLeft}>
+              <span className={styles.themeIcon} role="img" aria-label="Sun">☀️</span>
+              <span className={styles.themeText}>Self & Identity <span className={styles.themeCountInline}>(4 readings)</span></span>
+            </div>
+            <button 
+              className={styles.learnMoreButton} 
+              aria-label="Learn more about Self & Identity"
+              onClick={() => handleThemeClick('Self & Identity')}
+            >
+              <span className={styles.learnMoreIcon}>ℹ️</span>
+            </button>
+          </li>
+          <li className={styles.themeItem}>
+            <div className={styles.themeLeft}>
+              <span className={styles.themeIcon} role="img" aria-label="Heart">💗</span>
+              <span className={styles.themeText}>Love & Relationships <span className={styles.themeCountInline}>(Coming Soon)</span></span>
+            </div>
+          </li>
+          <li className={styles.themeItem}>
+            <div className={styles.themeLeft}>
+              <span className={styles.themeIcon} role="img" aria-label="Brain">🧠</span>
+              <span className={styles.themeText}>Mindset & Communication <span className={styles.themeCountInline}>(Coming Soon)</span></span>
+            </div>
+          </li>
+          <li className={styles.themeItem}>
+            <div className={styles.themeLeft}>
+              <span className={styles.themeIcon} role="img" aria-label="Fire">🔥</span>
+              <span className={styles.themeText}>Healing & Inner Transformation <span className={styles.themeCountInline}>(Coming Soon)</span></span>
+            </div>
+          </li>
+          <li className={styles.themeItem}>
+            <div className={styles.themeLeft}>
+              <span className={styles.themeIcon} role="img" aria-label="Sparkles">✨</span>
+              <span className={styles.themeText}>More Themes Coming <span className={styles.themeCountInline}>(Stay Tuned)</span></span>
+            </div>
+          </li>
+        </ul>
       </div>
-    </li>
-    <li className={styles.learnItem}>
-      <span className={styles.learnIcon} role="img" aria-label="Document">📄</span>
-      <div className={styles.learnTextBlock}>
-        <div className={styles.learnHeading}>Beautiful PDF Delivery</div>
-        <div className={styles.learnBody}>Arrives straight to your inbox in a clean, journal-ready format for reflection or sharing.</div>
-      </div>
-    </li>
-  </ul>
-);
+
+      {/* Readings Tooltip */}
+      {showReadingsTooltip && (
+        <div className={styles.tooltipOverlay}>
+          <div className={styles.tooltip} ref={tooltipRef}>
+            <div className={styles.tooltipContent}>
+              <button 
+                className={styles.tooltipCloseButton}
+                onClick={() => setShowReadingsTooltip(false)}
+                aria-label="Close tooltip"
+              >
+                ✕
+              </button>
+              <div className={styles.categoryDescription}>
+                This category reflects your core identity, how you show up in the world, and the journey of becoming more fully yourself.
+              </div>
+              <div className={styles.readingsHeader}>
+                Included Readings
+              </div>
+              <ul className={styles.readingsList}>
+                {selfIdentityReadings.map((reading, index) => (
+                  <li key={index} className={styles.readingItem}>
+                    {reading}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+});
+
+LearnListContent.displayName = 'LearnListContent';
+
+const LearnList = memo<LearnListProps>(() => {
+  return (
+    <ErrorBoundary 
+      fallback={
+        <div className={styles.errorFallback}>
+          <div className={styles.errorIcon}>⚠️</div>
+          <p className={styles.errorMessage}>Unable to load learn section. Please refresh the page.</p>
+        </div>
+      }
+    >
+      <LearnListContent />
+    </ErrorBoundary>
+  );
+});
+
+LearnList.displayName = 'LearnList';
 
 export default LearnList; 

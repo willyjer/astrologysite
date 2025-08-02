@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import './styles/globals.css';
+import './styles/critical.css';
+import PerformanceTracker from './components/ui/PerformanceMonitor';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,8 +18,13 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "AstroAware - AI-Powered Astrological Readings",
   description: "Discover your cosmic path through personalized AI-powered astrological readings, tailored uniquely to your birth details.",
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-  themeColor: '#0A0A0A',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -27,8 +33,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        {/* Resource hints for better performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+      </head>
       <body>
+        <PerformanceTracker />
         {children}
       </body>
     </html>

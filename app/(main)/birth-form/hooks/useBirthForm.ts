@@ -24,15 +24,12 @@ export const useBirthForm = (): UseBirthFormReturn => {
   const form = useForm<BirthFormValues>({
     resolver: zodResolver(birthFormSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
       birthDate: '',
       birthTime: '',
       birthPlace: '',
       lat: 0,
       lon: 0,
-      timezone: 0,
-      unknownTime: false,
+      timezone: 0
     },
     mode: 'onChange',
   });
@@ -42,15 +39,12 @@ export const useBirthForm = (): UseBirthFormReturn => {
     if (formData) {
       // Set form values from storage
       form.reset({
-        firstName: formData.firstName || '',
-        lastName: formData.lastName || '',
         birthDate: formData.birthDate || '',
         birthTime: formData.birthTime || '',
         birthPlace: formData.birthPlace || '',
         lat: formData.lat || 0,
         lon: formData.lon || 0,
         timezone: formData.timezone || 0,
-        unknownTime: formData.unknownTime || false,
       });
     }
   }, [formData, form]);
@@ -59,43 +53,32 @@ export const useBirthForm = (): UseBirthFormReturn => {
     try {
       setIsSubmitting(true);
       setSubmissionError(null);
-      console.log('--- SUBMITTING BIRTH FORM ---');
-      console.log('Raw form data:', data);
-      console.log('Selected readings at submit:', readings);
 
       // Validate with Zod schema
       const validation = validateBirthForm(data);
-      console.log('Validation result:', validation);
       if (!validation.isValid) {
-        console.warn('Validation failed:', validation.errors);
-        setSubmissionError('Validation failed. See console for details.');
+        setSubmissionError('Validation failed. Please check your input.');
         return;
       }
 
       // Use the centralized storage hook to update all form data
       updateFormData({
-        firstName: data.firstName,
-        lastName: data.lastName,
         birthDate: data.birthDate,
         birthTime: data.birthTime,
         birthPlace: data.birthPlace,
         lat: data.lat,
         lon: data.lon,
         timezone: data.timezone,
-        unknownTime: data.unknownTime
       });
-      
-      console.log('Birth form - Data successfully stored');
       
       // Navigate to confirmation page with readings in URL
       navigateToStep('/birth-form/confirmation');
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        } catch (submissionError) {
+      const errorMessage = submissionError instanceof Error ? submissionError.message : 'An error occurred';
       setSubmissionError(errorMessage);
-      console.error('Submission error:', error);
+      // Submission error
     } finally {
       setIsSubmitting(false);
-      console.log('--- END SUBMIT ---');
     }
   };
 
@@ -109,5 +92,4 @@ export const useBirthForm = (): UseBirthFormReturn => {
     error,
     selectedReadings: readings,
   };
-}; 
 }; 

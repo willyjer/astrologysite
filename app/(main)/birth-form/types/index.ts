@@ -6,13 +6,20 @@ import {
   DateFieldProps, 
   TimeFieldProps, 
   LocationFieldProps 
-} from '@/components/forms/types';
+} from '../../../components/forms/types';
 
 /**
  * The complete set of values for the birth form
  * Derived from the Zod validation schema
  */
-export type BirthFormValues = z.infer<typeof birthFormSchema>;
+export interface BirthFormValues {
+  birthDate: string;
+  birthTime: string;
+  birthPlace: string;
+  lat: number;
+  lon: number;
+  timezone: number;
+}
 
 /**
  * The possible steps in the birth form flow
@@ -61,17 +68,7 @@ export interface FormFieldProps {
   required?: boolean;
 }
 
-/**
- * Props for the name fields component
- */
-export interface NameFieldsProps extends NameFieldProps {
-  /** Name of the field in the form data */
-  name: keyof BirthFormValues;
-  /** Error message for first name */
-  firstNameError?: string;
-  /** Error message for last name */
-  lastNameError?: string;
-}
+
 
 /**
  * Props for the date fields component
@@ -130,8 +127,6 @@ export interface UseFormSubmissionReturn {
  * (parsed and expanded from user-facing BirthFormData)
  */
 export interface BirthFormApiData {
-  firstName: string;
-  lastName: string;
   birthDate: string;
   birthTime: string;
   birthPlace: string;
@@ -143,7 +138,6 @@ export interface BirthFormApiData {
   hour: number;
   min: number;
   tzone: number;
-  unknownTime?: boolean;
 }
 
 /**

@@ -1,53 +1,380 @@
 /* LearnList styles */
 
-.learnList {
-  list-style-type: none;
-  padding: 0;
-  margin: var(--space-md) 0;
+.learnContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.headerSection {
+  text-align: center;
+  margin-bottom: var(--space-xs);
+  padding: 0 var(--space-4xs);
   width: 100%;
 }
 
-.learnItem {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-xs);
-  text-align: left;
-  padding: var(--space-xs);
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
+.headerTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-top: 0;
+  margin-bottom: var(--space-2xs);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  text-align: center;
 }
 
-.learnIcon {
+.headerBody {
+  font-family: 'Inter', sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.headerBody:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Themes Section */
+.themesSection {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 12px;
+  padding: var(--space-4xs) var(--space-4xs);
+  text-align: center;
+  width: 100%;
+  max-width: 90vw;
+  margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  backdrop-filter: blur(8px);
+}
+
+.themesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px 12px 0 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+}
+
+.themesIntro {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+}
+
+.themesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.themeItem {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 0.24rem 0.9rem;
+  border-radius: 0;
+  transition: all 0.2s var(--ease-fast);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.themeItem .learnMoreButton {
+  justify-self: center;
+}
+
+.themeItem:nth-child(even) {
+  background: rgba(255,255,255,0.03);
+}
+
+.themeItem:nth-child(odd) {
+  background: rgba(255,255,255,0.06);
+}
+
+.themeItem:last-child {
+  border-bottom: none;
+}
+
+.themeLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.themeItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.themeIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
-  height: 48px;
-  background: rgba(205, 163, 73, 0.15);
-  border-radius: 50%;
-  font-size: 24px;
-  margin-top: var(--space-3xs);
-}
-
-.learnTextBlock {
-  flex: 1;
-}
-
-.learnHeading {
-  font-family: 'Inter', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: var(--space-4xs);
-  letter-spacing: -0.3px;
-}
-
-.learnBody {
-  font-family: 'Inter', sans-serif;
+  min-width: 32px;
+  height: 32px;
+  background: transparent;
+  border-radius: 0;
   font-size: 16px;
-  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.themeItem:hover .themeIcon {
+  background: transparent;
+  transform: scale(1.05);
+}
+
+.themeText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: var(--fg);
+  transition: color 0.2s var(--ease-fast);
+}
+
+.themeItem:hover .themeText {
+  color: var(--accent);
+}
+
+.themeCountInline {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
   color: var(--fg-muted);
-} 
+  margin-left: 0.5rem;
+  transition: all 0.2s var(--ease-fast);
+}
+
+.themeItem:hover .themeCountInline {
+  color: var(--accent);
+}
+
+.learnMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-fast);
+  padding: 0;
+}
+
+.learnMoreButton:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+
+.learnMoreIcon {
+  font-size: 1rem;
+  color: var(--fg-muted);
+  transition: all 0.2s var(--ease-fast);
+}
+
+.learnMoreButton:hover .learnMoreIcon {
+  color: var(--accent);
+}
+
+.totalCount {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+}
+
+/* Tooltip Styles */
+.tooltipOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom right, #1e1b2f, #15121f);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  max-width: 420px;
+  width: auto;
+  min-width: 380px;
+  pointer-events: auto;
+  animation: tooltipSlideUp 0.2s ease-out;
+}
+
+.tooltipContent {
+  position: relative;
+  padding: var(--space-lg);
+}
+
+.tooltipCloseButton {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: none;
+  border: none;
+  color: var(--fg-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: var(--space-4xs);
+  border-radius: 6px;
+  transition: all 0.2s var(--ease-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  z-index: 1;
+}
+
+.tooltipCloseButton:hover {
+  color: var(--accent);
+  background: rgba(245, 189, 161, 0.1);
+}
+
+.categoryDescription {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-style: italic;
+}
+
+.categoryDescription::before {
+  content: "Who are you beneath the surface?";
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: var(--space-2xs);
+  line-height: 1.4;
+  font-style: normal;
+}
+
+.readingsHeader {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2xs);
+  text-align: left;
+}
+
+.readingsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.readingItem {
+  padding: var(--space-2xs) var(--space-2xs);
+  color: var(--fg);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s var(--ease-fast);
+  margin-bottom: var(--space-4xs);
+  cursor: pointer;
+  position: relative;
+}
+
+.readingItem:last-child {
+  margin-bottom: 0;
+}
+
+.readingItem:hover {
+  color: var(--accent);
+  background: rgba(245, 189, 161, 0.08);
+  transform: translateX(2px);
+}
+
+.readingItem::before {
+  content: "•";
+  color: var(--accent);
+  font-weight: bold;
+  margin-right: var(--space-2xs);
+  opacity: 0.7;
+}
+
+@keyframes tooltipSlideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Error fallback styles */
+.errorFallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  min-height: 200px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin: var(--space-md) 0;
+}
+
+.errorFallback .errorIcon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+  opacity: 0.8;
+}
+
+.errorFallback .errorMessage {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

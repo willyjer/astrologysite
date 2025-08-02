@@ -1,0 +1,213 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm);
+  background: var(--gradient-space);
+  overflow: hidden;
+  position: relative;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  background: linear-gradient(to bottom right, #1e1b2f, #15121f);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.2s var(--ease-fast);
+  backdrop-filter: blur(8px);
+  animation: float 6s ease-in-out infinite;
+  margin: var(--space-2xs) auto;
+}
+
+.content::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 120%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(255, 225, 200, 0.06), transparent 70%);
+  filter: blur(2px);
+}
+
+.content:hover, .content:focus-within {
+  box-shadow: 0 4px 48px 0 rgba(205, 163, 73, 0.3), 0 0 40px 0 rgba(205, 163, 73, 0.15);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--fg);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  letter-spacing: -0.5px;
+}
+
+.section {
+  background: linear-gradient(145deg, #3A2F4C, #2C233D);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: var(--space-md);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.sectionTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.sectionTitle::before {
+  content: '✨';
+  font-size: 16px;
+}
+
+.select {
+  width: 100%;
+  padding: var(--space-sm);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--fg);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  transition: all 0.2s var(--ease-fast);
+  backdrop-filter: blur(4px);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(205, 163, 73, 0.2);
+}
+
+.select option {
+  background: #2C233D;
+  color: var(--fg);
+}
+
+.readingCard {
+  padding: var(--space-sm);
+  margin-bottom: var(--space-2xs);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-fast);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(4px);
+}
+
+.readingCard:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.readingCard.selected {
+  background: rgba(205, 163, 73, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(205, 163, 73, 0.2);
+}
+
+.readingName {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: var(--space-2xs);
+}
+
+.readingDescription {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--fg-muted);
+  line-height: 1.4;
+}
+
+.continueButton {
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: 8px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-fast);
+  background: linear-gradient(135deg, var(--accent), #d4a574);
+  color: #1e1b2f;
+  box-shadow: 0 4px 12px rgba(205, 163, 73, 0.3);
+}
+
+.continueButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(205, 163, 73, 0.4);
+}
+
+.continueButton:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.continueButton:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.continueButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(205, 163, 73, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
+  
+  .readingCard:hover {
+    transform: none;
+  }
+  
+  .continueButton:hover:not(:disabled) {
+    transform: none;
+  }
+} 

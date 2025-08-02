@@ -35,7 +35,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 22px;
   font-weight: 400;
-  color: #B6BDC8;
+  color: var(--fg-muted);
   line-height: 1.5;
   max-width: 540px;
   margin-left: auto;
@@ -51,4 +51,32 @@
   gap: var(--space-sm);
   margin-top: var(--space-md);
   flex-wrap: wrap;
+}
+
+/* Error fallback styles */
+.errorFallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  min-height: 200px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin: var(--space-md) 0;
+}
+
+.errorFallback .errorIcon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+  opacity: 0.8;
+}
+
+.errorFallback .errorMessage {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  font-size: 0.9rem;
+  line-height: 1.4;
 } 

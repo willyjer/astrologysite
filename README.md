@@ -1,117 +1,146 @@
-# AstroAware - AI-Powered Astrological Readings
+# AstroAnon - AI-Powered Astrology Readings
 
-A modern, luxury tablet kiosk application that delivers personalized AI-powered astrological readings. Built with Next.js, TypeScript, and a cosmic-inspired design system.
+A modern web application that generates personalized astrology readings using AI. Users can input their birth data and receive detailed, personalized astrological insights.
 
-![AstroAware Banner](public/banner.png)
+## 🌟 Features
 
-## ✨ Features
-
-- 🌟 Personalized AI-powered astrological readings
-- 🎨 Luxurious, cosmic-inspired design system
-- 📱 Optimized for tablet kiosk experience
-- 💳 Secure payment integration with Stripe
-- ⚡ Built with performance and accessibility in mind
-- 🔒 Type-safe development with TypeScript
+- **Personalized Birth Chart Analysis**: Generate detailed astrological readings based on birth data
+- **AI-Powered Insights**: Advanced AI generates unique, personalized content for each reading
+- **Multiple Reading Types**: Core Self, Chart Ruler, Inner Warrior, and Self Belief readings
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Session Management**: Secure session handling with data persistence
+- **Error Handling**: Comprehensive error handling with user-friendly messages
 
 ## 🚀 Tech Stack
 
-- **Framework:** Next.js 14
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Animation:** Framer Motion
-- **Forms:** React Hook Form with Zod validation
-- **Payment:** Stripe
-- **Date/Time:** Luxon
-- **Icons:** Lucide React
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: CSS Modules with custom design system
+- **Forms**: React Hook Form with Zod validation
+- **Icons**: Lucide React
+- **Date/Time**: Luxon
+- **AI Integration**: OpenAI GPT-4 for reading generation
+- **Astrology API**: Professional astrology chart calculation
 
-## 📦 Installation
+## 📁 Project Structure
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/astro-aware.git
-   cd astro-aware
-   ```
+```
+AstroAnon/
+├── app/                          # Next.js app directory
+│   ├── (main)/                   # Main application routes
+│   │   ├── birth-form/          # Birth data collection
+│   │   ├── intro/               # Landing page
+│   │   ├── qualified-readings/  # Reading selection
+│   │   └── results/             # Reading display
+│   ├── api/                     # API routes
+│   ├── components/              # Shared components
+│   ├── lib/                     # Utilities and services
+│   └── styles/                  # Global styles
+├── public/                      # Static assets
+├── docs/                        # Documentation
+└── scripts/                     # Build and analysis scripts
+```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+## 🔧 Environment Variables
 
-3. Set up environment variables:
-   Create a `.env.local` file in the root directory and add the following variables:
-   ```env
-   STRIPE_PUBLIC_KEY=your_stripe_public_key
-   STRIPE_SECRET_KEY=your_stripe_secret_key
-   ```
+Create a `.env.local` file in the root directory with the following variables:
 
-4. Run the development server:
-   ```bash
-   npm run dev
-   ```
+```env
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key_here
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+# Astrology API
+ASTROLOGY_API_USER_ID=your_astrology_api_user_id
+ASTROLOGY_API_KEY=your_astrology_api_key
 
-## 🎨 Design System
-
-AstroAware follows a carefully crafted design system that emphasizes:
-
-- **Typography:** Playfair Display for headlines, Inter for body text
-- **Colors:** Deep space-inspired palette with gold accents
-- **Spacing:** 8-point grid system
-- **Components:** Modern, minimal design with cosmic touches
-- **Animations:** Smooth, purposeful motion design
-
-## 📱 Tablet Optimization
-
-The application is specifically designed for tablet kiosks with:
-
-- Fixed portrait layout (768 × 1024 dp safe area)
-- Touch-optimized interface
-- Kiosk-mode ready
-- Orientation lock
-- Optimized touch targets
-- "Built with ❤️ by [Your Company Name]" positioned on the right side of the screen
+# TimeZoneDB API (optional)
+TIMEZONEDB_API_KEY=your_timezonedb_api_key
+```
 
 ## 🛠️ Development
 
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
 ```bash
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm run start
-
-# Run linting
-npm run lint
+git clone <repository-url>
+cd AstroAnon
 ```
 
-## 🧪 Testing
+2. Install dependencies
+```bash
+npm install
+```
 
-[Add testing instructions when implemented]
+3. Set up environment variables (see above)
 
-## 📄 License
+4. Run the development server
+```bash
+npm run dev
+```
 
-[Add your license information]
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run analyze` - Analyze bundle size
+- `npm run performance:check` - Run Lighthouse performance audit
+
+## 🔒 Security Features
+
+- **Input Sanitization**: All user inputs are sanitized to prevent XSS attacks
+- **API Key Security**: All API keys are stored in environment variables
+- **Security Headers**: Comprehensive security headers including CSP, X-Frame-Options
+- **Error Boundaries**: React error boundaries prevent app crashes
+- **Rate Limiting**: Built-in rate limiting for API calls
+
+## 🎨 Design System
+
+The application uses a custom design system with:
+- Consistent color palette and typography
+- Responsive breakpoints for all devices
+- Accessible components with proper ARIA labels
+- Loading states and error handling
+- Progressive enhancement
+
+## 📱 Responsive Design
+
+- **Desktop**: Full-featured experience with all interactions
+- **Tablet**: Optimized layout for touch interactions
+- **Mobile**: Streamlined interface with large touch targets
+
+## 🚀 Performance
+
+- **Code Splitting**: Automatic code splitting with Next.js
+- **Lazy Loading**: Non-critical components loaded on demand
+- **Bundle Analysis**: Built-in bundle analysis tools
+- **Performance Monitoring**: Core Web Vitals tracking
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-## 🌟 Credits
+## 📄 License
 
-- Design System: AstroAware Design Team
-- Icons: [Lucide Icons](https://lucide.dev)
-- Fonts: [Inter](https://rsms.me/inter/) & [Playfair Display](https://fonts.google.com/specimen/Playfair+Display)
+This project is private and proprietary.
 
-## 📞 Support
+## 🆘 Support
 
-For support, please email [support@astroaware.com](mailto:support@astroaware.com)
+For support or questions, please open an issue in the repository.
 
---- 
+---
+
+**Built with ❤️ using Next.js and AI** 

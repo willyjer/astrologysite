@@ -1,0 +1,190 @@
+.birthFormErrorBoundary {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background: var(--gradient-space);
+  position: relative;
+  overflow: hidden;
+}
+
+.birthFormErrorContent {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  width: 100%;
+  padding: var(--space-xl);
+  background: linear-gradient(to bottom right, #1e1b2f, #15121f);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: float 6s ease-in-out infinite;
+}
+
+.birthFormErrorContent::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 120%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(255, 225, 200, 0.06), transparent 70%);
+  filter: blur(2px);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.birthFormErrorIcon {
+  font-size: 64px;
+  margin-bottom: var(--space-md);
+  animation: cosmicPulse 3s ease-in-out infinite;
+}
+
+@keyframes cosmicPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+}
+
+.birthFormErrorTitle {
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.birthFormErrorMessage {
+  color: var(--fg-muted);
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0 0 var(--space-md) 0;
+}
+
+.birthFormErrorRetry {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 var(--space-lg) 0;
+  padding: var(--space-sm);
+  background: rgba(205, 163, 73, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(205, 163, 73, 0.2);
+}
+
+.birthFormErrorActions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: var(--space-lg) 0;
+}
+
+.birthFormErrorRetryButton {
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 24px rgba(205, 163, 73, 0.4);
+  padding: 16px 32px;
+  font-size: 18px;
+}
+
+.birthFormErrorRetryButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(205, 163, 73, 0.5);
+}
+
+.birthFormErrorResetButton {
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.1);
+  padding: 16px 32px;
+  font-size: 18px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--fg);
+}
+
+.birthFormErrorResetButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.birthFormErrorBackButton {
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
+  padding: 12px 24px;
+  font-size: 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--fg-muted);
+}
+
+.birthFormErrorBackButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--fg);
+}
+
+.birthFormErrorHelp {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.birthFormErrorHelp p {
+  color: var(--fg-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .birthFormErrorContent {
+    padding: var(--space-lg);
+    margin: var(--space-md);
+  }
+
+  .birthFormErrorTitle {
+    font-size: 28px;
+  }
+
+  .birthFormErrorMessage {
+    font-size: 16px;
+  }
+
+  .birthFormErrorActions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .birthFormErrorRetryButton,
+  .birthFormErrorResetButton {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .birthFormErrorBackButton {
+    width: 100%;
+    max-width: 200px;
+  }
+} 

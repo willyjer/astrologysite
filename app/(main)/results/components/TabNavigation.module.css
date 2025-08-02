@@ -1,0 +1,170 @@
+.tabSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 6px 0 12px 0;
+  background: transparent;
+}
+
+.tabNavigation {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 0 0 2px 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabNavigation::-webkit-scrollbar {
+  display: none;
+}
+
+.tabCarousel {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 3px;
+  padding-top: 8px;
+  scroll-behavior: smooth;
+  flex: 1;
+}
+
+.tabCarousel::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s var(--ease-fast);
+  flex-shrink: 0;
+  touch-action: manipulation;
+  margin: 0;
+}
+
+.scrollArrow:hover {
+  background: rgba(205, 163, 73, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(205, 163, 73, 0.2);
+}
+
+.scrollArrow:active {
+  transform: scale(0.95);
+}
+
+.tabButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 12px 20px;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s var(--ease-fast);
+  min-height: 48px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: max-content;
+  box-shadow: none;
+  touch-action: manipulation;
+  position: relative;
+  transform: translateY(0);
+  scroll-snap-align: start;
+  opacity: 0.7;
+}
+
+.tabButton:hover:not(.tabButtonActive):not(:disabled) {
+  background: rgba(205, 163, 73, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(205, 163, 73, 0.2);
+  opacity: 1;
+}
+
+.tabButtonActive {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 1.02rem;
+  border-color: var(--accent);
+  box-shadow: 0 3px 12px rgba(205, 163, 73, 0.4);
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+.tabButton:disabled,
+.tabButtonDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: var(--fg-muted);
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tabButton:disabled:hover,
+.tabButtonDisabled:hover {
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--fg-muted);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .tabSection {
+    padding: 6px 0 10px 0;
+  }
+
+  .tabNavigation {
+    gap: 6px;
+    padding: 2px 0px;
+  }
+
+  .tabCarousel {
+    gap: 6px;
+    padding-bottom: 2px;
+    padding-top: 6px;
+  }
+
+  .scrollArrow {
+    width: 32px;
+    height: 40px;
+    font-size: 1.2rem;
+    margin: 0 6px;
+  }
+
+  .tabButton {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    min-height: 44px;
+  }
+} 

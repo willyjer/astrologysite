@@ -1,0 +1,66 @@
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 60vh;
+}
+
+.errorState h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--danger);
+  margin: 0 0 1rem 0;
+}
+
+.errorState p {
+  font-size: 1.1rem;
+  color: var(--fg-muted);
+  margin: 0 0 2rem 0;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.retryButton {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.retryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.retryButton:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .errorState {
+    padding: 3rem 1rem;
+    min-height: 50vh;
+  }
+
+  .errorState h1 {
+    font-size: 2rem;
+  }
+
+  .errorState p {
+    font-size: 1rem;
+  }
+
+  .retryButton {
+    padding: 0.875rem 1.75rem;
+    font-size: 0.95rem;
+  }
+} 
