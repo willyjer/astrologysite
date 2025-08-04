@@ -95,7 +95,7 @@ export function LocationAutocomplete({
       }));
       
       setSuggestions(formattedSuggestions);
-        } catch (searchError) {
+    } catch (searchError) {
       // Error searching places
       setSuggestions([]);
     } finally {
@@ -157,7 +157,7 @@ export function LocationAutocomplete({
         lng: place.lng,
         timezone,
       });
-        } catch (timezoneError) {
+    } catch (timezoneError) {
       // Error in handleSelectPlace
       onPlaceSelect({
         name: place.name,

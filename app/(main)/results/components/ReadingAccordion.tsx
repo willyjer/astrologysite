@@ -58,9 +58,6 @@ const ReadingAccordion: React.FC<ReadingAccordionProps> = ({
         aria-controls={`reading-${reading.id}`}
       >
         <div className={styles.accordionTitle}>
-          <div className={styles.titleIcon}>
-            <span className={styles.readingIcon}>✨</span>
-          </div>
           <h3 className={styles.readingTitle}>{reading.title}</h3>
         </div>
         <div className={styles.accordionIcon}>

@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
             },
           ],
           temperature: 0.7,
-          max_tokens: 10000, // Maximum for GPT-4o-mini
+          max_tokens: 10000, // Increased from 10000 to prevent truncation
           top_p: 0.9,
           frequency_penalty: 0.1,
           presence_penalty: 0.1,

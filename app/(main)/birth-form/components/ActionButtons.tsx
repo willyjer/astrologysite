@@ -16,9 +16,14 @@ export function ActionButtons({ handleNext, isLoading, showErrors, error }: Acti
         size="md"
         onClick={handleNext}
         disabled={isLoading || (showErrors && !!error)}
-        className={showErrors && error ? styles.buttonDisabled : ''}
+        className={`${showErrors && error ? styles.buttonDisabled : ''} ${styles.responsiveButton}`}
       >
-        {isLoading ? 'Fetching Your Chart...' : 'View My Personalized Readings List'}
+        <span className={styles.desktopText}>
+          {isLoading ? 'Fetching Your Chart...' : 'View My Personalized Readings List'}
+        </span>
+        <span className={styles.mobileText}>
+          {isLoading ? 'Fetching Your Chart...' : 'View My Readings List'}
+        </span>
       </Button>
     </div>
   );

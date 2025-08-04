@@ -38,6 +38,31 @@
   margin-bottom: auto;
 }
 
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .intro {
+    padding: var(--space-sm) var(--space-sm) 0 var(--space-sm);
+  }
+  
+  .content {
+    padding: var(--space-md) var(--space-md);
+    max-width: 100%;
+    margin: 0 var(--space-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .intro {
+    padding: var(--space-xs) var(--space-xs) 0 var(--space-xs);
+  }
+  
+  .content {
+    padding: var(--space-sm) var(--space-sm);
+    margin: 0 var(--space-2xs);
+    border-radius: 12px;
+  }
+}
+
 .content::after {
   content: '';
   position: absolute;
@@ -81,6 +106,21 @@
   justify-content: center;
   min-width: 48px;
   min-height: 48px;
+}
+
+/* Mobile arrow positioning */
+@media (max-width: 768px) {
+  .homeArrow {
+    top: var(--space-2xs);
+    left: var(--space-2xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .homeArrow {
+    top: var(--space-4xs);
+    left: var(--space-4xs);
+  }
 }
 
 .homeArrow:hover {
@@ -140,6 +180,16 @@
   max-width: 580px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Mobile button row adjustments */
+@media (max-width: 768px) {
+  .buttonRow {
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .getStartedButton {

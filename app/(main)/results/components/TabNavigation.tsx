@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { TabNavigationProps } from '../types';
 import styles from './TabNavigation.module.css';
 
@@ -8,54 +8,94 @@ export default function TabNavigation({
   onCategoryChange,
   generatedReadings,
 }: TabNavigationProps) {
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleCategorySelect = (categoryKey: string) => {
+    const categoryReadings = generatedReadings.filter(reading => reading.category === categoryKey);
+    if (categoryReadings.length > 0) {
+      onCategoryChange(categoryKey);
+      setIsDropdownOpen(false);
     }
   };
 
-  const scrollRight = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
     }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
+  // Get the selected category data
+  const selectedCategoryData = categories.find(cat => cat.key === selectedCategory);
+  
+  // Get reading counts for each category
+  const getCategoryReadingCount = (categoryKey: string) => {
+    return generatedReadings.filter(reading => reading.category === categoryKey).length;
   };
 
   return (
     <div className={styles.tabSection}>
-      <nav className={styles.tabNavigation} ref={carouselRef}>
-        <button 
-          className={styles.scrollArrow} 
-          onClick={scrollLeft}
-          aria-label="Scroll left"
-        >
-          ‹
-        </button>
-        <div className={styles.tabCarousel}>
-          {categories.map(category => {
-            const categoryReadings = generatedReadings.filter(reading => reading.category === category.key);
-            const hasReadings = categoryReadings.length > 0;
-            return (
-              <button
-                key={category.key}
-                className={`${styles.tabButton} ${selectedCategory === category.key ? styles.tabButtonActive : ''} ${!hasReadings ? styles.tabButtonDisabled : ''}`}
-                onClick={() => hasReadings && onCategoryChange(category.key)}
-                disabled={!hasReadings}
-              >
-                {category.shortLabel} {hasReadings && `(${categoryReadings.length})`}
-              </button>
-            );
-          })}
+      <div className={styles.categorySelector} ref={dropdownRef}>
+        <div className={styles.header}>
+          <button
+            className={styles.dropdownButton}
+            onClick={toggleDropdown}
+            aria-haspopup="listbox"
+            aria-expanded={isDropdownOpen}
+          >
+            <span className={styles.selectedCategory}>
+              {selectedCategoryData ? (
+                <>
+                  <span className={styles.categoryName}>
+                    {selectedCategoryData.shortLabel}
+                  </span>
+                </>
+              ) : (
+                <span className={styles.placeholder}>Choose a Category</span>
+              )}
+            </span>
+            <span className={`${styles.dropdownIcon} ${isDropdownOpen ? styles.open : ''}`}>
+              ⌄
+            </span>
+          </button>
+
+          {isDropdownOpen && (
+            <div className={styles.dropdown}>
+              {categories.map((category) => {
+                const readingCount = getCategoryReadingCount(category.key);
+                const hasReadings = readingCount > 0;
+                return (
+                  <button
+                    key={category.key}
+                    className={`${styles.dropdownItem} ${selectedCategory === category.key ? styles.selected : ''} ${!hasReadings ? styles.disabled : ''}`}
+                    onClick={() => handleCategorySelect(category.key)}
+                    disabled={!hasReadings}
+                  >
+                    <span className={styles.categoryName}>
+                      {category.shortLabel} ({readingCount} readings)
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
-        <button 
-          className={styles.scrollArrow} 
-          onClick={scrollRight}
-          aria-label="Scroll right"
-        >
-          ›
-        </button>
-      </nav>
+      </div>
     </div>
   );
 } 

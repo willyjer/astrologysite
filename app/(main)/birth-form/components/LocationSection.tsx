@@ -40,7 +40,7 @@ export function LocationSection({
           className={styles.locationWrapper}
         />
       </div>
-      <div className={styles.subheadline}>Begin typing your city — autocomplete ensures an accurate match.</div>
+      <div className={styles.subheadline}>Begin typing your city — autocomplete will help ensure an accurate match.</div>
     </>
   );
 } 

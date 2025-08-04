@@ -13,14 +13,8 @@ export async function generateReading(
   extractedData: ExtractedReadingData
 ): Promise<ReadingGenerationResult> {
   try {
-    // Starting AI generation for readingId
-    // Extracted data for readingId
-    
     const writerPrompt = getPrompt(readingId);
     const editorPrompt = getPrompt(`editor-${readingId}`);
-    
-    // Writer prompt for readingId
-    // Editor prompt for readingId
 
     const response: AICompleteReadingResponse = await AIService.generateCompleteReading(
       readingId,
@@ -29,10 +23,7 @@ export async function generateReading(
       editorPrompt
     );
 
-    // AI Service response for readingId
-
     if (response.success && response.formattedReading) {
-      // Successfully generated reading readingId
       return {
         success: true,
         reading: {
@@ -51,7 +42,6 @@ export async function generateReading(
     }
   } catch (generationError) {
     console.error(`❌ Exception in generateReading for ${readingId}:`, generationError);
-    // Error generating reading
     return {
       success: false,
       error: generationError instanceof Error ? generationError.message : 'Failed to generate reading',
@@ -66,28 +56,18 @@ export async function generateMultipleReadings(
   readings: GeneratedReading[],
   extractedReadings: ExtractedReadingData[]
 ): Promise<GeneratedReading[]> {
-  // Starting generation for readings
-  // Readings to generate
-  // Extracted data available
-
   const readingPromises = readings.map(async (reading) => {
     try {
-      // Generating reading: reading.id
-      
       const extractedData = extractedReadings.find(er => er.readingId === reading.id);
       if (!extractedData) {
         console.error(`❌ No extracted data found for reading: ${reading.id}`);
         throw new Error(`No extracted data found for reading: ${reading.id}`);
       }
-
-      // Found extracted data for reading.id
       
       const result = await generateReading(reading.id, extractedData);
-      // Generated reading reading.id
       
       if (result.success && result.reading) {
         const updatedReading = updateReadingWithContent(reading, result.reading.content);
-        // Updated reading reading.id with content length
         return updatedReading;
       } else {
         console.error(`❌ Failed to generate reading ${reading.id}:`, result.error);
@@ -95,7 +75,6 @@ export async function generateMultipleReadings(
       }
     } catch (generationError) {
       console.error(`❌ Error generating reading ${reading.id}:`, generationError);
-      // Error generating reading
       return updateReadingWithContent(
         reading, 
         '', 
@@ -105,45 +84,36 @@ export async function generateMultipleReadings(
   });
 
   const results = await Promise.all(readingPromises);
-  // All readings generated
-  
   return results;
 }
 
 /**
- * Handle AI generation errors
+ * Handle AI errors and return user-friendly messages
  */
-export function handleAIError(error: unknown): string {
+export function handleAIError(error: any): string {
   if (error instanceof Error) {
-    const errorMessage = error.message.toLowerCase();
+    const message = error.message.toLowerCase();
     
-    // Handle specific error types
-    if (errorMessage.includes('timeout') || errorMessage.includes('timed out')) {
-      return 'The AI service took too long to respond. Please try again.';
-    }
-    
-    if (errorMessage.includes('rate limit') || errorMessage.includes('429')) {
+    if (message.includes('rate limit') || message.includes('too many requests')) {
       return 'Too many requests. Please wait a moment and try again.';
     }
     
-    if (errorMessage.includes('network') || errorMessage.includes('connection')) {
+    if (message.includes('timeout') || message.includes('network')) {
       return 'Network error. Please check your connection and try again.';
     }
     
-    if (errorMessage.includes('service unavailable') || errorMessage.includes('503')) {
-      return 'AI service is temporarily unavailable. Please try again later.';
+    if (message.includes('api key') || message.includes('authentication')) {
+      return 'Service temporarily unavailable. Please try again later.';
     }
     
-    if (errorMessage.includes('invalid api key') || errorMessage.includes('401')) {
-      return 'AI service configuration error. Please contact support.';
+    if (message.includes('quota') || message.includes('billing')) {
+      return 'Service temporarily unavailable. Please try again later.';
     }
     
-    // AI Generation Error
-    return error.message;
+    return 'Failed to generate readings. Please try again.';
   }
   
-  // Unknown AI Generation Error
-  return 'An unexpected error occurred during reading generation';
+  return 'An unexpected error occurred. Please try again.';
 }
 
 /**

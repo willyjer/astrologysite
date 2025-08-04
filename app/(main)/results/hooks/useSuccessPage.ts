@@ -40,7 +40,7 @@ export function useResultsPage(): UseResultsPageReturn {
 
   const [error, setError] = useState<string>('');
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('self-identity-authenticity');
+  const [selectedCategory, setSelectedCategory] = useState<string>('self-identity');
   
   const searchParams = useSearchParams();
 

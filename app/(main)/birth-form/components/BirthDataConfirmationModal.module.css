@@ -232,25 +232,97 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .overlay {
-    padding: 16px;
+    padding: 12px;
   }
   
   .modal {
     max-width: 100%;
     margin: 0;
+    max-height: 95vh;
   }
   
   .header {
-    padding: 20px 20px 0 20px;
+    padding: 16px 16px 0 16px;
+    padding-bottom: 16px;
   }
   
   .content {
-    padding: 20px;
+    padding: 16px;
   }
   
   .footer {
-    padding: 20px;
+    padding: 16px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .description {
+    font-size: 14px;
+    margin: 0 0 16px 0;
+  }
+
+  .sectionTitle {
+    font-size: 18px;
+    margin: 0 0 12px 0;
+  }
+
+  .dataSection {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .dataRow {
     flex-direction: column;
+    gap: 12px;
+  }
+
+  .dataItem {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .value {
+    font-size: 14px;
+  }
+
+  .confirmButton {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  .closeButton {
+    top: 16px;
+    right: 16px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    padding: 8px;
+  }
+  
+  .modal {
+    max-height: 98vh;
+  }
+  
+  .header {
+    padding: 12px 12px 0 12px;
+    padding-bottom: 12px;
+  }
+  
+  .content {
+    padding: 12px;
+  }
+  
+  .footer {
+    padding: 12px;
   }
   
   .title {
@@ -258,7 +330,46 @@
   }
   
   .description {
+    font-size: 13px;
+    margin: 0 0 12px 0;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+  }
+
+  .dataSection {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .dataRow {
+    gap: 8px;
+  }
+
+  .dataItem {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .label {
+    font-size: 11px;
+  }
+
+  .value {
+    font-size: 13px;
+  }
+
+  .confirmButton {
+    padding: 10px 20px;
     font-size: 14px;
+  }
+
+  .closeButton {
+    top: 12px;
+    right: 12px;
+    padding: 4px;
   }
 }
 
@@ -306,4 +417,16 @@
   text-align: center;
   margin: 0;
   font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .loadingText {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loadingText {
+    font-size: 13px;
+  }
 } 

@@ -16,7 +16,7 @@ export function sanitizeString(input: string): string {
     .replace(/[&]/g, '&amp;') // Encode ampersands
     .replace(/["]/g, '&quot;') // Encode quotes
     .replace(/[']/g, '&#x27;') // Encode single quotes
-    .slice(0, 1000); // Limit length
+    .slice(0, 50000); // Increased from 1000 to prevent AI response truncation
 }
 
 /**
@@ -126,7 +126,7 @@ export function sanitizePrompt(input: any): string | null {
     return null;
   }
   
-  const sanitized = input.trim().slice(0, 10000); // Limit to 10KB
+  const sanitized = input.trim().slice(0, 50000); // Increased from 10000 to prevent truncation
   return sanitized.length > 0 ? sanitized : null;
 }
 

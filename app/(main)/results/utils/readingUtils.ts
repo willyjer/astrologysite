@@ -61,10 +61,16 @@ export function getReadingTitles(): Record<string, string> {
  */
 export function getReadingCategories(): Record<string, string> {
   return {
-    'core-self': 'self-identity-authenticity',
-    'chart-ruler': 'self-identity-authenticity',
-    'inner-warrior': 'self-identity-authenticity',
-    'self-belief': 'self-identity-authenticity'
+    'core-self': 'self-identity',
+    'chart-ruler': 'self-identity',
+    'inner-warrior': 'self-identity',
+    'self-belief': 'self-identity',
+    'growth-mindset': 'mindset',
+    'mental-clarity': 'mindset',
+    'love-patterns': 'love',
+    'soulmate-compatibility': 'love',
+    'career-path': 'career',
+    'leadership-style': 'career'
   };
 }
 
@@ -82,7 +88,7 @@ export function initializeGeneratedReadings(
     title: readingTitles[reading.id as keyof typeof readingTitles] || reading.id,
     content: '',
     loading: true,
-    category: readingCategories[reading.id as keyof typeof readingCategories] || 'self-identity-authenticity'
+    category: readingCategories[reading.id as keyof typeof readingCategories] || 'self-identity'
   }));
 }
 

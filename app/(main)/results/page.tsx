@@ -15,11 +15,6 @@ const TabNavigation = lazy(() => import('./components/TabNavigation'));
 function ResultsPageContent() {
   const [isClient, setIsClient] = useState(false);
 
-  // Add logging to see what data we're receiving
-  useEffect(() => {
-    // SuccessPage: URL params
-  }, []);
-
   // Use extracted hooks for all logic
   const {
     status,
@@ -63,15 +58,51 @@ function ResultsPageContent() {
   // Filter readings by selected category
   const filteredReadings = generatedReadings.filter(reading => reading.category === selectedCategory);
 
-  // Log readings for debugging
-  useEffect(() => {
-    if (generatedReadings.length > 0) {
-      // SuccessPage: Current readings state
+  // Build categories with reading counts
+  const allCategories = [
+    {
+      key: 'self-identity',
+      label: 'Self-Identity & Authenticity',
+      shortLabel: 'Self-Identity & Authenticity',
+      overview: '',
+      readings: [
+        { id: 'core-self', name: 'Core Self & Personality Blueprint', description: '', universal: true, conditional: false },
+        { id: 'inner-warrior', name: 'Your Inner Warrior – Confidence & Drive', description: '', universal: true, conditional: false },
+        { id: 'self-belief', name: 'Self-Belief & Inner Light', description: '', universal: true, conditional: false },
+        { id: 'chart-ruler', name: 'The Chart Ruler & Your Guiding Energy', description: '', universal: true, conditional: false }
+      ]
+    },
+    {
+      key: 'mindset',
+      label: 'Mindset & Growth',
+      shortLabel: 'Mindset & Growth',
+      overview: '',
+      readings: [
+        { id: 'growth-mindset', name: 'Growth Mindset', description: '', universal: true, conditional: false },
+        { id: 'mental-clarity', name: 'Mental Clarity', description: '', universal: true, conditional: false }
+      ]
+    },
+    {
+      key: 'love',
+      label: 'Love & Relationships',
+      shortLabel: 'Love & Relationships',
+      overview: '',
+      readings: [
+        { id: 'love-patterns', name: 'Love Patterns', description: '', universal: true, conditional: false },
+        { id: 'soulmate-compatibility', name: 'Soulmate Compatibility', description: '', universal: true, conditional: false }
+      ]
+    },
+    {
+      key: 'career',
+      label: 'Career & Purpose',
+      shortLabel: 'Career & Purpose',
+      overview: '',
+      readings: [
+        { id: 'career-path', name: 'Career Path', description: '', universal: true, conditional: false },
+        { id: 'leadership-style', name: 'Leadership Style', description: '', universal: true, conditional: false }
+      ]
     }
-  }, [generatedReadings]);
-
-  // Show all categories, but mark inactive ones
-  const allCategories: any[] = []; // Temporarily empty until we rebuild categories
+  ];
 
   // Don't render anything until client-side hydration is complete
   if (!isClient) {
@@ -142,7 +173,7 @@ function ResultsPageContent() {
       <div className={styles.mainContainer}>
         <div className={styles.content}>
           <div className={styles.successHeader}>
-            <h1 className={styles.successTitle}>Your Readings Are Ready! ✨</h1>
+            <h1 className={styles.successTitle}>Your Readings Are Ready!</h1>
             <p className={styles.successSubtitle}>
               Your personalized astrology readings have been crafted with care. 
               Explore the insights below to discover your cosmic path.

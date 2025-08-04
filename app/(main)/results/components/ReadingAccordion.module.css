@@ -64,36 +64,6 @@
   flex: 1;
 }
 
-.titleIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(245, 189, 161, 0.1);
-  border: 1px solid rgba(245, 189, 161, 0.15);
-  transition: all 0.2s var(--ease-fast);
-}
-
-.readingIcon {
-  font-size: 1rem;
-  line-height: 1;
-  opacity: 0.8;
-  transition: all 0.2s var(--ease-fast);
-}
-
-.accordionHeader:hover .titleIcon {
-  background: rgba(245, 189, 161, 0.15);
-  border-color: rgba(245, 189, 161, 0.25);
-  transform: scale(1.05);
-}
-
-.accordionHeader:hover .readingIcon {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
 .readingTitle {
   font-family: 'Inter', sans-serif;
   font-size: 1.05rem;
@@ -198,8 +168,8 @@
   font-size: 1.08rem;
   line-height: 1.8;
   color: var(--fg);
-  max-width: 700px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 2.5rem 1.5rem 2rem 1.5rem;
   background: rgba(255,255,255,0.04);
   border-radius: 18px;
@@ -270,19 +240,6 @@
   font-style: italic;
 }
 
-@media (max-width: 600px) {
-  .readingContent {
-    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
-    font-size: 1rem;
-  }
-  .readingContent h2 {
-    font-size: 1.3rem;
-  }
-  .readingContent h3 {
-    font-size: 1.08rem;
-  }
-}
-
 @media (max-width: 768px) {
   .accordionHeader {
     padding: var(--space-md);
@@ -298,5 +255,79 @@
   
   .readingContent {
     font-size: 0.95rem;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    width: 100%;
+    max-width: none;
+  }
+
+  .readingContent h2 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .readingContent h3 {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 0.8rem 0;
+  }
+
+  .readingContent p {
+    font-size: 0.95rem;
+    margin: 0 0 1.1em 0;
+  }
+
+  .accordionIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .accordionHeader {
+    padding: var(--space-sm);
+  }
+  
+  .readingTitle {
+    font-size: 1rem;
+  }
+  
+  .contentInner {
+    padding: var(--space-sm);
+  }
+  
+  .readingContent {
+    font-size: 0.9rem;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    width: 100%;
+    max-width: none;
+  }
+
+  .readingContent h2 {
+    font-size: 1.3rem;
+    margin: 0 0 0.8rem 0;
+  }
+
+  .readingContent h3 {
+    font-size: 1rem;
+    margin: 1.2rem 0 0.6rem 0;
+  }
+
+  .readingContent p {
+    font-size: 0.9rem;
+    margin: 0 0 1em 0;
+  }
+
+  .accordionIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon {
+    width: 10px;
+    height: 10px;
   }
 } 

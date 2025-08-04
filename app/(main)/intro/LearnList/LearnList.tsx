@@ -48,12 +48,12 @@ const LearnListContent = memo<LearnListProps>(() => {
     <div className={styles.learnContainer}>
       {/* Header Section */}
       <div className={styles.headerSection}>
-        <h3 className={styles.headerTitle}>A Quiet Revolution in Astrology</h3>
+        <h3 className={styles.headerTitle}>
+          <span className={styles.desktopTitle}>A Quiet Revolution in Astrology</span>
+          <span className={styles.mobileTitle}>A Revolution in Astrology</span>
+        </h3>
         <p className={styles.headerBody}>
-        Where personal astrology meets emotional depth.
-        </p>
-        <p className={styles.headerBody}>
-        AI-assisted. Soul-centered. Psychologically-attuned.
+        Where personal astrology meets emotional depth. AI-assisted. Soul-centered. Psychologically-attuned.
         </p>
       </div>
 
@@ -63,6 +63,12 @@ const LearnListContent = memo<LearnListProps>(() => {
           <span className={styles.themesIntro}>Themes we cover</span>
           <span className={styles.totalCount}>About</span>
         </div>
+        
+        {/* Mobile Themes Header */}
+        <div className={styles.mobileThemesHeader}>
+          <span className={styles.mobileThemesIntro}>Themes</span>
+        </div>
+        
         <ul className={styles.themesList}>
           <li className={styles.themeItem}>
             <div className={styles.themeLeft}>
@@ -100,6 +106,32 @@ const LearnListContent = memo<LearnListProps>(() => {
               <span className={styles.themeIcon} role="img" aria-label="Sparkles">✨</span>
               <span className={styles.themeText}>More Themes Coming <span className={styles.themeCountInline}>(Stay Tuned)</span></span>
             </div>
+          </li>
+        </ul>
+        
+        {/* Mobile Themes List */}
+        <ul className={styles.mobileThemesList}>
+          <li className={styles.mobileThemeItem}>
+            <span className={styles.mobileThemeText}>Self & Identity</span>
+            <button 
+              className={styles.mobileLearnMoreButton} 
+              aria-label="Learn more about Self & Identity"
+              onClick={() => handleThemeClick('Self & Identity')}
+            >
+              <span className={styles.mobileLearnMoreIcon}>ℹ️</span>
+            </button>
+          </li>
+          <li className={styles.mobileThemeItem}>
+            <span className={styles.mobileThemeText}>Love & Relationships</span>
+          </li>
+          <li className={styles.mobileThemeItem}>
+            <span className={styles.mobileThemeText}>Mindset & Communication</span>
+          </li>
+          <li className={styles.mobileThemeItem}>
+            <span className={styles.mobileThemeText}>Healing & Inner Transformation</span>
+          </li>
+          <li className={styles.mobileThemeItem}>
+            <span className={styles.mobileThemeText}>(More Themes Coming)</span>
           </li>
         </ul>
       </div>

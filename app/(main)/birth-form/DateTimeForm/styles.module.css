@@ -58,4 +58,43 @@
   color: var(--danger);
   font-size: 16px;
   margin-top: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .inputRow {
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .inputWrapper {
+    flex: none;
+    gap: var(--space-4xs);
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .input {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputRow {
+    gap: var(--space-3xs);
+  }
+
+  .inputWrapper {
+    gap: var(--space-4xs);
+  }
+
+  .label {
+    font-size: 15px;
+  }
+
+  .input {
+    font-size: 15px;
+  }
 } 
