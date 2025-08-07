@@ -1,4 +1,7 @@
-import type { GeneratedReading, ReadingGenerationRequest, ReadingGenerationResult } from '../types';
+import type {
+  GeneratedReading,
+  ReadingGenerationResult,
+} from '../types';
 import type { AICompleteReadingResponse } from '../../../lib/ai-service';
 import type { ExtractedReadingData } from '../../../lib/readings';
 import { AIService } from '../../../lib/ai-service';
@@ -16,12 +19,13 @@ export async function generateReading(
     const writerPrompt = getPrompt(readingId);
     const editorPrompt = getPrompt(`editor-${readingId}`);
 
-    const response: AICompleteReadingResponse = await AIService.generateCompleteReading(
-      readingId,
-      extractedData,
-      writerPrompt,
-      editorPrompt
-    );
+    const response: AICompleteReadingResponse =
+      await AIService.generateCompleteReading(
+        readingId,
+        extractedData,
+        writerPrompt,
+        editorPrompt
+      );
 
     if (response.success && response.formattedReading) {
       return {
@@ -34,17 +38,26 @@ export async function generateReading(
         },
       };
     } else {
-      console.error(`❌ AI generation failed for ${readingId}:`, response.error);
+      console.error(
+        `❌ AI generation failed for ${readingId}:`,
+        response.error
+      );
       return {
         success: false,
         error: response.error || 'Failed to generate reading',
       };
     }
   } catch (generationError) {
-    console.error(`❌ Exception in generateReading for ${readingId}:`, generationError);
+    console.error(
+      `❌ Exception in generateReading for ${readingId}:`,
+      generationError
+    );
     return {
       success: false,
-      error: generationError instanceof Error ? generationError.message : 'Failed to generate reading',
+      error:
+        generationError instanceof Error
+          ? generationError.message
+          : 'Failed to generate reading',
     };
   }
 }
@@ -58,27 +71,40 @@ export async function generateMultipleReadings(
 ): Promise<GeneratedReading[]> {
   const readingPromises = readings.map(async (reading) => {
     try {
-      const extractedData = extractedReadings.find(er => er.readingId === reading.id);
+      const extractedData = extractedReadings.find(
+        (er) => er.readingId === reading.id
+      );
       if (!extractedData) {
         console.error(`❌ No extracted data found for reading: ${reading.id}`);
         throw new Error(`No extracted data found for reading: ${reading.id}`);
       }
-      
+
       const result = await generateReading(reading.id, extractedData);
-      
+
       if (result.success && result.reading) {
-        const updatedReading = updateReadingWithContent(reading, result.reading.content);
+        const updatedReading = updateReadingWithContent(
+          reading,
+          result.reading.content
+        );
         return updatedReading;
       } else {
-        console.error(`❌ Failed to generate reading ${reading.id}:`, result.error);
+        console.error(
+          `❌ Failed to generate reading ${reading.id}:`,
+          result.error
+        );
         return updateReadingWithContent(reading, '', result.error);
       }
     } catch (generationError) {
-      console.error(`❌ Error generating reading ${reading.id}:`, generationError);
+      console.error(
+        `❌ Error generating reading ${reading.id}:`,
+        generationError
+      );
       return updateReadingWithContent(
-        reading, 
-        '', 
-        generationError instanceof Error ? generationError.message : 'Failed to generate reading'
+        reading,
+        '',
+        generationError instanceof Error
+          ? generationError.message
+          : 'Failed to generate reading'
       );
     }
   });
@@ -93,26 +119,29 @@ export async function generateMultipleReadings(
 export function handleAIError(error: any): string {
   if (error instanceof Error) {
     const message = error.message.toLowerCase();
-    
-    if (message.includes('rate limit') || message.includes('too many requests')) {
+
+    if (
+      message.includes('rate limit') ||
+      message.includes('too many requests')
+    ) {
       return 'Too many requests. Please wait a moment and try again.';
     }
-    
+
     if (message.includes('timeout') || message.includes('network')) {
       return 'Network error. Please check your connection and try again.';
     }
-    
+
     if (message.includes('api key') || message.includes('authentication')) {
       return 'Service temporarily unavailable. Please try again later.';
     }
-    
+
     if (message.includes('quota') || message.includes('billing')) {
       return 'Service temporarily unavailable. Please try again later.';
     }
-    
+
     return 'Failed to generate readings. Please try again.';
   }
-  
+
   return 'An unexpected error occurred. Please try again.';
 }
 
@@ -158,27 +187,29 @@ export async function retryAIGeneration(
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const result = await generateReading(readingId, extractedData);
-      
+
       if (result.success) {
         return result;
       }
-      
+
       // If it's the last attempt, return the error
       if (attempt === maxRetries) {
         return result;
       }
-      
+
       // Wait before retrying (exponential backoff)
       const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
-      await new Promise(resolve => setTimeout(resolve, delay));
-      
+      await new Promise((resolve) => setTimeout(resolve, delay));
     } catch (retryError) {
       // Attempt failed for reading
-      
+
       if (attempt === maxRetries) {
         return {
           success: false,
-          error: retryError instanceof Error ? retryError.message : 'Failed to generate reading',
+          error:
+            retryError instanceof Error
+              ? retryError.message
+              : 'Failed to generate reading',
         };
       }
     }
@@ -227,10 +258,10 @@ export function getAIGenerationProgress(
   remaining: number;
 } {
   const percentage = Math.round((completedReadings / totalReadings) * 100);
-  
+
   return {
     percentage,
     completed: completedReadings,
     remaining: totalReadings - completedReadings,
   };
-} 
+}

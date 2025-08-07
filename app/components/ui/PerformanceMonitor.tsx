@@ -29,7 +29,7 @@ export default function PerformanceTracker() {
       // Largest Contentful Paint (LCP)
       if ('PerformanceObserver' in window) {
         const observer = new PerformanceObserver((list) => {
-          for (const entry of list.getEntries()) {
+          for (const _entry of list.getEntries()) {
             // LCP logged
             // Send to analytics if needed
           }
@@ -56,8 +56,7 @@ export default function PerformanceTracker() {
       // First Input Delay (FID)
       if ('PerformanceObserver' in window) {
         const observer = new PerformanceObserver((list) => {
-          for (const entry of list.getEntries()) {
-            const firstInputEntry = entry as any;
+          for (const _entry of list.getEntries()) {
             // FID logged
             // Send to analytics if needed
           }
@@ -69,7 +68,9 @@ export default function PerformanceTracker() {
     // Track page load performance
     const trackPageLoad = () => {
       if ('performance' in window) {
-        const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+        const navigation = performance.getEntriesByType(
+          'navigation'
+        )[0] as PerformanceNavigationTiming;
         if (navigation) {
           // Page Load Time logged
           // DOM Content Loaded logged
@@ -111,4 +112,4 @@ export default function PerformanceTracker() {
   }, []);
 
   return null; // This component doesn't render anything
-} 
+}

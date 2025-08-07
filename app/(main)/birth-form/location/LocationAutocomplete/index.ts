@@ -1,2 +1,2 @@
 export { LocationAutocomplete } from './LocationAutocomplete';
-export * from './types'; 
+export * from './types';

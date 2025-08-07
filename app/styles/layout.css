@@ -1,0 +1,44 @@
+/* ===== LAYOUT STYLES ===== */
+/* This file contains layout-specific styles */
+
+/* ===== HEADER ===== */
+/* REMOVED: .header - unused global class */
+
+/* ===== MAIN CONTENT ===== */
+/* REMOVED: .main - unused global class */
+
+/* ===== PAGE CONTAINERS ===== */
+/* REMOVED: .page-container - unused global class */
+/* REMOVED: .page-content - unused global class */
+
+/* ===== INTRO PAGE SPECIFIC ===== */
+/* REMOVED: .intro - unused global class */
+/* REMOVED: .heroSection - unused global class */
+/* REMOVED: .learnSection - unused global class */
+/* REMOVED: .content - unused global class */
+/* REMOVED: .content::after - unused global class */
+
+/* REMOVED: .content:hover, .content:focus-within - unused global class */
+
+/* ===== NAVIGATION ===== */
+/* REMOVED: .nav-arrow - unused global class */
+/* REMOVED: .nav-arrow:hover - unused global class */
+/* REMOVED: .nav-arrow:active - unused global class */
+/* REMOVED: .nav-arrow:disabled - unused global class */
+
+/* ===== BUTTON LAYOUTS ===== */
+/* REMOVED: .button-row - unused global class */
+
+/* ===== RESPONSIVE LAYOUT ===== */
+@media (max-width: 768px) {
+  /* REMOVED: All unused global class media queries */
+}
+
+@media (max-width: 480px) {
+  /* REMOVED: All unused global class media queries */
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  /* REMOVED: All unused global class media queries */
+}

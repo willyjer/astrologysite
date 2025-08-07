@@ -15,7 +15,11 @@ export type BirthData = {
   tzone: number;
 };
 
-export type ExtractedReadingData = CoreSelfData | ChartRulerData | InnerWarriorData | SelfBeliefData;
+export type ExtractedReadingData =
+  | CoreSelfData
+  | ChartRulerData
+  | InnerWarriorData
+  | SelfBeliefData;
 
 export class ReadingExtractor {
   /**
@@ -23,19 +27,18 @@ export class ReadingExtractor {
    */
   static extract(
     readingId: string,
-    chartData: AstrologyChartResponse,
-    birthData: BirthData
+    chartData: AstrologyChartResponse
   ): ExtractedReadingData | null {
     switch (readingId) {
       case 'core-self':
-        return CoreSelfExtractor.extract(chartData, birthData);
+        return CoreSelfExtractor.extract(chartData);
       case 'chart-ruler':
-        return ChartRulerExtractor.extract(chartData, birthData);
+        return ChartRulerExtractor.extract(chartData);
       case 'inner-warrior':
-        return InnerWarriorExtractor.extract(chartData, birthData);
+        return InnerWarriorExtractor.extract(chartData);
       case 'self-belief':
       case 'self-belief-inner-light':
-        return SelfBeliefExtractor.extract(chartData, birthData, readingId);
+        return SelfBeliefExtractor.extract(chartData, readingId);
       default:
         return null;
     }
@@ -46,11 +49,10 @@ export class ReadingExtractor {
    */
   static extractMultiple(
     readingIds: string[],
-    chartData: AstrologyChartResponse,
-    birthData: BirthData
+    chartData: AstrologyChartResponse
   ): ExtractedReadingData[] {
     return readingIds
-      .map(id => this.extract(id, chartData, birthData))
+      .map((id) => this.extract(id, chartData))
       .filter((data): data is ExtractedReadingData => data !== null);
   }
 
@@ -58,6 +60,12 @@ export class ReadingExtractor {
    * Get all available reading IDs
    */
   static getAvailableReadings(): string[] {
-    return ['core-self', 'chart-ruler', 'inner-warrior', 'self-belief', 'self-belief-inner-light'];
+    return [
+      'core-self',
+      'chart-ruler',
+      'inner-warrior',
+      'self-belief',
+      'self-belief-inner-light',
+    ];
   }
-} 
+}

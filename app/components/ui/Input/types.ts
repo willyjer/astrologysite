@@ -13,4 +13,4 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   inputClassName?: string;
   errorClassName?: string;
   helperClassName?: string;
-} 
+}

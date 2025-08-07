@@ -1,10 +1,10 @@
 import type { LoadingStateProps } from '../types';
 import styles from './LoadingState.module.css';
 
-export default function LoadingState({ 
-  status, 
-  message, 
-  showProgress = false 
+export default function LoadingState({
+  status,
+  message,
+  showProgress = false,
 }: LoadingStateProps) {
   const getTitle = () => {
     switch (status) {
@@ -19,7 +19,7 @@ export default function LoadingState({
 
   const getMessage = () => {
     if (message) return message;
-    
+
     switch (status) {
       case 'loading':
         return 'Please wait while we set up your personalized astrology readings...';
@@ -35,6 +35,8 @@ export default function LoadingState({
       <div className={styles.loadingSpinner}></div>
       <h1>{getTitle()}</h1>
       <p>{getMessage()}</p>
+      
+      {/* Simple progress bar only */}
       {showProgress && (
         <div className={styles.progressBar}>
           <div className={styles.progressFill}></div>
@@ -42,4 +44,4 @@ export default function LoadingState({
       )}
     </div>
   );
-} 
+}

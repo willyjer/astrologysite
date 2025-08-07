@@ -1,5 +1,8 @@
 import styles from '../page.module.css';
-import { checkBrowserSupport, getUnsupportedFeaturesMessage } from '../utils/browserSupport';
+import {
+  checkBrowserSupport,
+  getUnsupportedFeaturesMessage,
+} from '../utils/browserSupport';
 
 interface BrowserWarningProps {
   browserSupport: ReturnType<typeof checkBrowserSupport> | null;
@@ -18,4 +21,4 @@ export function BrowserWarning({ browserSupport }: BrowserWarningProps) {
       </p>
     </div>
   );
-} 
+}

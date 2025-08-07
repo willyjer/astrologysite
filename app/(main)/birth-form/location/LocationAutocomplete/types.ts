@@ -15,4 +15,4 @@ export interface LocationAutocompleteProps {
     readonly minute: number;
   };
   readonly className?: string;
-} 
+}

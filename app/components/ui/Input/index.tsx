@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   } = props;
 
   return (
-    <div 
+    <div
       className={clsx(
         styles.wrapper,
         fullWidth && styles.fullWidth,
@@ -30,26 +30,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       )}
     >
       {label && (
-        <label 
-          htmlFor={inputProps.id} 
+        <label
+          htmlFor={inputProps.id}
           className={clsx(styles.label, labelClassName)}
         >
           {label}
         </label>
       )}
-      
+
       <div className={styles.inputWrapper}>
         {icon && iconPosition === 'left' && (
-          <span className={clsx(styles.icon, styles.iconLeft)}>
-            {icon}
-          </span>
+          <span className={clsx(styles.icon, styles.iconLeft)}>{icon}</span>
         )}
-        
+
         <input
           ref={ref}
           className={clsx(
             styles.input,
-            variant !== 'default' && styles[variant],
             icon && iconPosition === 'left' && styles.hasLeftIcon,
             icon && iconPosition === 'right' && styles.hasRightIcon,
             error && styles.hasError,
@@ -57,18 +54,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           )}
           {...inputProps}
         />
-        
+
         {icon && iconPosition === 'right' && (
-          <span className={clsx(styles.icon, styles.iconRight)}>
-            {icon}
-          </span>
+          <span className={clsx(styles.icon, styles.iconRight)}>{icon}</span>
         )}
       </div>
 
       {error && (
-        <div className={clsx(styles.error, errorClassName)}>
-          {error}
-        </div>
+        <div className={clsx(styles.error, errorClassName)}>{error}</div>
       )}
 
       {helperText && !error && (
@@ -80,4 +73,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   );
 });
 
-Input.displayName = 'Input'; 
+Input.displayName = 'Input';

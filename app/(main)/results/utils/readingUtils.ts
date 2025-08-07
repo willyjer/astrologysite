@@ -1,6 +1,9 @@
-import type { GeneratedReading, Reading, BirthFormData, Category } from '../types';
-import type { AstrologyChartResponse } from '../../../lib/astrology-service';
-import type { ExtractedReadingData } from '../../../lib/readings';
+import type {
+  GeneratedReading,
+  Reading,
+  BirthFormData,
+  Category,
+} from '../types';
 
 /**
  * Process birth data for reading generation
@@ -16,8 +19,9 @@ export function processBirthData(birthFormData: BirthFormData): {
   tzone: number;
 } {
   const [year, month, day] = birthFormData.birthDate.split('-').map(Number);
-  let hour = 0, min = 0;
-  
+  let hour = 0,
+    min = 0;
+
   if (birthFormData.birthTime) {
     [hour, min] = birthFormData.birthTime.split(':').map(Number);
   }
@@ -41,7 +45,7 @@ export function filterReadingsByCategory(
   readings: GeneratedReading[],
   category: string
 ): GeneratedReading[] {
-  return readings.filter(reading => reading.category === category);
+  return readings.filter((reading) => reading.category === category);
 }
 
 /**
@@ -52,7 +56,7 @@ export function getReadingTitles(): Record<string, string> {
     'core-self': 'Core Self & Personality Blueprint',
     'chart-ruler': 'Your Guiding Energy',
     'inner-warrior': 'Confidence & Drive',
-    'self-belief': 'Self-Belief & Inner Light'
+    'self-belief': 'Self-Belief & Inner Light',
   };
 }
 
@@ -70,7 +74,7 @@ export function getReadingCategories(): Record<string, string> {
     'love-patterns': 'love',
     'soulmate-compatibility': 'love',
     'career-path': 'career',
-    'leadership-style': 'career'
+    'leadership-style': 'career',
   };
 }
 
@@ -83,12 +87,15 @@ export function initializeGeneratedReadings(
   const readingTitles = getReadingTitles();
   const readingCategories = getReadingCategories();
 
-  return selectedReadings.map(reading => ({
+  return selectedReadings.map((reading) => ({
     id: reading.id,
-    title: readingTitles[reading.id as keyof typeof readingTitles] || reading.id,
+    title:
+      readingTitles[reading.id as keyof typeof readingTitles] || reading.id,
     content: '',
     loading: true,
-    category: readingCategories[reading.id as keyof typeof readingCategories] || 'self-identity'
+    category:
+      readingCategories[reading.id as keyof typeof readingCategories] ||
+      'self-identity',
   }));
 }
 
@@ -112,7 +119,7 @@ export function updateReadingWithContent(
  * Check if all readings are complete
  */
 export function areAllReadingsComplete(readings: GeneratedReading[]): boolean {
-  return readings.every(reading => !reading.loading);
+  return readings.every((reading) => !reading.loading);
 }
 
 /**
@@ -126,9 +133,9 @@ export function getReadingStats(readings: GeneratedReading[]): {
 } {
   return {
     total: readings.length,
-    completed: readings.filter(r => !r.loading && !r.error).length,
-    loading: readings.filter(r => r.loading).length,
-    error: readings.filter(r => r.error).length,
+    completed: readings.filter((r) => !r.loading && !r.error).length,
+    loading: readings.filter((r) => r.loading).length,
+    error: readings.filter((r) => r.error).length,
   };
 }
 
@@ -139,7 +146,7 @@ export function filterAllowedCategories(
   categories: Category[],
   allowedKeys: string[]
 ): Category[] {
-  return categories.filter(category => allowedKeys.includes(category.key));
+  return categories.filter((category) => allowedKeys.includes(category.key));
 }
 
 /**
@@ -149,8 +156,10 @@ export function getCategoriesWithReadings(
   categories: Category[],
   readings: GeneratedReading[]
 ): Category[] {
-  return categories.filter(category => {
-    const categoryReadings = readings.filter(reading => reading.category === category.key);
+  return categories.filter((category) => {
+    const categoryReadings = readings.filter(
+      (reading) => reading.category === category.key
+    );
     return categoryReadings.length > 0;
   });
 }
@@ -194,7 +203,7 @@ export function sortReadings(readings: GeneratedReading[]): GeneratedReading[] {
     // First, sort by loading status (completed first)
     if (a.loading && !b.loading) return 1;
     if (!a.loading && b.loading) return -1;
-    
+
     // Then sort by title alphabetically
     return a.title.localeCompare(b.title);
   });
@@ -205,8 +214,8 @@ export function sortReadings(readings: GeneratedReading[]): GeneratedReading[] {
  */
 export function getUniqueCategories(readings: GeneratedReading[]): string[] {
   const categories = readings
-    .map(reading => reading.category)
+    .map((reading) => reading.category)
     .filter((category): category is string => !!category);
-  
+
   return Array.from(new Set(categories));
-} 
+}

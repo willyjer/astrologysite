@@ -1,5 +1,4 @@
 import type { AstrologyChartResponse } from '../astrology-service';
-import type { BirthData } from './index';
 
 export type ChartRulerData = {
   readingId: 'chart-ruler';
@@ -25,8 +24,7 @@ export class ChartRulerExtractor {
    * Extract relevant data for the chart-ruler reading
    */
   static extract(
-    chartData: AstrologyChartResponse,
-    birthData: BirthData
+    chartData: AstrologyChartResponse
   ): ChartRulerData {
     const { houses, aspects } = chartData;
 
@@ -39,8 +37,17 @@ export class ChartRulerExtractor {
     // Only apply combust/cazimi logic for Mercury or Venus
     let isCombust = false;
     let isCazimi = false;
-    if (ruler && ['Mercury', 'Venus'].includes(ruler) && placement?.fullDegree !== null && placement?.fullDegree !== undefined && sunDegree != null) {
-      const combustion = this.calcCombustCazimi(placement.fullDegree, sunDegree);
+    if (
+      ruler &&
+      ['Mercury', 'Venus'].includes(ruler) &&
+      placement?.fullDegree !== null &&
+      placement?.fullDegree !== undefined &&
+      sunDegree != null
+    ) {
+      const combustion = this.calcCombustCazimi(
+        placement.fullDegree,
+        sunDegree
+      );
       isCombust = combustion.isCombust;
       isCazimi = combustion.isCazimi;
     }
@@ -58,16 +65,18 @@ export class ChartRulerExtractor {
         isCombust,
         isCazimi,
         essentialDignity: dignity,
-        aspects: rulerAspects
-      }
+        aspects: rulerAspects,
+      },
     };
   }
 
   /**
    * Find the Ascendant sign from house 1
    */
-  private static findAscendantSign(houses: AstrologyChartResponse['houses']): string | null {
-    return houses.find(h => h.house_id === 1)?.sign || null;
+  private static findAscendantSign(
+    houses: AstrologyChartResponse['houses']
+  ): string | null {
+    return houses.find((h) => h.house_id === 1)?.sign || null;
   }
 
   /**
@@ -75,7 +84,7 @@ export class ChartRulerExtractor {
    */
   private static getRuler(sign: string | null): string | null {
     if (!sign) return null;
-    
+
     const rulerships: { [key: string]: string } = {
       Aries: 'Mars',
       Taurus: 'Venus',
@@ -97,11 +106,11 @@ export class ChartRulerExtractor {
    * Find a planet's placement with full details
    */
   private static findPlanetPlacement(
-    houses: AstrologyChartResponse['houses'], 
+    houses: AstrologyChartResponse['houses'],
     target: string | null
   ) {
     if (!target) return null;
-    
+
     for (const house of houses) {
       for (const planet of house.planets) {
         if (planet.name === target) {
@@ -109,7 +118,7 @@ export class ChartRulerExtractor {
             sign: planet.sign,
             house: house.house_id,
             fullDegree: planet.full_degree,
-            isRetrograde: planet.is_retro === "true",
+            isRetrograde: planet.is_retro === 'true',
           };
         }
       }
@@ -120,7 +129,9 @@ export class ChartRulerExtractor {
   /**
    * Find the Sun's degree
    */
-  private static findSunDegree(houses: AstrologyChartResponse['houses']): number | null {
+  private static findSunDegree(
+    houses: AstrologyChartResponse['houses']
+  ): number | null {
     for (const house of houses) {
       for (const planet of house.planets) {
         if (planet.name === 'Sun') {
@@ -139,16 +150,19 @@ export class ChartRulerExtractor {
     const orb = Math.min(diff, 360 - diff); // handles wraparound at 0°
     return {
       isCombust: orb < 8,
-      isCazimi: orb < 0.28
+      isCazimi: orb < 0.28,
     };
   }
 
   /**
    * Get essential dignity of a planet in a sign
    */
-  private static getEssentialDignity(planet: string | null, sign: string | null): string {
+  private static getEssentialDignity(
+    planet: string | null,
+    sign: string | null
+  ): string {
     if (!planet || !sign) return 'None';
-    
+
     const exalted: { [key: string]: string } = {
       Sun: 'Aries',
       Moon: 'Taurus',
@@ -177,16 +191,26 @@ export class ChartRulerExtractor {
       Saturn: 'Cancer',
     };
 
-    if (exalted[planet] === sign) return 'Exalted';
-    if (fall[planet] === sign) return 'Fall';
-    if (detriment[planet] === sign || (Array.isArray(detriment[planet]) && detriment[planet].includes(sign))) return 'Detriment';
+    const exaltedSign = exalted[planet];
+    const fallSign = fall[planet];
+    const detrimentSign = detriment[planet];
+    
+    if (exaltedSign === sign) return 'Exalted';
+    if (fallSign === sign) return 'Fall';
+    if (
+      detrimentSign === sign ||
+      (Array.isArray(detrimentSign) && detrimentSign.includes(sign))
+    )
+      return 'Detriment';
     return 'None';
   }
 
   /**
    * Check if an aspect is relevant based on type and orb
    */
-  private static isRelevantAspect(aspect: AstrologyChartResponse['aspects'][0]): boolean {
+  private static isRelevantAspect(
+    aspect: AstrologyChartResponse['aspects'][0]
+  ): boolean {
     const strong = ['Conjunction', 'Opposition', 'Trine', 'Square', 'Sextile'];
     const minor = ['Quincunx', 'Semi Sextile', 'Semi Square', 'Quintile'];
 
@@ -199,20 +223,25 @@ export class ChartRulerExtractor {
    * Find aspects to a specific planet
    */
   private static findAspectsToPlanet(
-    aspects: AstrologyChartResponse['aspects'], 
+    aspects: AstrologyChartResponse['aspects'],
     targetPlanet: string | null
   ) {
     if (!targetPlanet) return [];
-    
+
     return aspects
-      .filter(a =>
-        (a.aspecting_planet === targetPlanet || a.aspected_planet === targetPlanet) &&
-        this.isRelevantAspect(a)
+      .filter(
+        (a) =>
+          (a.aspecting_planet === targetPlanet ||
+            a.aspected_planet === targetPlanet) &&
+          this.isRelevantAspect(a)
       )
-      .map(a => ({
-        with: a.aspecting_planet === targetPlanet ? a.aspected_planet : a.aspecting_planet,
+      .map((a) => ({
+        with:
+          a.aspecting_planet === targetPlanet
+            ? a.aspected_planet
+            : a.aspecting_planet,
         type: a.type,
         orb: a.orb,
       }));
   }
-} 
+}

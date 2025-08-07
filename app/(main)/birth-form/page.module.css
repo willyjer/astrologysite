@@ -1,385 +1,146 @@
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-sm);
-  background: var(--gradient-space);
-  overflow: hidden;
-  position: relative;
+/* ===== BIRTH FORM PAGE STYLES ===== */
+/* This file contains only birth-form page specific styles */
+
+/* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
+.birthFormContainer {
+  /* Mobile container styles */
+  margin-top: var(
+    --space-sm
+  ) !important; /* 5 - CRITICAL: Overrides PageLayout spacing */
+  justify-content: flex-start !important; /* 5 - CRITICAL: Prevents vertical centering */
 }
 
-.content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 640px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  padding: var(--space-lg) var(--space-md);
-  background: linear-gradient(to bottom right, #1e1b2f, #15121f);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.2s var(--ease-fast);
-  backdrop-filter: blur(8px);
-  animation: float 6s ease-in-out infinite;
-  margin: var(--space-2xs) auto;
-}
-
-.content::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  width: 120%;
-  height: 80%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(255, 225, 200, 0.06), transparent 70%);
-  filter: blur(2px);
-}
-
-.content:hover, .content:focus-within {
-  box-shadow: 0 4px 48px 0 rgba(205, 163, 73, 0.3), 0 0 40px 0 rgba(205, 163, 73, 0.15);
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.titleGroup {
-  text-align: center;
-  margin-bottom: var(--space-3xs);
-}
-
-.title {
-  font-family: "Playfair Display", serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: var(--fg);
-  letter-spacing: -0.5px;
+.birthFormContent {
+  /* Mobile content styles */
+  display: flex; /* 4 - IMPORTANT: Layout structure */
+  flex-direction: column; /* 4 - IMPORTANT: Vertical stacking */
+  gap: var(--space-md); /* 3 - MODERATE: Spacing between elements */
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+  display: flex; /* 4 - IMPORTANT: Layout structure */
+  flex-direction: column; /* 4 - IMPORTANT: Vertical stacking */
+  gap: var(--space-sm); /* 3 - MODERATE: Spacing between form sections */
 }
 
 .section {
-  background: linear-gradient(145deg, #3A2F4C, #2C233D);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: var(--space-sm);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
+  background: var(--gradient-section); /* 3 - MODERATE: Visual styling */
+  border-radius: var(--radius-md); /* 3 - MODERATE: Rounded corners */
+  padding: var(--space-sm); /* 4 - IMPORTANT: Content spacing */
+  position: relative; /* 3 - MODERATE: Positioning context */
 }
 
-.section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-  pointer-events: none;
-  border-radius: 12px;
-}
-
-.subheadline {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: var(--fg-muted);
-  text-align: left;
-  margin-top: var(--space-2xs);
-  padding-left: 20px;
-  font-style: italic;
-}
-
-.locationWrapper {
-  margin-top: var(--space-2xs);
-}
-
-.locationSpacer {
-  height: var(--space-sm);
-}
-
-.locationLabel {
-  font-weight: 450;
-  color: var(--fg);
-  font-size: 20px;
-  padding-left: 21px;
-}
-
-.errorContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin: 0;
-  padding: var(--space-sm) var(--space-md);
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
-  border: 1px solid rgba(255, 107, 107, 0.3);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.1);
-  animation: errorPulse 2s ease-in-out infinite;
-}
-
-.errorIcon {
-  font-size: 20px;
-  animation: errorShake 0.5s ease-in-out;
-}
-
-.errorMessage {
-  color: var(--danger);
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
+/* ===== FORM HEADER STYLES ===== */
+.titleGroup {
   text-align: center;
-  flex: 1;
+  margin-bottom: 0;
 }
 
-@keyframes errorPulse {
-  0%, 100% {
-    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.1);
-  }
-  50% {
-    box-shadow: 0 6px 24px rgba(255, 107, 107, 0.2);
-  }
-}
-
-@keyframes errorShake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-2px);
-  }
-  75% {
-    transform: translateX(2px);
-  }
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0 var(--space-2xs);
-  position: relative;
-}
-
-.buttons button {
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 24px rgba(205, 163, 73, 0.4);
-  padding: 16px 32px;
-  font-size: 18px;
-}
-
-.buttons button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(205, 163, 73, 0.5);
-}
-
-.buttons button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.buttons button:disabled:hover {
-  transform: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive button text */
-.desktopText {
-  display: block;
-}
-
-.mobileText {
-  display: none;
-}
-
-.responsiveButton {
-  width: 100%;
-  max-width: 100%;
-}
-
-.decorativeLine {
-  width: 160px;
-  height: 1.5px;
-  margin: 0.5rem auto 1rem auto;
-  border-radius: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, #fffbe6 50%, var(--accent) 70%, transparent 100%);
-  box-shadow: none;
-  opacity: 0.7;
+.title {
+  font-family: var(--font-display);
+  font-size: 28px; /* 3 - MODERATE: Smaller title for mobile */
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0 0 var(--space-4xs) 0;
 }
 
 .helpText {
-  margin-top: 0.25rem;
-  margin-bottom: -1rem;
-  font-size: 19px;
+  font-family: var(--font-sans);
+  font-size: 14px;
   color: var(--fg-muted);
-  font-style: italic;
-  text-align: center;
+  margin: 0;
 }
 
+/* ===== LOCATION SECTION STYLES ===== */
+.locationSpacer {
+  margin-top: var(--space-xs); /* 3 - MODERATE: Spacing from previous section */
+}
+
+.subheadline {
+  font-family: var(--font-sans);
+  font-size: 13px; /* 3 - MODERATE: Smaller text for mobile */
+  color: var(--fg-muted);
+  margin: var(--space-4xs); /* 3 - MODERATE: Reduced spacing from form */
+  text-align: center;
+  font-style: italic;
+}
+
+/* ===== ERROR DISPLAY STYLES ===== */
+.errorContainer {
+  display: flex; /* 4 - IMPORTANT: Layout for error display */
+  align-items: center; /* 4 - IMPORTANT: Vertical alignment */
+  gap: var(--space-2xs); /* 3 - MODERATE: Spacing between icon and text */
+  padding: var(--space-2xs) var(--space-sm); /* 3 - MODERATE: Internal spacing */
+  background: rgba(239, 68, 68, 0.1); /* 3 - MODERATE: Error background */
+  border: 1px solid rgba(239, 68, 68, 0.2); /* 3 - MODERATE: Error border */
+  border-radius: 8px; /* 3 - MODERATE: Rounded corners */
+  margin-top: var(--space-2xs); /* 3 - MODERATE: Spacing from form */
+}
+
+.errorIcon {
+  color: var(--error); /* 3 - MODERATE: Error color */
+}
+
+.errorMessage {
+  font-family: var(--font-sans); /* 3 - MODERATE: Typography consistency */
+  font-size: 14px; /* 3 - MODERATE: Readable size */
+  color: var(--error); /* 3 - MODERATE: Error text color */
+}
+
+/* ===== ACTION BUTTONS STYLES ===== */
+.buttons {
+  display: flex; /* 4 - IMPORTANT: Layout structure */
+  flex-direction: column; /* 4 - IMPORTANT: Vertical button stacking */
+  gap: var(--space-sm); /* 3 - MODERATE: Spacing between buttons */
+  margin-top: var(--space-4xs); /* 3 - MODERATE: Reduced spacing from form */
+  width: 100%; /* 3 - MODERATE: Full width */
+}
+
+.buttons button {
+  width: 100%; /* 4 - IMPORTANT: Full width buttons */
+  padding: var(--space-sm) var(--space-md); /* 4 - IMPORTANT: Button sizing */
+  border-radius: var(--radius-md); /* 3 - MODERATE: Rounded buttons */
+  font-weight: 600; /* 3 - MODERATE: Button text weight */
+  cursor: pointer; /* 3 - MODERATE: Interactive cursor */
+}
+
+.buttons button:disabled {
+  opacity: 0.6; /* 3 - MODERATE: Disabled state */
+  cursor: not-allowed; /* 3 - MODERATE: Disabled cursor */
+}
+
+.buttonDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE TEXT STYLES ===== */
+.desktopText {
+  display: none; /* 3 - MODERATE: Responsive text hiding */
+}
+
+.mobileText {
+  display: block; /* 3 - MODERATE: Responsive text showing */
+}
+
+/* ===== BROWSER WARNING STYLES ===== */
 .browserWarning {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin: 0;
-  padding: var(--space-sm) var(--space-md);
-  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
-  border: 1px solid rgba(255, 193, 7, 0.3);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(255, 193, 7, 0.1);
+  display: flex; /* 4 - IMPORTANT: Layout for warning */
+  align-items: center; /* 4 - IMPORTANT: Vertical alignment */
+  gap: var(--space-2xs); /* 3 - MODERATE: Spacing between icon and text */
+  padding: var(--space-2xs) var(--space-sm); /* 3 - MODERATE: Internal spacing */
+  background: rgba(245, 189, 161, 0.1); /* 3 - MODERATE: Warning background */
+  border: 1px solid rgba(245, 189, 161, 0.2); /* 3 - MODERATE: Warning border */
+  border-radius: 8px; /* 3 - MODERATE: Rounded corners */
+  margin-top: var(--space-sm); /* 3 - MODERATE: Spacing from content */
 }
 
 .browserWarningIcon {
-  font-size: 20px;
+  color: var(--accent); /* 3 - MODERATE: Warning icon color */
 }
 
 .browserWarningMessage {
-  color: #ffc107;
-  font-size: 14px;
-  font-weight: 500;
-  margin: 0;
-  text-align: center;
-  flex: 1;
+  font-family: var(--font-sans); /* 3 - MODERATE: Typography consistency */
+  font-size: 12px; /* 3 - MODERATE: Small text size */
+  color: var(--fg-muted); /* 3 - MODERATE: Muted text color */
 }
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .container {
-    padding: var(--space-xs);
-  }
-
-  .content {
-    padding: var(--space-md) var(--space-xs);
-    gap: var(--space-sm);
-  }
-
-  .title {
-    font-size: 32px;
-  }
-
-  .helpText {
-    font-size: 16px;
-    margin-bottom: var(--space-4xs);
-  }
-
-  .form {
-    gap: var(--space-sm);
-  }
-
-  .section {
-    padding: var(--space-xs);
-  }
-
-  .decorativeLine {
-    display: none;
-  }
-
-  .locationLabel {
-    font-size: 18px;
-    padding-left: 0;
-    font-weight: 350;
-    margin-bottom: var(--space-4xs);
-  }
-
-  .subheadline {
-    font-size: 15px;
-    margin-top: var(--space-5xs);
-    padding-left: 0;
-  }
-
-  .locationSpacer {
-    height: var(--space-2xs);
-  }
-
-  .locationWrapper {
-    margin-top: var(--space-4xs);
-  }
-
-  .buttons {
-    padding: 0;
-  }
-
-  .buttons button {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
-
-  .desktopText {
-    display: none;
-  }
-
-  .mobileText {
-    display: block;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: var(--space-2xs);
-  }
-
-  .content {
-    padding: var(--space-sm) var(--space-2xs);
-    gap: var(--space-xs);
-  }
-
-  .title {
-    font-size: 28px;
-  }
-
-  .helpText {
-    font-size: 14px;
-    margin-bottom: var(--space-4xs);
-  }
-
-  .form {
-    gap: var(--space-xs);
-  }
-
-  .section {
-    padding: var(--space-2xs);
-  }
-
-  .locationLabel {
-    font-size: 16px;
-    padding-left: 0;
-    font-weight: 350;
-    margin-bottom: var(--space-4xs);
-  }
-
-  .subheadline {
-    font-size: 14px;
-    margin-top: var(--space-5xs);
-    padding-left: 0;
-  }
-
-  .locationSpacer {
-    height: var(--space-3xs);
-  }
-
-  .locationWrapper {
-    margin-top: var(--space-4xs);
-  }
-
-  .buttons button {
-    padding: 10px 16px;
-    font-size: 13px;
-  }
-}
-
- 

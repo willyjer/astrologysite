@@ -66,11 +66,20 @@ export type TabNavigationProps = {
   generatedReadings: GeneratedReading[];
 };
 
+// Progress Data Types
+export type ProgressData = {
+  totalReadings: number;
+  completedReadings: number;
+  currentReading?: string;
+  isWorkerEnabled?: boolean;
+};
+
 // Loading State Types
 export type LoadingStateProps = {
   status: ResultsPageState;
   message?: string;
   showProgress?: boolean;
+  progressData?: ProgressData | null;
 };
 
 // Error State Types
@@ -78,8 +87,6 @@ export type ErrorStateProps = {
   error: string;
   onRetry: () => void;
 };
-
-
 
 // Reading Accordion Types
 export type ReadingAccordionProps = {
@@ -99,7 +106,6 @@ export type URLParams = {
   lon: string | null;
   timezone: string | null;
   readings: string | null;
-
 };
 
 // AI Generation Types
@@ -133,4 +139,4 @@ export type {
   AstrologyChartResponse,
   ExtractedReadingData,
   AICompleteReadingResponse,
-}; 
+};

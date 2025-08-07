@@ -3,7 +3,11 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(145deg, rgba(30, 27, 47, 0.95), rgba(21, 18, 31, 0.95));
+  background: linear-gradient(
+    145deg,
+    rgba(30, 27, 47, 0.95),
+    rgba(21, 18, 31, 0.95)
+  );
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 100;
   padding: var(--space-xs);
@@ -57,7 +61,7 @@
   border: none;
   border-radius: 8px;
   background: var(--accent);
-  color: #1e1b2f;
+  color: var(--text-dark);
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   cursor: pointer;
@@ -65,7 +69,7 @@
 }
 
 .proceedButton:hover:not(.disabled) {
-  background: #d4a574;
+  background: var(--success);
 }
 
 .proceedButton.disabled {
@@ -96,14 +100,18 @@
   width: 16px;
   height: 16px;
   border: 2px solid rgba(30, 27, 47, 0.3);
-  border-top: 2px solid #1e1b2f;
+  border-top: 2px solid var(--text-dark);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Mobile Responsiveness */
@@ -177,4 +185,4 @@
   .spinner {
     animation: none;
   }
-} 
+}

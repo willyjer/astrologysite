@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .primary { fill: #cda349; }
+    .secondary { fill: #1e1b2f; }
+    @media (prefers-color-scheme: dark) {
+      .primary { fill: #cda349; }
+      .secondary { fill: #ffffff; }
+    }
+  </style>
+  <!-- Astrology/cosmic themed icon optimized for small sizes -->
+  <circle cx="16" cy="16" r="15" class="secondary" stroke="none"/>
+  <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="1" class="primary"/>
+  <!-- Simple star/compass design -->
+  <path d="M16 4 L18 10 L24 8 L20 14 L28 16 L20 18 L24 24 L18 22 L16 28 L14 22 L8 24 L12 18 L4 16 L12 14 L8 8 L14 10 Z" class="primary"/>
+  <circle cx="16" cy="16" r="2" class="primary"/>
+</svg>

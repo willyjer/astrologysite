@@ -2,8 +2,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2xs);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-weight: 500;
   transition: all 0.2s ease;
   cursor: pointer;
@@ -41,40 +40,9 @@
   color: var(--accent);
 }
 
-/* Cart button variant */
-.cart {
-  background: var(--accent);
-  color: var(--bg);
-  font-weight: 600;
-}
-
-.cart:hover:not(:disabled) {
-  background: var(--accent-hover);
-  box-shadow: 0 0 12px rgba(252, 217, 168, 0.5);
-  transform: scale(1.02);
-}
-
-.cart:active:not(:disabled) {
-  transform: scale(0.96);
-}
-
-/* Learn more button variant */
-.learn {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  font-weight: 600;
-}
-
-.learn:hover:not(:disabled) {
-  border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(252, 217, 168, 0.3);
-  transform: scale(1.02);
-}
-
-.learn:active:not(:disabled) {
-  transform: scale(0.96);
-}
+/* REMOVED: .cart - unused button variant */
+/* REMOVED: .learn - unused button variant */
+/* REMOVED: .text - unused button variant */
 
 /* Sizes */
 .sm {
@@ -92,13 +60,7 @@
   font-size: 18px;
 }
 
-/* CTA size - for prominent buttons */
-.cta {
-  padding: 14px 32px;
-  font-size: 20px;
-  font-weight: 600;
-  min-width: 180px;
-}
+/* REMOVED: .cta - unused button variant */
 
 /* Icon Button */
 .iconButton {
@@ -172,4 +134,4 @@
   to {
     transform: rotate(360deg);
   }
-} 
+}

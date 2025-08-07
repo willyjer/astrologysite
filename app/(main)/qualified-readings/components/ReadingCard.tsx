@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Reading } from '../types';
 import styles from './ReadingCard.module.css';
 
@@ -17,16 +17,10 @@ export function ReadingCard({
   isSelected,
   isExpanded,
   onToggleSelection,
-  onToggleExpansion
+  onToggleExpansion,
 }: ReadingCardProps) {
-  const [isAnimating, setIsAnimating] = useState(false);
-
   const handleToggleExpansion = () => {
-    setIsAnimating(true);
     onToggleExpansion(reading.id);
-    
-    // Reset animation flag after transition
-    setTimeout(() => setIsAnimating(false), 300);
   };
 
   const handleToggleSelection = (e: React.MouseEvent) => {
@@ -43,7 +37,7 @@ export function ReadingCard({
             <h3 className={styles.readingTitle}>{reading.name}</h3>
           </div>
         </div>
-        
+
         <button
           className={`${styles.addButton} ${isSelected ? styles.added : ''}`}
           onClick={handleToggleSelection}
@@ -77,11 +71,13 @@ export function ReadingCard({
       </div>
 
       {/* Expandable Content */}
-      <div className={`${styles.expandableContent} ${isExpanded ? styles.expanded : ''}`}>
+      <div
+        className={`${styles.expandableContent} ${isExpanded ? styles.expanded : ''}`}
+      >
         <div className={styles.detailedDescription}>
           {reading.detailedDescription}
         </div>
       </div>
     </div>
   );
-} 
+}

@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import type { 
-  BirthFormData, 
-  Reading, 
-  GeneratedReading, 
+import type {
+  BirthFormData,
+  Reading,
+  GeneratedReading,
   ResultsPageState,
-  AstrologyChartResponse 
+  AstrologyChartResponse,
+  ProgressData,
 } from '../types';
-import { getSessionData, validateSessionData, getSessionIdFromUrl, validateSessionId } from '../utils/sessionUtils';
-import { getCachedGeneratedReadings, hasCachedGeneratedReadings } from '../utils/storageUtils';
+import {
+  getSessionData,
+  validateSessionData,
+  getSessionIdFromUrl,
+  validateSessionId,
+} from '../utils/sessionUtils';
+import {
+  getCachedGeneratedReadings,
+  hasCachedGeneratedReadings,
+} from '../utils/storageUtils';
 
 export interface UseResultsPageReturn {
   // State
@@ -21,7 +30,8 @@ export interface UseResultsPageReturn {
   error: string;
   openAccordion: number | null;
   selectedCategory: string;
-  
+  progressData: ProgressData | null;
+
   // Actions
   setOpenAccordion: (index: number | null) => void;
   setSelectedCategory: (category: string) => void;
@@ -33,15 +43,25 @@ export interface UseResultsPageReturn {
 export function useResultsPage(): UseResultsPageReturn {
   // State
   const [status, setStatus] = useState<ResultsPageState>('loading');
-  const [birthFormData, setBirthFormData] = useState<BirthFormData | null>(null);
+  const [birthFormData, setBirthFormData] = useState<BirthFormData | null>(
+    null
+  );
   const [selectedReadings, setSelectedReadings] = useState<Reading[]>([]);
-  const [chartData, setChartData] = useState<AstrologyChartResponse | null>(null);
-  const [generatedReadings, setGeneratedReadings] = useState<GeneratedReading[]>([]);
+  const [chartData, setChartData] = useState<AstrologyChartResponse | null>(
+    null
+  );
+  const [generatedReadings, setGeneratedReadings] = useState<
+    GeneratedReading[]
+  >([]);
 
   const [error, setError] = useState<string>('');
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('self-identity');
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>('self-identity');
   
+  // Progress tracking state
+  const [progressData, setProgressData] = useState<ProgressData | null>(null);
+
   const searchParams = useSearchParams();
 
   // Initialize page data from session
@@ -73,13 +93,17 @@ export function useResultsPage(): UseResultsPageReturn {
     const validation = validateSessionData(session);
     if (!validation.isValid) {
       setStatus('error');
-      setError(`Session data error: ${validation.errors.join(', ')}. Please return to the birth form.`);
+      setError(
+        `Session data error: ${validation.errors.join(', ')}. Please return to the birth form.`
+      );
       return;
     }
 
     // Set data from session
     setBirthFormData(session.birthData);
-    setSelectedReadings(session.selectedReadings?.map(id => ({ id, name: id })) || []);
+    setSelectedReadings(
+      session.selectedReadings?.map((id) => ({ id, name: id })) || []
+    );
     setChartData(session.chartData);
 
     // Check if we have cached generated readings
@@ -90,7 +114,11 @@ export function useResultsPage(): UseResultsPageReturn {
       setStatus('complete');
     } else {
       // Proceed to processing if we have the required data
-      if (session.birthData && session.selectedReadings && session.selectedReadings.length > 0) {
+      if (
+        session.birthData &&
+        session.selectedReadings &&
+        session.selectedReadings.length > 0
+      ) {
         setStatus('processing');
       } else {
         setStatus('error');
@@ -99,7 +127,22 @@ export function useResultsPage(): UseResultsPageReturn {
     }
   }, [searchParams]);
 
-
+  // Update progress data based on readings
+  useEffect(() => {
+    if (status === 'processing' && selectedReadings.length > 0) {
+      const completedReadings = generatedReadings.filter(
+        reading => !reading.loading && reading.content
+      ).length;
+      
+      setProgressData({
+        totalReadings: selectedReadings.length,
+        completedReadings,
+        isWorkerEnabled: true, // We'll detect this in the hook
+      });
+    } else {
+      setProgressData(null);
+    }
+  }, [status, selectedReadings, generatedReadings]);
 
   return {
     // State
@@ -112,7 +155,8 @@ export function useResultsPage(): UseResultsPageReturn {
     error,
     openAccordion,
     selectedCategory,
-    
+    progressData,
+
     // Actions
     setOpenAccordion,
     setSelectedCategory,
@@ -120,4 +164,4 @@ export function useResultsPage(): UseResultsPageReturn {
     setStatus,
     setGeneratedReadings,
   };
-} 
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Component, ReactNode } from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { Button } from './Button';
 import styles from './ErrorBoundary.module.css';
 
@@ -17,7 +18,10 @@ interface ErrorBoundaryProps {
   resetOnPropsChange?: boolean;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
@@ -47,8 +51,26 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       this.props.onError(error, errorInfo);
     }
 
-    // In production, you might want to send this to an error reporting service
-    // Example: Sentry.captureException(error, { extra: errorInfo });
+    // Log detailed error information to console during development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('ErrorBoundary caught an error:', error);
+      console.error('Error stack:', error.stack);
+      console.error('Component stack:', errorInfo.componentStack);
+    }
+
+    // Send error to Sentry in production
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.captureException(error, {
+        extra: {
+          componentStack: errorInfo.componentStack,
+          errorBoundary: 'RootErrorBoundary',
+        },
+        tags: {
+          errorBoundary: 'root',
+          component: 'ErrorBoundary',
+        },
+      });
+    }
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryProps) {
@@ -88,10 +110,27 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <div className={styles.errorBoundaryIcon}>⚠️</div>
             <h2 className={styles.errorBoundaryTitle}>Something went wrong</h2>
             <p className={styles.errorBoundaryMessage}>
-              We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
+              We encountered an unexpected error. Please try refreshing the page
+              or contact support if the problem persists.
             </p>
-            
 
+            {/* Development error details */}
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <details className={styles.errorBoundaryDetails}>
+                <summary>Error Details (Development Only)</summary>
+                <div className={styles.errorBoundaryStack}>
+                  <strong>Error:</strong> {this.state.error.message}
+                  {'\n\n'}
+                  <strong>Stack:</strong>
+                  {'\n'}
+                  {this.state.error.stack}
+                  {'\n\n'}
+                  <strong>Component Stack:</strong>
+                  {'\n'}
+                  {this.state.errorInfo?.componentStack}
+                </div>
+              </details>
+            )}
 
             <div className={styles.errorBoundaryActions}>
               <Button
@@ -134,4 +173,4 @@ export function withErrorBoundary<P extends object>(
   WrappedComponent.displayName = `withErrorBoundary(${Component.displayName || Component.name})`;
 
   return WrappedComponent;
-} 
+}

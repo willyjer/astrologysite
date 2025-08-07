@@ -1,0 +1,179 @@
+/* ===== DESIGN SYSTEM ===== */
+/* This file contains all design tokens and core styles */
+
+:root {
+  /* ===== COLORS ===== */
+  --bg: #0a0a0a;
+  --card-bg: #141414;
+  --fg: #f4f4f5;
+  --fg-muted: #9ca3af;
+  --border: #2e2e2e;
+  --accent: #f5bda1;
+  --accent-hover: #f0aa87;
+  --danger: #ef4444;
+  --placeholder: #555555;
+  --accent-secondary: #a6a8c9;
+  --continue-gradient: linear-gradient(90deg, #3a3d5a 0%, #5b4b7e 100%);
+  --error: #ef4444;
+  --error-light: #ff6b6b;
+  --success: #d4a574;
+  --text-white: #ffffff;
+  --text-dark: #1e1b2f;
+
+  /* ===== SPACING ===== */
+  --space-4xs: 4px;
+  --space-3xs: 8px;
+  --space-2xs: 12px;
+  --space-xs: 16px;
+  --space-sm: 24px;
+  --space-md: 32px;
+  --space-lg: 48px;
+  --header-height: 96px;
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-inter: 'Inter', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+
+  /* ===== GRADIENTS ===== */
+  --gradient-space: radial-gradient(
+    circle at 30% 10%,
+    #1c1c1c 0%,
+    #1a1620 20%,
+    #1e1a25 40%,
+    #1a1620 60%,
+    #0a0a0a 90%
+  );
+
+  /* ===== MOTION ===== */
+  --ease-fast: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+
+  /* ===== SHADOWS ===== */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-xl:
+    0 4px 48px 0 rgba(205, 163, 73, 0.3), 0 0 40px 0 rgba(205, 163, 73, 0.15);
+  --shadow-accent: 0 0 12px rgba(252, 217, 168, 0.5);
+  --shadow-glow:
+    0 0 30px rgba(205, 163, 73, 0.6), 0 0 15px rgba(205, 163, 73, 0.4);
+
+  /* ===== GRADIENTS ===== */
+  --gradient-card: linear-gradient(to bottom right, #1e1b2f, #15121f);
+  --gradient-section: linear-gradient(145deg, #3a2f4c, #2c233d);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #e6b85c 100%);
+
+  /* ===== ANIMATIONS ===== */
+  --animation-float: float 6s ease-in-out infinite;
+}
+
+/* ===== RESET & BASE ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #181b22 0%, #23243a 60%, #1a1830 100%);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--space-sm) 0;
+}
+
+/* Mobile-first typography */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+h2 {
+  font-size: 1.75rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.6;
+}
+
+/* ===== LAYOUT UTILITIES ===== */
+/* REMOVED: .container - unused global class */
+/* REMOVED: .flex-center - unused global class */
+/* REMOVED: .user-no-select - unused global class */
+
+/* ===== ACCESSIBILITY ===== */
+/* REMOVED: .sr-only - unused global class */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== TABLET AND UP (768px+) ===== */
+@media (min-width: 768px) {
+  /* REMOVED: .container media query - unused global class */
+
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== DESKTOP AND UP (1024px+) ===== */
+@media (min-width: 1024px) {
+  /* REMOVED: .container media query - unused global class */
+}

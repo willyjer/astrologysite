@@ -16,7 +16,9 @@ export default function TabNavigation({
   };
 
   const handleCategorySelect = (categoryKey: string) => {
-    const categoryReadings = generatedReadings.filter(reading => reading.category === categoryKey);
+    const categoryReadings = generatedReadings.filter(
+      (reading) => reading.category === categoryKey
+    );
     if (categoryReadings.length > 0) {
       onCategoryChange(categoryKey);
       setIsDropdownOpen(false);
@@ -26,7 +28,10 @@ export default function TabNavigation({
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -41,11 +46,15 @@ export default function TabNavigation({
   }, [isDropdownOpen]);
 
   // Get the selected category data
-  const selectedCategoryData = categories.find(cat => cat.key === selectedCategory);
-  
+  const selectedCategoryData = categories.find(
+    (cat) => cat.key === selectedCategory
+  );
+
   // Get reading counts for each category
   const getCategoryReadingCount = (categoryKey: string) => {
-    return generatedReadings.filter(reading => reading.category === categoryKey).length;
+    return generatedReadings.filter(
+      (reading) => reading.category === categoryKey
+    ).length;
   };
 
   return (
@@ -69,7 +78,9 @@ export default function TabNavigation({
                 <span className={styles.placeholder}>Choose a Category</span>
               )}
             </span>
-            <span className={`${styles.dropdownIcon} ${isDropdownOpen ? styles.open : ''}`}>
+            <span
+              className={`${styles.dropdownIcon} ${isDropdownOpen ? styles.open : ''}`}
+            >
               ⌄
             </span>
           </button>
@@ -98,4 +109,4 @@ export default function TabNavigation({
       </div>
     </div>
   );
-} 
+}

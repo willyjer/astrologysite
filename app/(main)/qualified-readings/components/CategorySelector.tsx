@@ -13,11 +13,13 @@ interface CategorySelectorProps {
 export function CategorySelector({
   categories,
   selectedCategory,
-  onCategoryChange
+  onCategoryChange,
 }: CategorySelectorProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
+  const selectedCategoryData = categories.find(
+    (cat) => cat.id === selectedCategory
+  );
 
   const handleCategorySelect = (categoryId: string) => {
     onCategoryChange(categoryId);
@@ -40,14 +42,20 @@ export function CategorySelector({
           <span className={styles.selectedCategory}>
             {selectedCategoryData ? (
               <>
-                <span className={styles.categoryIcon}>{selectedCategoryData.icon}</span>
-                <span className={styles.categoryName}>{selectedCategoryData.name}</span>
+                <span className={styles.categoryIcon}>
+                  {selectedCategoryData.icon}
+                </span>
+                <span className={styles.categoryName}>
+                  {selectedCategoryData.name}
+                </span>
               </>
             ) : (
               <span className={styles.placeholder}>Choose a Category</span>
             )}
           </span>
-          <span className={`${styles.dropdownIcon} ${isDropdownOpen ? styles.open : ''}`}>
+          <span
+            className={`${styles.dropdownIcon} ${isDropdownOpen ? styles.open : ''}`}
+          >
             ⌄
           </span>
         </button>
@@ -72,9 +80,13 @@ export function CategorySelector({
         {selectedCategoryData ? (
           <p>{selectedCategoryData.description}</p>
         ) : (
-          <p>Select a category above to explore personalized readings crafted for your unique astrological journey. Each category offers insights into different aspects of your life and personality.</p>
+          <p>
+            Select a category above to explore personalized readings crafted for
+            your unique astrological journey. Each category offers insights into
+            different aspects of your life and personality.
+          </p>
         )}
       </div>
     </div>
   );
-} 
+}

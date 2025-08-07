@@ -35,15 +35,15 @@ export class InnerWarriorExtractor {
    * Extract relevant data for the inner-warrior reading
    */
   static extract(
-    chartData: AstrologyChartResponse,
-    birthData: BirthData
+    chartData: AstrologyChartResponse
   ): InnerWarriorData {
     const { houses, aspects } = chartData;
 
     const marsPlacement = this.findMarsPlacement(houses);
     const marsAspects = this.findMarsAspects(aspects);
     const ariesPersonalPlanets = this.findAriesPersonalPlanets(houses);
-    const firstHousePersonalPlanets = this.findFirstHousePersonalPlanets(houses);
+    const firstHousePersonalPlanets =
+      this.findFirstHousePersonalPlanets(houses);
 
     return {
       readingId: 'inner-warrior',
@@ -57,7 +57,7 @@ export class InnerWarriorExtractor {
         marsAspects,
         ariesPersonalPlanets,
         firstHousePersonalPlanets,
-      }
+      },
     };
   }
 
@@ -72,7 +72,7 @@ export class InnerWarriorExtractor {
             sign: planet.sign,
             house: house.house_id,
             fullDegree: planet.full_degree,
-            isRetrograde: planet.is_retro === "true",
+            isRetrograde: planet.is_retro === 'true',
           };
         }
       }
@@ -83,16 +83,15 @@ export class InnerWarriorExtractor {
   /**
    * Find personal planets in Aries
    */
-  private static findAriesPersonalPlanets(houses: AstrologyChartResponse['houses']): string[] {
+  private static findAriesPersonalPlanets(
+    houses: AstrologyChartResponse['houses']
+  ): string[] {
     const personalPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
     const planetsInAries: string[] = [];
 
     for (const house of houses) {
       for (const planet of house.planets) {
-        if (
-          planet.sign === 'Aries' &&
-          personalPlanets.includes(planet.name)
-        ) {
+        if (planet.sign === 'Aries' && personalPlanets.includes(planet.name)) {
           planetsInAries.push(planet.name);
         }
       }
@@ -103,20 +102,24 @@ export class InnerWarriorExtractor {
   /**
    * Find personal planets in the first house
    */
-  private static findFirstHousePersonalPlanets(houses: AstrologyChartResponse['houses']): string[] {
+  private static findFirstHousePersonalPlanets(
+    houses: AstrologyChartResponse['houses']
+  ): string[] {
     const personalPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
-    const firstHouse = houses.find(h => h.house_id === 1);
+    const firstHouse = houses.find((h) => h.house_id === 1);
     if (!firstHouse) return [];
 
     return firstHouse.planets
-      .filter(p => personalPlanets.includes(p.name))
-      .map(p => p.name);
+      .filter((p) => personalPlanets.includes(p.name))
+      .map((p) => p.name);
   }
 
   /**
    * Check if an aspect is relevant based on type and orb
    */
-  private static isRelevantAspect(aspect: AstrologyChartResponse['aspects'][0]): boolean {
+  private static isRelevantAspect(
+    aspect: AstrologyChartResponse['aspects'][0]
+  ): boolean {
     const strong = ['Conjunction', 'Opposition', 'Trine', 'Square', 'Sextile'];
     const minor = ['Quincunx', 'Semi Sextile', 'Semi Square', 'Quintile'];
 
@@ -131,15 +134,21 @@ export class InnerWarriorExtractor {
   private static findMarsAspects(aspects: AstrologyChartResponse['aspects']) {
     const relevantTargets = ['Sun', 'Moon', 'Ascendant', 'Venus'];
     return aspects
-      .filter(a =>
-        (a.aspecting_planet === 'Mars' && relevantTargets.includes(a.aspected_planet)) ||
-        (a.aspected_planet === 'Mars' && relevantTargets.includes(a.aspecting_planet))
+      .filter(
+        (a) =>
+          (a.aspecting_planet === 'Mars' &&
+            relevantTargets.includes(a.aspected_planet)) ||
+          (a.aspected_planet === 'Mars' &&
+            relevantTargets.includes(a.aspecting_planet))
       )
       .filter(this.isRelevantAspect)
-      .map(a => ({
-        with: a.aspecting_planet === 'Mars' ? a.aspected_planet : a.aspecting_planet,
+      .map((a) => ({
+        with:
+          a.aspecting_planet === 'Mars'
+            ? a.aspected_planet
+            : a.aspecting_planet,
         type: a.type,
-        orb: a.orb
+        orb: a.orb,
       }));
   }
-} 
+}

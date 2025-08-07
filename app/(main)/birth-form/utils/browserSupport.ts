@@ -25,7 +25,7 @@ export function checkBrowserSupport(): BrowserSupport {
     dateInput: false,
     timeInput: false,
     isSupported: true,
-    unsupportedFeatures: []
+    unsupportedFeatures: [],
   };
 
   // Only run on client side
@@ -97,7 +97,7 @@ export function checkBrowserSupport(): BrowserSupport {
 export function getUnsupportedFeaturesMessage(features: string[]): string {
   if (features.length === 0) return '';
 
-  const featureMessages = features.map(feature => {
+  const featureMessages = features.map((feature) => {
     switch (feature) {
       case 'localStorage':
         return 'data saving';
@@ -131,14 +131,17 @@ export function isBrowserLikelyToHaveIssues(): boolean {
   if (typeof window === 'undefined') {
     return false;
   }
-  
+
   const support = checkBrowserSupport();
-  
+
   // Check for old browsers
   const userAgent = window.navigator.userAgent;
   const isOldIE = /MSIE|Trident/.test(userAgent);
-  const isOldSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent) && /Version\/[1-9]\./.test(userAgent);
-  
+  const isOldSafari =
+    /Safari/.test(userAgent) &&
+    !/Chrome/.test(userAgent) &&
+    /Version\/[1-9]\./.test(userAgent);
+
   return isOldIE || isOldSafari || !support.isSupported;
 }
 
@@ -149,20 +152,20 @@ export function getBrowserRecommendations(): string {
   if (typeof window === 'undefined') {
     return 'For the best experience, please use Chrome, Firefox, Safari, or Edge.';
   }
-  
+
   const userAgent = window.navigator.userAgent;
-  
+
   if (/MSIE|Trident/.test(userAgent)) {
     return 'Please use Microsoft Edge, Chrome, Firefox, or Safari for the best experience.';
   }
-  
+
   if (/Firefox/.test(userAgent)) {
-    return 'You\'re using Firefox. For the best experience, consider using Chrome or Safari.';
+    return "You're using Firefox. For the best experience, consider using Chrome or Safari.";
   }
-  
+
   if (/Safari/.test(userAgent) && !/Chrome/.test(userAgent)) {
-    return 'You\'re using Safari. For the best experience, consider using Chrome or Firefox.';
+    return "You're using Safari. For the best experience, consider using Chrome or Firefox.";
   }
-  
+
   return 'For the best experience, please use Chrome, Firefox, Safari, or Edge.';
-} 
+}

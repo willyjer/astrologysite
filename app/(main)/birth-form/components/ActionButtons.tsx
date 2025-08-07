@@ -8,7 +8,12 @@ interface ActionButtonsProps {
   error: string;
 }
 
-export function ActionButtons({ handleNext, isLoading, showErrors, error }: ActionButtonsProps) {
+export function ActionButtons({
+  handleNext,
+  isLoading,
+  showErrors,
+  error,
+}: ActionButtonsProps) {
   return (
     <div className={styles.buttons}>
       <Button
@@ -19,7 +24,9 @@ export function ActionButtons({ handleNext, isLoading, showErrors, error }: Acti
         className={`${showErrors && error ? styles.buttonDisabled : ''} ${styles.responsiveButton}`}
       >
         <span className={styles.desktopText}>
-          {isLoading ? 'Fetching Your Chart...' : 'View My Personalized Readings List'}
+          {isLoading
+            ? 'Fetching Your Chart...'
+            : 'View My Personalized Readings List'}
         </span>
         <span className={styles.mobileText}>
           {isLoading ? 'Fetching Your Chart...' : 'View My Readings List'}
@@ -27,4 +34,4 @@ export function ActionButtons({ handleNext, isLoading, showErrors, error }: Acti
       </Button>
     </div>
   );
-} 
+}

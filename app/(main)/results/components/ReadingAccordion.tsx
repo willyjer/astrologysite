@@ -1,20 +1,38 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styles from './ReadingAccordion.module.css';
 
 // Simple HTML sanitization function
 const sanitizeHTML = (html: string): string => {
   if (typeof html !== 'string') return '';
-  
+
   return html
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remove script tags
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '') // Remove iframe tags
-    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '') // Remove object tags
-    .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '') // Remove embed tags
+    .replace(/<script[^>]*>.*?<\/script>/gi, '') // Remove script tags
+    .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '') // Remove iframe tags
+    .replace(/<object[^>]*>.*?<\/object>/gi, '') // Remove object tags
+    .replace(/<embed[^>]*>.*?<\/embed>/gi, '') // Remove embed tags
     .replace(/javascript:/gi, '') // Remove javascript: protocol
     .replace(/on\w+\s*=/gi, '') // Remove event handlers
     .replace(/<[^>]*>/g, (match) => {
       // Only allow safe HTML tags
-      const safeTags = ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'div', 'span'];
+      const safeTags = [
+        'p',
+        'br',
+        'strong',
+        'em',
+        'u',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'ul',
+        'ol',
+        'li',
+        'blockquote',
+        'div',
+        'span',
+      ];
       const tagName = match.match(/<(\w+)/)?.[1]?.toLowerCase();
       if (tagName && safeTags.includes(tagName)) {
         return match;
@@ -31,16 +49,14 @@ interface ReadingAccordionProps {
     loading: boolean;
     error?: string;
   };
-  index: number;
   isOpen: boolean;
   onToggle: () => void;
 }
 
-const ReadingAccordion: React.FC<ReadingAccordionProps> = ({ 
-  reading, 
-  index, 
-  isOpen, 
-  onToggle 
+const ReadingAccordion: React.FC<ReadingAccordionProps> = ({
+  reading,
+  isOpen,
+  onToggle,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -79,7 +95,7 @@ const ReadingAccordion: React.FC<ReadingAccordionProps> = ({
           </svg>
         </div>
       </button>
-      
+
       <div
         className={`${styles.accordionContent} ${isOpen ? styles.open : ''}`}
         aria-hidden={!isOpen}
@@ -95,9 +111,11 @@ const ReadingAccordion: React.FC<ReadingAccordionProps> = ({
               <p>Error: {reading.error}</p>
             </div>
           ) : (
-            <div 
+            <div
               className={styles.readingContent}
-              dangerouslySetInnerHTML={{ __html: sanitizeHTML(reading.content) }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHTML(reading.content),
+              }}
             />
           )}
         </div>
@@ -106,4 +124,4 @@ const ReadingAccordion: React.FC<ReadingAccordionProps> = ({
   );
 };
 
-export default ReadingAccordion; 
+export default ReadingAccordion;

@@ -4,5 +4,4 @@ export interface DateTimeFormProps {
   error: string;
   onDateChange: (value: string) => void;
   onTimeChange: (value: string) => void;
-  onNext: () => void;
-} 
+}

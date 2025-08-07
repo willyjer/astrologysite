@@ -34,7 +34,9 @@ export class AIService {
   /**
    * Generate a reading using OpenAI GPT-4o-mini
    */
-  static async generateReading(request: AIReadingRequest): Promise<AIReadingResponse> {
+  static async generateReading(
+    request: AIReadingRequest
+  ): Promise<AIReadingResponse> {
     try {
       const response = await fetch('/api/ai/generate-reading', {
         method: 'POST',
@@ -45,8 +47,12 @@ export class AIService {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Failed to parse error response' }));
-        throw new Error(errorData.error || `OpenAI API error: ${response.status}`);
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: 'Failed to parse error response' }));
+        throw new Error(
+          errorData.error || `OpenAI API error: ${response.status}`
+        );
       }
 
       const data = await response.json();
@@ -54,7 +60,10 @@ export class AIService {
     } catch (apiError) {
       return {
         success: false,
-        error: apiError instanceof Error ? apiError.message : 'Unknown error occurred',
+        error:
+          apiError instanceof Error
+            ? apiError.message
+            : 'Unknown error occurred',
       };
     }
   }
@@ -62,15 +71,19 @@ export class AIService {
   /**
    * Generate multiple readings in parallel
    */
-  static async generateMultipleReadings(requests: AIReadingRequest[]): Promise<AIReadingResponse[]> {
-    const promises = requests.map(request => this.generateReading(request));
+  static async generateMultipleReadings(
+    requests: AIReadingRequest[]
+  ): Promise<AIReadingResponse[]> {
+    const promises = requests.map((request) => this.generateReading(request));
     return Promise.all(promises);
   }
 
   /**
    * Generate a formatted reading using the editor
    */
-  static async generateFormattedReading(request: AIEditorRequest): Promise<AIReadingResponse> {
+  static async generateFormattedReading(
+    request: AIEditorRequest
+  ): Promise<AIReadingResponse> {
     try {
       const response = await fetch('/api/ai/generate-reading', {
         method: 'POST',
@@ -81,8 +94,12 @@ export class AIService {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Failed to parse error response' }));
-        throw new Error(errorData.error || `OpenAI API error: ${response.status}`);
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: 'Failed to parse error response' }));
+        throw new Error(
+          errorData.error || `OpenAI API error: ${response.status}`
+        );
       }
 
       const data = await response.json();
@@ -90,7 +107,10 @@ export class AIService {
     } catch (formattingError) {
       return {
         success: false,
-        error: formattingError instanceof Error ? formattingError.message : 'Unknown error occurred',
+        error:
+          formattingError instanceof Error
+            ? formattingError.message
+            : 'Unknown error occurred',
       };
     }
   }
@@ -99,9 +119,9 @@ export class AIService {
    * Generate a complete reading (raw + formatted) in two steps
    */
   static async generateCompleteReading(
-    readingId: string, 
-    extractedData: any, 
-    writerPrompt: string, 
+    readingId: string,
+    extractedData: any,
+    writerPrompt: string,
     editorPrompt: string
   ): Promise<AICompleteReadingResponse> {
     try {
@@ -128,7 +148,8 @@ export class AIService {
         prompt: editorPrompt,
       };
 
-      const formattedResponse = await this.generateFormattedReading(editorRequest);
+      const formattedResponse =
+        await this.generateFormattedReading(editorRequest);
 
       if (!formattedResponse.success || !formattedResponse.content) {
         return {
@@ -148,8 +169,11 @@ export class AIService {
     } catch (completeReadingError) {
       return {
         success: false,
-        error: completeReadingError instanceof Error ? completeReadingError.message : 'Unknown error occurred',
+        error:
+          completeReadingError instanceof Error
+            ? completeReadingError.message
+            : 'Unknown error occurred',
       };
     }
   }
-} 
+}

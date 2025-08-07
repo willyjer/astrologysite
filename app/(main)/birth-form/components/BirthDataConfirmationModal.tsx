@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { Button } from '../../../components/ui/Button';
-import { X, Calendar, Clock, MapPin, Loader2 } from '../../../components/ui/icons';
+import {
+  X,
+  Loader2,
+} from '../../../components/ui/icons';
 import styles from './BirthDataConfirmationModal.module.css';
 import { ErrorBoundary } from '../../../components/ui/ErrorBoundary';
 
@@ -24,14 +27,17 @@ export function BirthDataConfirmationModal({
   onClose,
   onConfirm,
   birthData,
-  isLoading = false
+  isLoading = false,
 }: BirthDataConfirmationModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Close modal when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -51,12 +57,12 @@ export function BirthDataConfirmationModal({
     // Parse the date string as local date to avoid timezone issues
     const [year, month, day] = dateString.split('-').map(Number);
     const date = new Date(year, month - 1, day); // month is 0-indexed
-    
+
     return date.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -69,12 +75,7 @@ export function BirthDataConfirmationModal({
     return `${displayHour}:${minutes} ${ampm}`;
   };
 
-  const formatTimezone = (timezone: number) => {
-    const hours = Math.floor(timezone / 60);
-    const minutes = timezone % 60;
-    const sign = hours >= 0 ? '+' : '';
-    return `UTC${sign}${hours}:${minutes.toString().padStart(2, '0')}`;
-  };
+
 
   return (
     <div className={styles.overlay}>
@@ -83,16 +84,14 @@ export function BirthDataConfirmationModal({
           <div className={styles.modal}>
             <div className={styles.header}>
               <h2 className={styles.title}>Error</h2>
-              <button 
-                onClick={onClose}
-                className={styles.closeButton}
-              >
+              <button onClick={onClose} className={styles.closeButton}>
                 <X size={20} />
               </button>
             </div>
             <div className={styles.content}>
               <p className={styles.description}>
-                There was an error displaying the confirmation details. Please try again or refresh the page.
+                There was an error displaying the confirmation details. Please
+                try again or refresh the page.
               </p>
             </div>
             <div className={styles.footer}>
@@ -115,13 +114,15 @@ export function BirthDataConfirmationModal({
               <div className={styles.loadingSpinner}>
                 <Loader2 size={32} className={styles.spinnerIcon} />
               </div>
-              <p className={styles.loadingText}>Fetching your astrological chart...</p>
+              <p className={styles.loadingText}>
+                Fetching your astrological chart...
+              </p>
             </div>
           )}
-          
+
           <div className={styles.header}>
             <h2 className={styles.title}>Confirm Birth Info</h2>
-            <button 
+            <button
               onClick={onClose}
               className={styles.closeButton}
               disabled={isLoading}
@@ -132,7 +133,9 @@ export function BirthDataConfirmationModal({
 
           <div className={styles.content}>
             <p className={styles.description}>
-              Please review your birth information below. This data will be used to determine which readings are applicable to you and to generate your personalized astrological readings.
+              Please review your birth information below. This data will be used
+              to determine which readings are applicable to you and to generate
+              your personalized astrological readings.
             </p>
 
             <div className={styles.dataSection}>
@@ -141,7 +144,9 @@ export function BirthDataConfirmationModal({
                 <div className={styles.dataItem}>
                   <div className={styles.dataContent}>
                     <label className={styles.label}>Birth Date</label>
-                    <span className={styles.value}>{formatDate(birthData.birthDate)}</span>
+                    <span className={styles.value}>
+                      {formatDate(birthData.birthDate)}
+                    </span>
                   </div>
                 </div>
 
@@ -179,4 +184,4 @@ export function BirthDataConfirmationModal({
       </ErrorBoundary>
     </div>
   );
-} 
+}

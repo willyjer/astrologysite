@@ -1,2 +1,2 @@
 export { default } from './IntroHero';
-export * from './IntroHero'; 
+export * from './IntroHero';

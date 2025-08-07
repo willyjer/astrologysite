@@ -34,4 +34,4 @@ export interface QualifiedReadingsPageState {
   expandedReadings: string[];
   isLoading: boolean;
   hasSessionData: boolean;
-} 
+}

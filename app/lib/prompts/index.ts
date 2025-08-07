@@ -25,9 +25,13 @@ export const prompts: PromptMap = {
 };
 
 export function getPrompt(readingId: string): string {
-  return prompts[readingId] || 'Write an astrology reading based on this data.';
+  const prompt = prompts[readingId];
+  if (prompt) {
+    return prompt;
+  }
+  return 'Write an astrology reading based on this data.';
 }
 
 export function getAvailablePrompts(): string[] {
   return Object.keys(prompts);
-} 
+}

@@ -35,7 +35,6 @@ export class SelfBeliefExtractor {
    */
   static extract(
     chartData: AstrologyChartResponse,
-    birthData: BirthData,
     readingId: 'self-belief' | 'self-belief-inner-light' = 'self-belief'
   ): SelfBeliefData {
     const { houses, aspects } = chartData;
@@ -43,7 +42,8 @@ export class SelfBeliefExtractor {
     const sun = this.findSunPlacement(houses);
     const sunAspects = this.findSunAspects(aspects);
     const leoPersonalPlanets = this.findLeoPersonalPlanets(houses);
-    const fifthHousePersonalPlanets = this.findFifthHousePersonalPlanets(houses);
+    const fifthHousePersonalPlanets =
+      this.findFifthHousePersonalPlanets(houses);
 
     return {
       readingId,
@@ -53,7 +53,7 @@ export class SelfBeliefExtractor {
         sunAspects,
         leoPersonalPlanets,
         fifthHousePersonalPlanets,
-      }
+      },
     };
   }
 
@@ -83,17 +83,21 @@ export class SelfBeliefExtractor {
     const minor = ['Quincunx', 'Semi Sextile', 'Semi Square', 'Quintile'];
 
     return aspects
-      .filter(a =>
-        (a.aspecting_planet === 'Sun' && relevantPlanets.includes(a.aspected_planet)) ||
-        (a.aspected_planet === 'Sun' && relevantPlanets.includes(a.aspecting_planet))
+      .filter(
+        (a) =>
+          (a.aspecting_planet === 'Sun' &&
+            relevantPlanets.includes(a.aspected_planet)) ||
+          (a.aspected_planet === 'Sun' &&
+            relevantPlanets.includes(a.aspecting_planet))
       )
-      .filter(a => {
+      .filter((a) => {
         if (strong.includes(a.type)) return a.orb <= 5;
         if (minor.includes(a.type)) return a.orb <= 2.5;
         return false;
       })
-      .map(a => ({
-        with: a.aspecting_planet === 'Sun' ? a.aspected_planet : a.aspecting_planet,
+      .map((a) => ({
+        with:
+          a.aspecting_planet === 'Sun' ? a.aspected_planet : a.aspecting_planet,
         type: a.type,
         orb: a.orb,
       }));
@@ -102,7 +106,9 @@ export class SelfBeliefExtractor {
   /**
    * Find personal planets in Leo
    */
-  private static findLeoPersonalPlanets(houses: AstrologyChartResponse['houses']): string[] {
+  private static findLeoPersonalPlanets(
+    houses: AstrologyChartResponse['houses']
+  ): string[] {
     const personalPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
     const planetsInLeo: string[] = [];
 
@@ -120,13 +126,15 @@ export class SelfBeliefExtractor {
   /**
    * Find personal planets in the fifth house
    */
-  private static findFifthHousePersonalPlanets(houses: AstrologyChartResponse['houses']): string[] {
+  private static findFifthHousePersonalPlanets(
+    houses: AstrologyChartResponse['houses']
+  ): string[] {
     const personalPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
-    const fifthHouse = houses.find(h => h.house_id === 5);
+    const fifthHouse = houses.find((h) => h.house_id === 5);
     if (!fifthHouse) return [];
 
     return fifthHouse.planets
-      .filter(p => personalPlanets.includes(p.name))
-      .map(p => p.name);
+      .filter((p) => personalPlanets.includes(p.name))
+      .map((p) => p.name);
   }
-} 
+}

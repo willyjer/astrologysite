@@ -1,25 +1,28 @@
+/* ===== ERROR STATE - MOBILE FIRST STYLES ===== */
+
+/* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
 .errorState {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4rem 2rem;
-  min-height: 60vh;
+  padding: var(--space-lg) var(--space-md); /* 3 - MODERATE: Smaller padding for mobile */
+  min-height: 40vh; /* 3 - MODERATE: Smaller height for mobile */
 }
 
 .errorState h1 {
-  font-size: 2.5rem;
+  font-size: 24px; /* 3 - MODERATE: Smaller font for mobile */
   font-weight: 700;
   color: var(--danger);
-  margin: 0 0 1rem 0;
+  margin: 0 0 var(--space-sm) 0;
 }
 
 .errorState p {
-  font-size: 1.1rem;
+  font-size: 14px; /* 3 - MODERATE: Smaller font for mobile */
   color: var(--fg-muted);
-  margin: 0 0 2rem 0;
-  max-width: 500px;
+  margin: 0 0 var(--space-md) 0;
+  max-width: 100%; /* 3 - MODERATE: Full width on mobile */
   line-height: 1.6;
 }
 
@@ -27,9 +30,9 @@
   background: var(--accent);
   color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: var(--space-sm) var(--space-md); /* 3 - MODERATE: Smaller padding for mobile */
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 14px; /* 3 - MODERATE: Smaller font for mobile */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -45,22 +48,45 @@
   transform: translateY(0);
 }
 
-@media (max-width: 768px) {
+/* ===== TABLET BREAKPOINT (768px+) ===== */
+@media (min-width: 768px) {
   .errorState {
-    padding: 3rem 1rem;
-    min-height: 50vh;
+    padding: var(--space-xl) var(--space-lg); /* 3 - MODERATE: More padding on tablet */
+    min-height: 50vh; /* 3 - MODERATE: Larger height on tablet */
   }
 
   .errorState h1 {
-    font-size: 2rem;
+    font-size: 32px; /* 3 - MODERATE: Larger font on tablet */
   }
 
   .errorState p {
-    font-size: 1rem;
+    font-size: 16px; /* 3 - MODERATE: Larger font on tablet */
+    max-width: 500px; /* 3 - MODERATE: Constrained width on tablet */
   }
 
   .retryButton {
-    padding: 0.875rem 1.75rem;
-    font-size: 0.95rem;
+    padding: var(--space-md) var(--space-lg); /* 3 - MODERATE: More padding on tablet */
+    font-size: 16px; /* 3 - MODERATE: Larger font on tablet */
   }
-} 
+}
+
+/* ===== DESKTOP BREAKPOINT (1024px+) ===== */
+@media (min-width: 1024px) {
+  .errorState {
+    padding: var(--space-xl) var(--space-xl); /* 3 - MODERATE: Most padding on desktop */
+    min-height: 60vh; /* 3 - MODERATE: Largest height on desktop */
+  }
+
+  .errorState h1 {
+    font-size: 40px; /* 3 - MODERATE: Largest font on desktop */
+  }
+
+  .errorState p {
+    font-size: 18px; /* 3 - MODERATE: Largest font on desktop */
+  }
+
+  .retryButton {
+    padding: var(--space-lg) var(--space-xl); /* 3 - MODERATE: Most padding on desktop */
+    font-size: 18px; /* 3 - MODERATE: Largest font on desktop */
+  }
+}

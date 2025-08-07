@@ -17,17 +17,17 @@
   flex-direction: column;
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-xs);
-  background: linear-gradient(to bottom right, #1e1b2f, #15121f);
+  background: var(--gradient-card);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     0 0 40px rgba(205, 163, 73, 0.15),
     0 0 60px rgba(205, 163, 73, 0.08),
     0 0 80px rgba(205, 163, 73, 0.04);
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
-  animation: float 6s ease-in-out infinite;
+  animation: var(--animation-float);
   margin: var(--space-2xs) auto;
 }
 
@@ -41,12 +41,17 @@
   height: 80%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(255, 225, 200, 0.06), transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 225, 200, 0.06),
+    transparent 70%
+  );
   filter: blur(2px);
 }
 
-.content:hover, .content:focus-within {
-  box-shadow: 
+.content:hover,
+.content:focus-within {
+  box-shadow:
     0 8px 48px rgba(0, 0, 0, 0.4),
     0 0 50px rgba(205, 163, 73, 0.25),
     0 0 70px rgba(205, 163, 73, 0.15),
@@ -56,8 +61,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .header {
@@ -78,10 +88,10 @@
 }
 
 .title {
-  font-family: "Playfair Display", serif;
+  font-family: 'Playfair Display', serif;
   font-size: 32px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-white);
   margin: var(--space-3xs) 0 var(--space-4xs) 0;
   letter-spacing: 0.5px;
   line-height: 1.2;
@@ -161,8 +171,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Mobile Responsiveness */
@@ -239,4 +253,4 @@
   .unifiedContainer:hover {
     transform: none;
   }
-} 
+}

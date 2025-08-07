@@ -2,7 +2,7 @@
 
 /**
  * Comprehensive Bundle Analysis Script
- * 
+ *
  * Analyzes bundle size, dependencies, and provides optimization recommendations
  * for the entire AstroAnon project.
  */
@@ -59,7 +59,7 @@ class BundleAnalyzer {
 
     const stats = fs.statSync(filePath);
     const relativePath = path.relative(process.cwd(), filePath);
-    
+
     return {
       path: relativePath,
       size: stats.size,
@@ -86,8 +86,8 @@ class BundleAnalyzer {
     console.log(`Analyzing directory: ${fullPath}`);
     const files = this.getFilesRecursively(fullPath);
     console.log(`Found ${files.length} files in ${dirPath}`);
-    
-    files.forEach(file => {
+
+    files.forEach((file) => {
       const analysis = this.analyzeFile(file);
       if (analysis) {
         this.results.files.push(analysis);
@@ -98,25 +98,33 @@ class BundleAnalyzer {
 
   getFilesRecursively(dirPath) {
     const files = [];
-    
+
     try {
       const items = fs.readdirSync(dirPath);
 
-      items.forEach(item => {
+      items.forEach((item) => {
         const fullPath = path.join(dirPath, item);
-        
+
         try {
           const stat = fs.statSync(fullPath);
 
           if (stat.isDirectory()) {
             // Skip node_modules and .next
-            if (item !== 'node_modules' && item !== '.next' && !item.startsWith('.')) {
+            if (
+              item !== 'node_modules' &&
+              item !== '.next' &&
+              !item.startsWith('.')
+            ) {
               files.push(...this.getFilesRecursively(fullPath));
             }
           } else {
             // Only analyze relevant file types
             const ext = path.extname(item);
-            if (['.tsx', '.ts', '.js', '.jsx', '.css', '.module.css'].includes(ext)) {
+            if (
+              ['.tsx', '.ts', '.js', '.jsx', '.css', '.module.css'].includes(
+                ext
+              )
+            ) {
               files.push(fullPath);
             }
           }
@@ -136,10 +144,10 @@ class BundleAnalyzer {
     const packageJsonPath = path.join(process.cwd(), 'package.json');
     if (fs.existsSync(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-      
+
       // Analyze production dependencies
       if (packageJson.dependencies) {
-        Object.keys(packageJson.dependencies).forEach(dep => {
+        Object.keys(packageJson.dependencies).forEach((dep) => {
           this.results.dependencies.add(dep);
         });
       }
@@ -159,21 +167,21 @@ class BundleAnalyzer {
     }
 
     // Check for large individual files
-    const largeFiles = this.results.files.filter(file => 
-      file.size > PERFORMANCE_BUDGETS.individualComponentSize
+    const largeFiles = this.results.files.filter(
+      (file) => file.size > PERFORMANCE_BUDGETS.individualComponentSize
     );
-    
+
     if (largeFiles.length > 0) {
       this.results.warnings.push({
         type: 'large-files',
-        message: `Large files detected: ${largeFiles.map(f => `${f.path} (${f.sizeKB}KB)`).join(', ')}`,
+        message: `Large files detected: ${largeFiles.map((f) => `${f.path} (${f.sizeKB}KB)`).join(', ')}`,
         priority: 'medium',
       });
     }
 
     // Check third-party dependencies
     const thirdPartySize = this.results.files
-      .filter(file => file.path.includes('node_modules'))
+      .filter((file) => file.path.includes('node_modules'))
       .reduce((sum, file) => sum + file.size, 0);
 
     if (thirdPartySize > PERFORMANCE_BUDGETS.thirdPartyDependencies) {
@@ -198,7 +206,8 @@ class BundleAnalyzer {
       },
       {
         type: 'icon-optimization',
-        message: 'Consider using icon subsets or SVG sprites instead of full lucide-react',
+        message:
+          'Consider using icon subsets or SVG sprites instead of full lucide-react',
         priority: 'medium',
       },
       {
@@ -211,7 +220,7 @@ class BundleAnalyzer {
 
   printResults() {
     console.log('\n📊 Bundle Analysis Results\n');
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
 
     // Summary
     const totalSizeKB = (this.results.totalSize / 1024).toFixed(2);
@@ -222,7 +231,7 @@ class BundleAnalyzer {
     // Warnings
     if (this.results.warnings.length > 0) {
       console.log('\n⚠️  Warnings:');
-      this.results.warnings.forEach(warning => {
+      this.results.warnings.forEach((warning) => {
         console.log(`  • ${warning.message}`);
       });
     }
@@ -230,7 +239,7 @@ class BundleAnalyzer {
     // Recommendations
     if (this.results.recommendations.length > 0) {
       console.log('\n💡 Recommendations:');
-      this.results.recommendations.forEach(rec => {
+      this.results.recommendations.forEach((rec) => {
         console.log(`  • ${rec.message}`);
       });
     }
@@ -247,14 +256,14 @@ class BundleAnalyzer {
       });
     }
 
-    console.log('\n' + '=' .repeat(50));
+    console.log('\n' + '='.repeat(50));
   }
 
   run() {
     console.log('🔍 Analyzing bundle...\n');
 
     // Analyze critical paths
-    CRITICAL_PATHS.forEach(path => {
+    CRITICAL_PATHS.forEach((path) => {
       console.log(`Analyzing: ${path}`);
       this.analyzeDirectory(path);
     });
@@ -278,4 +287,4 @@ if (require.main === module) {
   analyzer.run();
 }
 
-module.exports = BundleAnalyzer; 
+module.exports = BundleAnalyzer;

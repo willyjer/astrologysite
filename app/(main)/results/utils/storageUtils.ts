@@ -8,8 +8,6 @@ const GENERATED_READINGS_KEY = 'astroGeneratedReadings';
 // Client-side storage utilities
 const isClient = typeof window !== 'undefined';
 
-
-
 /**
  * Get stored reviews from localStorage
  */
@@ -26,7 +24,7 @@ export function getStoredReviews(): StoredReviews {
 
     const parsed = JSON.parse(stored);
     return Array.isArray(parsed) ? parsed : [];
-    } catch (parseError) {
+  } catch (parseError) {
     // Error parsing stored reviews
     return [];
   }
@@ -43,8 +41,11 @@ export function addStoredReview(review: ReviewData): void {
   try {
     const existingReviews = getStoredReviews();
     const updatedReviews = [...existingReviews, review];
-    window.localStorage.setItem(STORED_REVIEWS_KEY, JSON.stringify(updatedReviews));
-    } catch (storageError) {
+    window.localStorage.setItem(
+      STORED_REVIEWS_KEY,
+      JSON.stringify(updatedReviews)
+    );
+  } catch (storageError) {
     // Error adding stored review
   }
 }
@@ -59,7 +60,7 @@ export function clearStoredReviews(): void {
 
   try {
     window.localStorage.removeItem(STORED_REVIEWS_KEY);
-    } catch (clearError) {
+  } catch (clearError) {
     // Error clearing stored reviews
   }
 }
@@ -79,7 +80,7 @@ export function getNatalChartData(): any | null {
     }
 
     return JSON.parse(stored);
-    } catch (parseError) {
+  } catch (parseError) {
     // Error parsing natal chart data
     return null;
   }
@@ -95,7 +96,7 @@ export function setNatalChartData(chartData: any): void {
 
   try {
     window.sessionStorage.setItem(NATAL_CHART_KEY, JSON.stringify(chartData));
-    } catch (storageError) {
+  } catch (storageError) {
     // Error setting natal chart data
   }
 }
@@ -110,7 +111,7 @@ export function clearNatalChartData(): void {
 
   try {
     window.sessionStorage.removeItem(NATAL_CHART_KEY);
-    } catch (clearError) {
+  } catch (clearError) {
     // Error clearing natal chart data
   }
 }
@@ -145,10 +146,13 @@ export function cacheGeneratedReadings(readings: GeneratedReading[]): void {
     return;
   }
 
-      try {
-      window.sessionStorage.setItem(GENERATED_READINGS_KEY, JSON.stringify(readings));
-      // Cached generated readings
-    } catch (storageError) {
+  try {
+    window.sessionStorage.setItem(
+      GENERATED_READINGS_KEY,
+      JSON.stringify(readings)
+    );
+    // Cached generated readings
+  } catch (storageError) {
     console.error('❌ Error caching generated readings:', storageError);
   }
 }
@@ -161,10 +165,10 @@ export function clearCachedGeneratedReadings(): void {
     return;
   }
 
-      try {
-      window.sessionStorage.removeItem(GENERATED_READINGS_KEY);
-      // Cleared cached generated readings
-    } catch (clearError) {
+  try {
+    window.sessionStorage.removeItem(GENERATED_READINGS_KEY);
+    // Cleared cached generated readings
+  } catch (clearError) {
     console.error('❌ Error clearing cached generated readings:', clearError);
   }
 }
@@ -179,12 +183,14 @@ export function hasCachedGeneratedReadings(): boolean {
 
   try {
     const cached = getCachedGeneratedReadings();
-    return cached.length > 0 && cached.some(reading => reading.content && reading.content.length > 0);
+    return (
+      cached.length > 0 &&
+      cached.some((reading) => reading.content && reading.content.length > 0)
+    );
   } catch (error) {
     return false;
   }
 }
-
 
 /**
  * Get storage statistics (for debugging)
@@ -200,4 +206,4 @@ export function getStorageStats(): {
     storedReviewsCount: storedReviews.length,
     hasNatalChart,
   };
-} 
+}

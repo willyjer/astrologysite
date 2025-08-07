@@ -42,10 +42,12 @@ export class AstrologyService {
    * Get natal chart data for a user
    * Uses caching to avoid duplicate API calls
    */
-  static async getNatalChart(birthData: AstrologyChartRequest): Promise<AstrologyChartResponse> {
+  static async getNatalChart(
+    birthData: AstrologyChartRequest
+  ): Promise<AstrologyChartResponse> {
     // Create a cache key based on birth data
     const cacheKey = `${birthData.day}-${birthData.month}-${birthData.year}-${birthData.hour}-${birthData.min}-${birthData.lat}-${birthData.lon}-${birthData.tzone}`;
-    
+
     // Check if we have cached data
     if (chartCache.has(cacheKey)) {
       return chartCache.get(cacheKey)!;
@@ -66,10 +68,10 @@ export class AstrologyService {
     }
 
     const data = await response.json();
-    
+
     // Cache the result
     chartCache.set(cacheKey, data.chart);
-    
+
     return data.chart;
   }
 
@@ -91,4 +93,4 @@ export class AstrologyService {
   static getCacheSize(): number {
     return chartCache.size;
   }
-} 
+}

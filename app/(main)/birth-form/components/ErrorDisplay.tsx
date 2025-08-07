@@ -6,7 +6,11 @@ interface ErrorDisplayProps {
   submissionError: string | null;
 }
 
-export function ErrorDisplay({ showErrors, error, submissionError }: ErrorDisplayProps) {
+export function ErrorDisplay({
+  showErrors,
+  error,
+  submissionError,
+}: ErrorDisplayProps) {
   if (!((showErrors && error) || submissionError)) {
     return null;
   }
@@ -17,4 +21,4 @@ export function ErrorDisplay({ showErrors, error, submissionError }: ErrorDispla
       <p className={styles.errorMessage}>{error || submissionError}</p>
     </div>
   );
-} 
+}

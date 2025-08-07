@@ -1,0 +1,89 @@
+/* ===== PAGE LAYOUT STYLES ===== */
+/* This file contains the shared layout structure for all pages */
+
+/* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
+.pageLayout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--gradient-space);
+}
+
+.mainContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xs) var(--space-sm);
+  margin-top: var(--header-height);
+  position: relative;
+  overflow: hidden;
+}
+
+.contentContainer {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-sm);
+  text-align: center;
+  background: var(--gradient-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow 0.2s var(--ease-fast);
+  backdrop-filter: blur(8px);
+}
+
+/* ===== CONTENT GLOW EFFECT ===== */
+.contentContainer::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 120%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 225, 200, 0.06),
+    transparent 70%
+  );
+  filter: blur(2px);
+}
+
+.contentContainer:hover,
+.contentContainer:focus-within {
+  box-shadow: var(--shadow-xl);
+}
+
+/* ===== SKIP LINK ===== */
+.skipLink {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: var(--radius-xs);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  transition: top 0.3s ease;
+}
+
+.skipLink:focus {
+  top: 6px;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .skipLink {
+    transition: none;
+  }
+}

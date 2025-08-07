@@ -1,12 +1,4 @@
-import { z } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
-import { birthFormSchema } from '../utils/validation';
-import { 
-  NameFieldProps, 
-  DateFieldProps, 
-  TimeFieldProps, 
-  LocationFieldProps 
-} from '../../../components/forms/types';
 
 /**
  * The complete set of values for the birth form
@@ -69,36 +61,6 @@ export interface FormFieldProps {
 }
 
 
-
-/**
- * Props for the date fields component
- */
-export interface DateFieldsProps extends DateFieldProps {
-  /** Name of the field in the form data */
-  name: keyof BirthFormValues;
-  /** Error message for date */
-  dateError?: string;
-}
-
-/**
- * Props for the time fields component
- */
-export interface TimeFieldsProps extends TimeFieldProps {
-  /** Name of the field in the form data */
-  name: keyof BirthFormValues;
-  /** Error message for time */
-  timeError?: string;
-}
-
-/**
- * Props for the location fields component
- */
-export interface LocationFieldsProps extends LocationFieldProps {
-  /** Name of the field in the form data */
-  name: keyof BirthFormValues;
-  /** Error message for location */
-  locationError?: string;
-}
 
 /**
  * Props for displaying form errors

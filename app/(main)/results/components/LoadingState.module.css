@@ -1,112 +1,127 @@
+/* ===== LOADING STATE - MOBILE FIRST STYLES ===== */
+
+/* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
 .loadingState {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4rem 2rem;
-  min-height: 60vh;
+  padding: var(--space-lg) var(--space-md); /* 3 - MODERATE: Smaller padding for mobile */
+  min-height: 40vh; /* 3 - MODERATE: Smaller height for mobile */
 }
 
 .loadingState h1 {
-  font-size: 2.5rem;
+  font-size: 24px; /* 3 - MODERATE: Smaller font for mobile */
   font-weight: 700;
   color: var(--accent);
-  margin: 0 0 1rem 0;
+  margin: 0 0 var(--space-sm) 0;
 }
 
 .loadingState p {
-  font-size: 1.1rem;
+  font-size: 14px; /* 3 - MODERATE: Smaller font for mobile */
   color: var(--fg-muted);
-  margin: 0 0 2rem 0;
-  max-width: 500px;
+  margin: 0 0 var(--space-md) 0;
+  max-width: 100%; /* 3 - MODERATE: Full width on mobile */
   line-height: 1.6;
 }
 
 .loadingSpinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-left: 4px solid var(--accent);
+  width: 40px; /* 3 - MODERATE: Smaller spinner for mobile */
+  height: 40px; /* 3 - MODERATE: Smaller spinner for mobile */
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-md);
 }
 
 .progressBar {
-  width: 300px;
-  height: 8px;
+  width: 200px; /* 3 - MODERATE: Smaller progress bar for mobile */
+  height: 6px; /* 3 - MODERATE: Thinner progress bar for mobile */
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  border-radius: 3px;
   overflow: hidden;
-  margin-top: 1rem;
+  margin-top: var(--space-sm);
 }
 
 .progressFill {
   height: 100%;
   background: var(--accent);
-  border-radius: 4px;
+  border-radius: 3px;
   animation: progress 2s ease-in-out infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes progress {
-  0% { width: 0%; }
-  50% { width: 70%; }
-  100% { width: 100%; }
-}
-
-@media (max-width: 768px) {
-  .loadingState {
-    padding: 3rem 1rem;
-    min-height: 50vh;
+  0% {
+    width: 0%;
   }
-
-  .loadingState h1 {
-    font-size: 2rem;
+  50% {
+    width: 70%;
   }
-
-  .loadingState p {
-    font-size: 1rem;
-  }
-
-  .loadingSpinner {
-    width: 50px;
-    height: 50px;
-  }
-
-  .progressBar {
-    width: 250px;
+  100% {
+    width: 100%;
   }
 }
 
-@media (max-width: 480px) {
+/* ===== TABLET BREAKPOINT (768px+) ===== */
+@media (min-width: 768px) {
   .loadingState {
-    padding: 2rem 0.8rem;
-    min-height: 40vh;
+    padding: var(--space-xl) var(--space-lg); /* 3 - MODERATE: More padding on tablet */
+    min-height: 50vh; /* 3 - MODERATE: Larger height on tablet */
   }
 
   .loadingState h1 {
-    font-size: 1.5rem;
-    margin: 0 0 0.8rem 0;
+    font-size: 32px; /* 3 - MODERATE: Larger font on tablet */
   }
 
   .loadingState p {
-    font-size: 0.9rem;
-    margin: 0 0 1.5rem 0;
+    font-size: 16px; /* 3 - MODERATE: Larger font on tablet */
+    max-width: 500px; /* 3 - MODERATE: Constrained width on tablet */
   }
 
   .loadingSpinner {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 1.5rem;
+    width: 50px; /* 3 - MODERATE: Larger spinner on tablet */
+    height: 50px; /* 3 - MODERATE: Larger spinner on tablet */
   }
 
   .progressBar {
-    width: 200px;
+    width: 250px; /* 3 - MODERATE: Larger progress bar on tablet */
   }
-} 
+}
+
+/* ===== DESKTOP BREAKPOINT (1024px+) ===== */
+@media (min-width: 1024px) {
+  .loadingState {
+    padding: var(--space-xl) var(--space-xl); /* 3 - MODERATE: Most padding on desktop */
+    min-height: 60vh; /* 3 - MODERATE: Largest height on desktop */
+  }
+
+  .loadingState h1 {
+    font-size: 40px; /* 3 - MODERATE: Largest font on desktop */
+  }
+
+  .loadingState p {
+    font-size: 18px; /* 3 - MODERATE: Largest font on desktop */
+  }
+
+  .loadingSpinner {
+    width: 60px; /* 3 - MODERATE: Largest spinner on desktop */
+    height: 60px; /* 3 - MODERATE: Largest spinner on desktop */
+    border-width: 4px; /* 3 - MODERATE: Thicker border on desktop */
+  }
+
+  .progressBar {
+    width: 300px; /* 3 - MODERATE: Largest progress bar on desktop */
+    height: 8px; /* 3 - MODERATE: Thicker progress bar on desktop */
+  }
+}

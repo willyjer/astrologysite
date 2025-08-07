@@ -1,12 +1,19 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'cart' | 'learn';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'cart'
+  | 'learn'
+  | 'text';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'cta';
 
 /**
  * Base props for all button components
  */
-export interface BaseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface BaseButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visual style variant of the button */
   variant?: ButtonVariant;
   /** Size of the button */
@@ -39,4 +46,4 @@ export interface IconButtonProps extends BaseButtonProps {
   icon: ReactNode;
   /** Accessible label for the button */
   label: string;
-} 
+}

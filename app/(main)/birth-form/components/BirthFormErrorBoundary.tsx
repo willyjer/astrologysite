@@ -1,8 +1,7 @@
 'use client';
 
 import React, { Component, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
-import { ErrorBoundary } from '../../../components/ui/ErrorBoundary';
+import * as Sentry from '@sentry/nextjs';
 import { Button } from '../../../components/ui/Button';
 import styles from './BirthFormErrorBoundary.module.css';
 
@@ -19,7 +18,10 @@ interface BirthFormErrorBoundaryState {
 }
 
 // Inner class component for error boundary functionality
-class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps, BirthFormErrorBoundaryState> {
+class BirthFormErrorBoundaryClass extends Component<
+  BirthFormErrorBoundaryProps,
+  BirthFormErrorBoundaryState
+> {
   constructor(props: BirthFormErrorBoundaryProps) {
     super(props);
     this.state = {
@@ -30,7 +32,9 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
     };
   }
 
-  static getDerivedStateFromError(error: Error): Partial<BirthFormErrorBoundaryState> {
+  static getDerivedStateFromError(
+    error: Error
+  ): Partial<BirthFormErrorBoundaryState> {
     return {
       hasError: true,
       error,
@@ -38,7 +42,7 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-          // BirthFormErrorBoundary caught an error
+    // BirthFormErrorBoundary caught an error
 
     this.setState({
       error,
@@ -49,18 +53,26 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
       this.props.onError(error, errorInfo);
     }
 
-    // In production, send to error reporting service
-    // Example: Sentry.captureException(error, { 
-    //   extra: { 
-    //     componentStack: errorInfo.componentStack,
-    //     retryCount: this.state.retryCount 
-    //   } 
-    // });
+    // Send error to Sentry in production
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.captureException(error, {
+        extra: {
+          componentStack: errorInfo.componentStack,
+          retryCount: this.state.retryCount,
+          errorBoundary: 'BirthFormErrorBoundary',
+        },
+        tags: {
+          errorBoundary: 'birth-form',
+          component: 'BirthFormErrorBoundary',
+          retryCount: this.state.retryCount.toString(),
+        },
+      });
+    }
   }
 
   handleRetry = () => {
     const newRetryCount = this.state.retryCount + 1;
-    
+
     // Limit retries to prevent infinite loops
     if (newRetryCount > 3) {
       this.handleReset();
@@ -115,16 +127,15 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
             <div className={styles.birthFormErrorIcon}>🌌</div>
             <h2 className={styles.birthFormErrorTitle}>Form Error</h2>
             <p className={styles.birthFormErrorMessage}>
-              We encountered an issue with the birth form. This might be due to corrupted data or a temporary problem.
+              We encountered an issue with the birth form. This might be due to
+              corrupted data or a temporary problem.
             </p>
-            
+
             {this.state.retryCount > 0 && (
               <p className={styles.birthFormErrorRetry}>
                 Retry attempt: {this.state.retryCount}/3
               </p>
             )}
-
-
 
             <div className={styles.birthFormErrorActions}>
               {this.state.retryCount < 3 && (
@@ -137,7 +148,7 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
                   Try Again
                 </Button>
               )}
-              
+
               <Button
                 variant="secondary"
                 size="md"
@@ -146,7 +157,7 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
               >
                 Start Fresh
               </Button>
-              
+
               <Button
                 variant="secondary"
                 size="sm"
@@ -159,7 +170,8 @@ class BirthFormErrorBoundaryClass extends Component<BirthFormErrorBoundaryProps,
 
             <div className={styles.birthFormErrorHelp}>
               <p>
-                If this problem persists, please contact support with the error details above.
+                If this problem persists, please contact support with the error
+                details above.
               </p>
             </div>
           </div>
@@ -188,4 +200,4 @@ export function withBirthFormErrorBoundary<P extends object>(
   WrappedComponent.displayName = `withBirthFormErrorBoundary(${Component.displayName || Component.name})`;
 
   return WrappedComponent;
-} 
+}

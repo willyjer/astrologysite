@@ -27,4 +27,4 @@ Use the following <h2> title at the top of the reading:
 - Ensure headings use <h2> for the title and <h3> for all section headers
 - Do not include <html>, <head>, or <body> wrappers — return only the inner content
 
-Return only the formatted HTML reading, nothing else.`; 
+Return only the formatted HTML reading, nothing else.`;

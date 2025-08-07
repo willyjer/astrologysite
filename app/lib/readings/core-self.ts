@@ -1,5 +1,4 @@
 import type { AstrologyChartResponse } from '../astrology-service';
-import type { BirthData } from './index';
 
 export type CoreSelfData = {
   readingId: 'core-self';
@@ -27,8 +26,7 @@ export class CoreSelfExtractor {
    * Extract relevant data for the core-self reading
    */
   static extract(
-    chartData: AstrologyChartResponse,
-    birthData: BirthData
+    chartData: AstrologyChartResponse
   ): CoreSelfData {
     const { houses, aspects } = chartData;
 
@@ -42,22 +40,25 @@ export class CoreSelfExtractor {
       data: {
         sun,
         rising: asc,
-        sunAscAspect
-      }
+        sunAscAspect,
+      },
     };
   }
 
   /**
    * Find a specific planet in the houses
    */
-  private static findPlanet(houses: AstrologyChartResponse['houses'], target: string) {
+  private static findPlanet(
+    houses: AstrologyChartResponse['houses'],
+    target: string
+  ) {
     for (const house of houses) {
       for (const planet of house.planets) {
         if (planet.name === target) {
           return {
             sign: planet.sign,
             house: house.house_id,
-            summary: `${target} in ${planet.sign} in the ${this.ordinal(house.house_id)} house`
+            summary: `${target} in ${planet.sign} in the ${this.ordinal(house.house_id)} house`,
           };
         }
       }
@@ -69,10 +70,10 @@ export class CoreSelfExtractor {
    * Find the Ascendant (Rising sign) from house 1
    */
   private static findAscendant(houses: AstrologyChartResponse['houses']) {
-    const house1 = houses.find(h => h.house_id === 1);
+    const house1 = houses.find((h) => h.house_id === 1);
     return {
-      sign: house1?.sign || "Unknown",
-      summary: `${house1?.sign || "Unknown"} Rising`
+      sign: house1?.sign || 'Unknown',
+      summary: `${house1?.sign || 'Unknown'} Rising`,
     };
   }
 
@@ -80,21 +81,21 @@ export class CoreSelfExtractor {
    * Find a specific aspect between two planets
    */
   private static findAspect(
-    aspects: AstrologyChartResponse['aspects'], 
-    planetA: string, 
+    aspects: AstrologyChartResponse['aspects'],
+    planetA: string,
     planetB: string
   ) {
     for (const aspect of aspects) {
-          const aspectingPlanet = aspect.aspecting_planet;
-    const aspectedPlanet = aspect.aspected_planet;
-              if (
-          (aspectingPlanet === planetA && aspectedPlanet === planetB) ||
-          (aspectingPlanet === planetB && aspectedPlanet === planetA)
-        ) {
+      const aspectingPlanet = aspect.aspecting_planet;
+      const aspectedPlanet = aspect.aspected_planet;
+      if (
+        (aspectingPlanet === planetA && aspectedPlanet === planetB) ||
+        (aspectingPlanet === planetB && aspectedPlanet === planetA)
+      ) {
         return {
           type: aspect.type,
           orb: aspect.orb,
-          summary: `${aspect.type} aspect between ${planetA} and ${planetB} (orb: ${aspect.orb}°)`
+          summary: `${aspect.type} aspect between ${planetA} and ${planetB} (orb: ${aspect.orb}°)`,
         };
       }
     }
@@ -105,8 +106,15 @@ export class CoreSelfExtractor {
    * Convert number to ordinal (1st, 2nd, 3rd, etc.)
    */
   private static ordinal(n: number): string {
-    const ordinalSuffixes = ["th", "st", "nd", "rd"];
+    const ordinalSuffixes = ['th', 'st', 'nd', 'rd'];
     const remainder = n % 100;
-    return n + (ordinalSuffixes[(remainder - 20) % 10] || ordinalSuffixes[remainder] || ordinalSuffixes[0]);
+    const suffix1 = ordinalSuffixes[(remainder - 20) % 10];
+    const suffix2 = ordinalSuffixes[remainder];
+    const suffix3 = ordinalSuffixes[0];
+    
+    return (
+      n +
+      (suffix1 || suffix2 || suffix3)
+    );
   }
-} 
+}

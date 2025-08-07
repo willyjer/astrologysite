@@ -6,12 +6,9 @@ export default function ErrorState({ error, onRetry }: ErrorStateProps) {
     <div className={styles.errorState}>
       <h1>Something Went Wrong</h1>
       <p>{error}</p>
-      <button 
-        onClick={onRetry} 
-        className={styles.retryButton}
-      >
+      <button onClick={onRetry} className={styles.retryButton}>
         Try Again
       </button>
     </div>
   );
-} 
+}

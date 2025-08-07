@@ -34,18 +34,18 @@ export function useBirthFormStorage() {
   const [storageAvailable, setStorageAvailable] = useState<boolean>(true);
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // Check localStorage availability on mount
   useEffect(() => {
     setStorageAvailable(isLocalStorageAvailable());
   }, []);
-  
+
   // Load data from localStorage and URL on mount
   useEffect(() => {
     // Get readings from URL
     const urlReadings = searchParams.getAll('readings');
     setReadings(urlReadings);
-    
+
     // Get form data from localStorage if available
     if (storageAvailable && typeof window !== 'undefined') {
       try {
@@ -66,7 +66,7 @@ export function useBirthFormStorage() {
       }
     }
   }, [searchParams, storageAvailable]);
-  
+
   /**
    * Update form data (partial updates supported)
    * @param updates Partial form data to merge with existing data
@@ -74,45 +74,53 @@ export function useBirthFormStorage() {
    */
   const updateFormData = (updates: Partial<BirthFormValues>) => {
     const newData = { ...formData, ...updates, readings };
-    
+
     // Always ensure readings are included
     if (!newData.readings) {
       newData.readings = readings;
     }
-    
+
     setFormData(newData);
-    
-              // Persist to localStorage if available
+
+    // Persist to localStorage if available
     if (storageAvailable && typeof window !== 'undefined') {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
       } catch (saveError) {
         // Error saving to localStorage
-        
+
         // Try to save without readings which could be large
         try {
           const { readings: _, ...essentialData } = newData;
-          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(essentialData));
+          window.localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(essentialData)
+          );
         } catch (minimalSaveError) {
           // Failed to save even minimal data to localStorage
-          
+
           // Try to clear some space and retry
           try {
             const { readings: _, ...essentialData } = newData;
             window.localStorage.clear();
-            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(essentialData));
+            window.localStorage.setItem(
+              STORAGE_KEY,
+              JSON.stringify(essentialData)
+            );
           } catch (clearStorageError) {
             // Failed to save after clearing storage
             setStorageAvailable(false);
-            throw new Error('Unable to save form data. Please try refreshing the page.');
+            throw new Error(
+              'Unable to save form data. Please try refreshing the page.'
+            );
           }
         }
       }
     }
-    
+
     return newData;
   };
-  
+
   /**
    * Clear form data from state and localStorage
    */
@@ -124,30 +132,30 @@ export function useBirthFormStorage() {
         // Error clearing localStorage
       }
     }
-    
+
     setFormData({});
   };
-  
+
   /**
    * Navigate to a step while preserving readings in the URL
    * @param path The path to navigate to
    */
   const navigateToStep = (path: string) => {
     const params = new URLSearchParams();
-    readings.forEach(reading => {
+    readings.forEach((reading) => {
       params.append('readings', reading);
     });
     const queryString = params.toString();
     const nextPath = queryString ? `${path}?${queryString}` : path;
     router.push(nextPath);
   };
-  
+
   return {
     formData,
     readings,
     storageAvailable,
     updateFormData,
     clearFormData,
-    navigateToStep
+    navigateToStep,
   };
-} 
+}

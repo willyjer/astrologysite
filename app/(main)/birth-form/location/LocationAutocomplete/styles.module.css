@@ -1,3 +1,5 @@
+/* ===== LOCATION AUTOCOMPLETE - MOBILE FIRST STYLES ===== */
+
 .container {
   position: relative;
   width: 100%;
@@ -10,7 +12,7 @@
 
 .searchIcon {
   position: absolute;
-  right: 18px;
+  right: 16px; /* 3 - MODERATE: Adjusted for larger padding */
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -23,9 +25,9 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--fg);
-  padding: 10px 40px 10px 12px;
-  font-family: "Inter", sans-serif;
-  font-size: 18px;
+  padding: 14px 40px 14px 16px; /* 4 - IMPORTANT: Larger padding for better touch targets */
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; /* 3 - MODERATE: Smaller font for mobile */
   transition: all 0.2s ease;
   backdrop-filter: blur(4px);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -51,7 +53,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 300px;
+  max-height: 250px; /* 3 - MODERATE: Smaller max height on mobile */
   overflow-y: auto;
   position: absolute;
   top: 100%;
@@ -66,10 +68,10 @@
 }
 
 .suggestionItem {
-  padding: 12px 16px;
+  padding: 10px 12px; /* 3 - MODERATE: Less padding on mobile */
   cursor: pointer;
-  font-family: "Inter", sans-serif;
-  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; /* 3 - MODERATE: Smaller font for mobile */
   color: var(--fg);
   transition: all 0.2s var(--ease-fast);
 }
@@ -84,8 +86,8 @@
   gap: var(--space-3xs);
   padding: var(--space-3xs) var(--space-2xs);
   color: var(--fg-muted);
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; /* 3 - MODERATE: Smaller font for mobile */
 }
 
 .spinner {
@@ -99,4 +101,49 @@
   to {
     transform: rotate(360deg);
   }
-} 
+}
+
+/* ===== TABLET BREAKPOINT (768px+) ===== */
+@media (min-width: 768px) {
+  .searchIcon {
+    right: 20px; /* 3 - MODERATE: Adjusted for larger padding */
+  }
+
+  .input {
+    padding: 16px 44px 16px 20px; /* 4 - IMPORTANT: Larger padding on tablet */
+    font-size: 16px; /* 3 - MODERATE: Larger font on tablet */
+  }
+
+  .suggestionsList {
+    max-height: 300px; /* 3 - MODERATE: Larger max height on tablet */
+  }
+
+  .suggestionItem {
+    padding: 12px 16px; /* 3 - MODERATE: More padding on tablet */
+    font-size: 16px; /* 3 - MODERATE: Larger font on tablet */
+  }
+
+  .loadingIndicator {
+    font-size: 14px; /* 3 - MODERATE: Larger font on tablet */
+  }
+}
+
+/* ===== DESKTOP BREAKPOINT (1024px+) ===== */
+@media (min-width: 1024px) {
+  .searchIcon {
+    right: 24px; /* 3 - MODERATE: Adjusted for largest padding */
+  }
+
+  .input {
+    padding: 18px 48px 18px 24px; /* 4 - IMPORTANT: Largest padding on desktop */
+    font-size: 18px; /* 3 - MODERATE: Largest font on desktop */
+  }
+
+  .suggestionItem {
+    font-size: 16px; /* 3 - MODERATE: Keep font size on desktop */
+  }
+
+  .loadingIndicator {
+    font-size: 14px; /* 3 - MODERATE: Keep font size on desktop */
+  }
+}

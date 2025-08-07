@@ -1,3 +1,5 @@
+/* ===== BIRTH FORM ERROR BOUNDARY - MOBILE FIRST STYLES ===== */
+
 .birthFormErrorBoundary {
   min-height: 100vh;
   display: flex;
@@ -14,8 +16,8 @@
   z-index: 2;
   max-width: 600px;
   width: 100%;
-  padding: var(--space-xl);
-  background: linear-gradient(to bottom right, #1e1b2f, #15121f);
+  padding: var(--space-lg); /* 4 - IMPORTANT: Moderate padding on mobile */
+  background: var(--gradient-card);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -33,12 +35,17 @@
   height: 80%;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(255, 225, 200, 0.06), transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 225, 200, 0.06),
+    transparent 70%
+  );
   filter: blur(2px);
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -47,13 +54,14 @@
 }
 
 .birthFormErrorIcon {
-  font-size: 64px;
+  font-size: 48px; /* 3 - MODERATE: Smaller icon for mobile */
   margin-bottom: var(--space-md);
   animation: cosmicPulse 3s ease-in-out infinite;
 }
 
 @keyframes cosmicPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -64,8 +72,8 @@
 }
 
 .birthFormErrorTitle {
-  font-family: "Playfair Display", serif;
-  font-size: 32px;
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; /* 3 - MODERATE: Smaller title for mobile */
   font-weight: 700;
   color: var(--fg);
   margin: 0 0 var(--space-sm) 0;
@@ -73,14 +81,14 @@
 
 .birthFormErrorMessage {
   color: var(--fg-muted);
-  font-size: 18px;
+  font-size: 16px; /* 3 - MODERATE: Smaller message for mobile */
   line-height: 1.6;
   margin: 0 0 var(--space-md) 0;
 }
 
 .birthFormErrorRetry {
   color: var(--accent);
-  font-size: 14px;
+  font-size: 12px; /* 3 - MODERATE: Smaller retry text for mobile */
   font-weight: 600;
   margin: 0 0 var(--space-lg) 0;
   padding: var(--space-sm);
@@ -91,17 +99,20 @@
 
 .birthFormErrorActions {
   display: flex;
+  flex-direction: column; /* 4 - IMPORTANT: Stack buttons vertically on mobile */
   gap: var(--space-sm);
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center; /* 4 - IMPORTANT: Center buttons on mobile */
   margin: var(--space-lg) 0;
 }
 
 .birthFormErrorRetryButton {
   transition: all 0.3s ease;
   box-shadow: 0 6px 24px rgba(205, 163, 73, 0.4);
-  padding: 16px 32px;
-  font-size: 18px;
+  padding: 12px 24px; /* 3 - MODERATE: Smaller padding on mobile */
+  font-size: 16px; /* 3 - MODERATE: Smaller font on mobile */
+  width: 100%; /* 4 - IMPORTANT: Full width on mobile */
+  max-width: 250px; /* 3 - MODERATE: Max width for mobile */
 }
 
 .birthFormErrorRetryButton:hover {
@@ -112,11 +123,13 @@
 .birthFormErrorResetButton {
   transition: all 0.3s ease;
   box-shadow: 0 6px 24px rgba(255, 255, 255, 0.1);
-  padding: 16px 32px;
-  font-size: 18px;
+  padding: 12px 24px; /* 3 - MODERATE: Smaller padding on mobile */
+  font-size: 16px; /* 3 - MODERATE: Smaller font on mobile */
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--fg);
+  width: 100%; /* 4 - IMPORTANT: Full width on mobile */
+  max-width: 250px; /* 3 - MODERATE: Max width for mobile */
 }
 
 .birthFormErrorResetButton:hover {
@@ -128,11 +141,13 @@
 .birthFormErrorBackButton {
   transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 10px 20px; /* 3 - MODERATE: Smaller padding on mobile */
+  font-size: 14px; /* 3 - MODERATE: Smaller font on mobile */
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--fg-muted);
+  width: 100%; /* 4 - IMPORTANT: Full width on mobile */
+  max-width: 200px; /* 3 - MODERATE: Max width for mobile */
 }
 
 .birthFormErrorBackButton:hover {
@@ -152,39 +167,86 @@
 
 .birthFormErrorHelp p {
   color: var(--fg-muted);
-  font-size: 14px;
+  font-size: 13px; /* 3 - MODERATE: Smaller help text for mobile */
   line-height: 1.5;
   margin: 0;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* ===== TABLET BREAKPOINT (768px+) ===== */
+@media (min-width: 768px) {
   .birthFormErrorContent {
-    padding: var(--space-lg);
-    margin: var(--space-md);
+    padding: var(--space-xl); /* 3 - MODERATE: More padding on tablet */
+    margin: var(--space-md); /* 3 - MODERATE: Add margin on tablet */
   }
 
   .birthFormErrorTitle {
-    font-size: 28px;
+    font-size: 32px; /* 3 - MODERATE: Larger title on tablet */
   }
 
   .birthFormErrorMessage {
-    font-size: 16px;
+    font-size: 18px; /* 3 - MODERATE: Larger message on tablet */
+  }
+
+  .birthFormErrorRetry {
+    font-size: 14px; /* 3 - MODERATE: Larger retry text on tablet */
   }
 
   .birthFormErrorActions {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row; /* 4 - IMPORTANT: Side by side on tablet */
+    flex-wrap: wrap; /* 3 - MODERATE: Allow wrapping */
+    align-items: stretch; /* 3 - MODERATE: Stretch buttons */
   }
 
   .birthFormErrorRetryButton,
   .birthFormErrorResetButton {
-    width: 100%;
-    max-width: 250px;
+    width: auto; /* 3 - MODERATE: Auto width on tablet */
+    max-width: none; /* 3 - MODERATE: No max width on tablet */
   }
 
   .birthFormErrorBackButton {
-    width: 100%;
-    max-width: 200px;
+    width: auto; /* 3 - MODERATE: Auto width on tablet */
+    max-width: none; /* 3 - MODERATE: No max width on tablet */
   }
-} 
+
+  .birthFormErrorHelp p {
+    font-size: 14px; /* 3 - MODERATE: Larger help text on tablet */
+  }
+}
+
+/* ===== DESKTOP BREAKPOINT (1024px+) ===== */
+@media (min-width: 1024px) {
+  .birthFormErrorIcon {
+    font-size: 64px; /* 3 - MODERATE: Largest icon on desktop */
+  }
+
+  .birthFormErrorTitle {
+    font-size: 32px; /* 3 - MODERATE: Keep title size on desktop */
+  }
+
+  .birthFormErrorMessage {
+    font-size: 18px; /* 3 - MODERATE: Keep message size on desktop */
+  }
+
+  .birthFormErrorRetry {
+    font-size: 14px; /* 3 - MODERATE: Keep retry text size on desktop */
+  }
+
+  .birthFormErrorRetryButton {
+    padding: 16px 32px; /* 3 - MODERATE: More padding on desktop */
+    font-size: 18px; /* 3 - MODERATE: Larger font on desktop */
+  }
+
+  .birthFormErrorResetButton {
+    padding: 16px 32px; /* 3 - MODERATE: More padding on desktop */
+    font-size: 18px; /* 3 - MODERATE: Larger font on desktop */
+  }
+
+  .birthFormErrorBackButton {
+    padding: 12px 24px; /* 3 - MODERATE: More padding on desktop */
+    font-size: 16px; /* 3 - MODERATE: Larger font on desktop */
+  }
+
+  .birthFormErrorHelp p {
+    font-size: 14px; /* 3 - MODERATE: Keep help text size on desktop */
+  }
+}

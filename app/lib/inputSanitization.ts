@@ -3,20 +3,41 @@
  */
 
 /**
- * Sanitize string input to prevent injection attacks
+ * Comprehensive HTML entity encoding map for XSS prevention
+ */
+const htmlEntities: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#x27;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;',
+};
+
+/**
+ * Sanitize string input to prevent XSS and injection attacks
  */
 export function sanitizeString(input: string): string {
   if (typeof input !== 'string') {
     return '';
   }
-  
+
   return input
     .trim()
-    .replace(/[<>]/g, '') // Remove potential HTML tags
-    .replace(/[&]/g, '&amp;') // Encode ampersands
-    .replace(/["]/g, '&quot;') // Encode quotes
-    .replace(/[']/g, '&#x27;') // Encode single quotes
-    .slice(0, 50000); // Increased from 1000 to prevent AI response truncation
+    // Comprehensive HTML entity encoding
+    .replace(/[&<>"'`=/]/g, (match) => htmlEntities[match] || match)
+    // Remove any remaining potential script patterns
+    .replace(/javascript:/gi, '')
+    .replace(/vbscript:/gi, '')
+    .replace(/data:/gi, '')
+    .replace(/onclick/gi, '')
+    .replace(/onload/gi, '')
+    .replace(/onerror/gi, '')
+    .replace(/onmouseover/gi, '')
+    // Limit length to prevent DoS
+    .slice(0, 50000);
 }
 
 /**
@@ -26,7 +47,7 @@ export function sanitizeEmail(email: string): string {
   if (typeof email !== 'string') {
     return '';
   }
-  
+
   return email
     .trim()
     .toLowerCase()
@@ -41,7 +62,7 @@ export function sanitizeNumber(input: any): number | null {
   if (input === null || input === undefined) {
     return null;
   }
-  
+
   const num = Number(input);
   return isNaN(num) ? null : num;
 }
@@ -58,51 +79,53 @@ export function validateAndSanitizeBirthData(data: any) {
     min: sanitizeNumber(data.min),
     lat: sanitizeNumber(data.lat),
     lon: sanitizeNumber(data.lon),
-    tzone: sanitizeNumber(data.tzone)
+    tzone: sanitizeNumber(data.tzone),
   };
 }
 
 /**
  * Validate birth data ranges
  */
-export function validateBirthDataRanges(data: ReturnType<typeof validateAndSanitizeBirthData>) {
+export function validateBirthDataRanges(
+  data: ReturnType<typeof validateAndSanitizeBirthData>
+) {
   const errors: string[] = [];
-  
+
   if (data.day === null || data.day < 1 || data.day > 31) {
     errors.push('Invalid day value. Must be between 1 and 31');
   }
-  
+
   if (data.month === null || data.month < 1 || data.month > 12) {
     errors.push('Invalid month value. Must be between 1 and 12');
   }
-  
+
   if (data.year === null || data.year < 1900 || data.year > 2100) {
     errors.push('Invalid year value. Must be between 1900 and 2100');
   }
-  
+
   if (data.hour === null || data.hour < 0 || data.hour > 23) {
     errors.push('Invalid hour value. Must be between 0 and 23');
   }
-  
+
   if (data.min === null || data.min < 0 || data.min > 59) {
     errors.push('Invalid minute value. Must be between 0 and 59');
   }
-  
+
   if (data.lat === null || data.lat < -90 || data.lat > 90) {
     errors.push('Invalid latitude value. Must be between -90 and 90');
   }
-  
+
   if (data.lon === null || data.lon < -180 || data.lon > 180) {
     errors.push('Invalid longitude value. Must be between -180 and 180');
   }
-  
+
   if (data.tzone === null || data.tzone < -12 || data.tzone > 14) {
     errors.push('Invalid timezone value. Must be between -12 and 14');
   }
-  
+
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -113,7 +136,7 @@ export function sanitizeReadingId(input: any): string | null {
   if (typeof input !== 'string') {
     return null;
   }
-  
+
   const sanitized = input.trim().replace(/[^a-zA-Z0-9-_]/g, '');
   return sanitized.length > 0 ? sanitized : null;
 }
@@ -125,7 +148,7 @@ export function sanitizePrompt(input: any): string | null {
   if (typeof input !== 'string') {
     return null;
   }
-  
+
   const sanitized = input.trim().slice(0, 50000); // Increased from 10000 to prevent truncation
   return sanitized.length > 0 ? sanitized : null;
 }
@@ -133,10 +156,13 @@ export function sanitizePrompt(input: any): string | null {
 /**
  * Sanitize coordinates for timezone API
  */
-export function sanitizeCoordinates(lat: any, lng: any): { lat: number | null; lng: number | null } {
+export function sanitizeCoordinates(
+  lat: any,
+  lng: any
+): { lat: number | null; lng: number | null } {
   return {
     lat: sanitizeNumber(lat),
-    lng: sanitizeNumber(lng)
+    lng: sanitizeNumber(lng),
   };
 }
 
@@ -147,7 +173,40 @@ export function validateRequestSize(contentLength: string | null): boolean {
   if (!contentLength) {
     return true; // Allow if no content length
   }
-  
+
   const size = parseInt(contentLength);
   return !isNaN(size) && size <= 1024 * 1024; // 1MB limit
-} 
+}
+
+/**
+ * Validate input length to prevent DoS attacks
+ */
+export function validateInputLength(input: string, maxLength: number = 1000): boolean {
+  if (typeof input !== 'string') {
+    return false;
+  }
+  return input.length <= maxLength;
+}
+
+/**
+ * Comprehensive input validation combining sanitization and length checks
+ */
+export function validateAndSanitizeInput(
+  input: string, 
+  maxLength: number = 1000
+): { isValid: boolean; sanitized: string; error?: string } {
+  if (typeof input !== 'string') {
+    return { isValid: false, sanitized: '', error: 'Input must be a string' };
+  }
+
+  if (!validateInputLength(input, maxLength)) {
+    return { 
+      isValid: false, 
+      sanitized: '', 
+      error: `Input exceeds maximum length of ${maxLength} characters` 
+    };
+  }
+
+  const sanitized = sanitizeString(input);
+  return { isValid: true, sanitized };
+}

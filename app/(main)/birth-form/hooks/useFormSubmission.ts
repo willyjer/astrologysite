@@ -23,16 +23,16 @@ export function useFormSubmission(): UseFormSubmissionReturn {
       if (!dateValidation.isValid) {
         throw new Error(dateValidation.error || 'Invalid date format');
       }
-      
+
       const timeValidation = validateTimeFormat(data.birthTime);
       if (!timeValidation.isValid) {
         throw new Error(timeValidation.error || 'Invalid time format');
       }
-      
+
       // Parse birth date and time
       const birthDate = new Date(data.birthDate);
       const [hour, minute] = data.birthTime.split(':').map(Number);
-      
+
       // Prepare chart request data
       const chartRequest = {
         day: birthDate.getDate(),
@@ -43,12 +43,14 @@ export function useFormSubmission(): UseFormSubmissionReturn {
         lat: data.lat,
         lon: data.lon,
         tzone: data.timezone,
-        house_type: "placidus"
+        house_type: 'placidus',
       };
 
       // Call the astrology API with retry logic
-      const { fetchWithRetry, formatApiError } = await import('../utils/apiUtils');
-      
+      const { fetchWithRetry, formatApiError } = await import(
+        '../utils/apiUtils'
+      );
+
       const result = await fetchWithRetry(
         '/api/astrology-chart',
         {
@@ -77,7 +79,7 @@ export function useFormSubmission(): UseFormSubmissionReturn {
               return true; // Service unavailable
             }
             return false;
-          }
+          },
         }
       );
 
@@ -98,17 +100,22 @@ export function useFormSubmission(): UseFormSubmissionReturn {
         sessionId,
         birthData: data,
         chartData: chartData.chart,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
-      const storageSuccess = safeSetStorage('astroSession', JSON.stringify(sessionData));
-      
+      const storageSuccess = safeSetStorage(
+        'astroSession',
+        JSON.stringify(sessionData)
+      );
+
       if (!storageSuccess) {
         throw new Error('Unable to save data. Please try again.');
       }
-      
     } catch (submissionError) {
-      const errorMessage = submissionError instanceof Error ? submissionError.message : 'An error occurred';
+      const errorMessage =
+        submissionError instanceof Error
+          ? submissionError.message
+          : 'An error occurred';
       setError(errorMessage);
       // Form submission error
     } finally {
@@ -136,4 +143,4 @@ export function useFormSubmission(): UseFormSubmissionReturn {
     isLoading,
     error,
   };
-} 
+}

@@ -1,4 +1,4 @@
-import type { BirthFormData, Reading } from '../types';
+import type { BirthFormData } from '../types';
 
 export interface AstroSession {
   sessionId: string;
@@ -24,7 +24,7 @@ export function getSessionData(): AstroSession | null {
     }
 
     const parsed = JSON.parse(sessionData);
-    
+
     // Validate session data structure
     if (!parsed.sessionId || !parsed.birthData || !parsed.chartData) {
       console.error('❌ Invalid session data structure');
@@ -59,9 +59,12 @@ export function validateSessionData(session: AstroSession): {
     if (!session.birthData.birthDate) errors.push('Missing birth date');
     if (!session.birthData.birthTime) errors.push('Missing birth time');
     if (!session.birthData.birthPlace) errors.push('Missing birth place');
-    if (typeof session.birthData.lat !== 'number') errors.push('Invalid latitude');
-    if (typeof session.birthData.lon !== 'number') errors.push('Invalid longitude');
-    if (typeof session.birthData.timezone !== 'number') errors.push('Invalid timezone');
+    if (typeof session.birthData.lat !== 'number')
+      errors.push('Invalid latitude');
+    if (typeof session.birthData.lon !== 'number')
+      errors.push('Invalid longitude');
+    if (typeof session.birthData.timezone !== 'number')
+      errors.push('Invalid timezone');
   }
 
   if (!session.chartData) {
@@ -77,7 +80,7 @@ export function validateSessionData(session: AstroSession): {
 
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -114,4 +117,4 @@ export function getSessionIdFromUrl(): string | null {
 export function validateSessionId(sessionId: string): boolean {
   const session = getSessionData();
   return session?.sessionId === sessionId;
-} 
+}

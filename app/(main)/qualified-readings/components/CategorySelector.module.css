@@ -19,14 +19,14 @@
   padding: var(--space-sm) var(--space-md);
   border: 1px solid rgba(230, 190, 255, 0.3);
   border-radius: 8px;
-  background: linear-gradient(145deg, #3A2F4C, #2C233D);
-  color: #ffffff;
+  background: var(--gradient-section);
+  color: var(--text-white);
   font-family: 'Inter', sans-serif;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 
+  box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.3),
     0 0 20px rgba(230, 190, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -38,14 +38,18 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 70%
+  );
   pointer-events: none;
   border-radius: 8px;
 }
 
 .dropdownButton:hover {
   border-color: rgba(230, 190, 255, 0.5);
-  box-shadow: 
+  box-shadow:
     0 6px 24px rgba(0, 0, 0, 0.4),
     0 0 30px rgba(230, 190, 255, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -54,7 +58,7 @@
 
 .dropdownButton:active {
   transform: translateY(0);
-  box-shadow: 
+  box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.3),
     0 0 15px rgba(230, 190, 255, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -99,11 +103,11 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: linear-gradient(145deg, #3A2F4C, #2C233D);
+  background: var(--gradient-section);
   border: 1px solid rgba(230, 190, 255, 0.3);
   border-radius: 0 0 8px 8px;
   margin-top: 0;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.4),
     0 0 25px rgba(230, 190, 255, 0.15);
   z-index: 1000;
@@ -115,7 +119,11 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 70%
+  );
   pointer-events: none;
   border-radius: 8px;
 }
@@ -127,7 +135,7 @@
   padding: var(--space-sm) var(--space-md);
   border: none;
   background: transparent;
-  color: #ffffff;
+  color: var(--text-white);
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   cursor: pointer;
@@ -149,7 +157,7 @@
 
 .dropdownItem.selected {
   background: rgba(230, 190, 255, 0.2);
-  color: #ffffff;
+  color: var(--text-white);
   font-weight: 500;
 }
 
@@ -199,4 +207,4 @@
   .dropdownIcon {
     transition: none;
   }
-} 
+}

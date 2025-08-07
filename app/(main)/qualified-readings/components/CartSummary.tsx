@@ -13,9 +13,9 @@ interface CartSummaryProps {
 export function CartSummary({
   cartSummary,
   onProceed,
-  isLoading = false
+  isLoading = false,
 }: CartSummaryProps) {
-  const { totalReadings, totalPrice, selectedReadings } = cartSummary;
+  const { totalReadings, totalPrice } = cartSummary;
 
   return (
     <div className={styles.container}>
@@ -53,4 +53,4 @@ export function CartSummary({
       </div>
     </div>
   );
-} 
+}
