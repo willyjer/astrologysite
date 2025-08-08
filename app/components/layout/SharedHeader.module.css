@@ -6,22 +6,7 @@
   transition: all 0.2s var(--ease-fast);
 }
 
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 12.5%; /* 100% - 75% = 25%, so 12.5% from each side */
-  width: 75%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(245, 189, 161, 0.15) 20%,
-    rgba(245, 189, 161, 0.25) 50%,
-    rgba(245, 189, 161, 0.15) 80%,
-    transparent 100%
-  );
-}
+/* Removed long underline separator for a cleaner look */
 
 .headerContent {
   display: flex;
@@ -34,24 +19,33 @@
 }
 
 .logo {
-  margin-left: 10%; /* Moved further left */
+  margin-left: 0; /* Use container padding instead of percentage offsets */
   display: flex;
   align-items: center;
 }
 
 .logoLink {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--accent);
+  font-size: 1.375rem; /* ~22px for a tighter brand size */
+  font-weight: 700; /* bolder for stronger presence */
+  /* Gradient brand: accent → white */
+  background: linear-gradient(
+    90deg,
+    rgba(245, 189, 161, 0.95) 0%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* fallback */
   text-decoration: none;
   transition: all 0.2s var(--ease-fast);
-  letter-spacing: 0.5px;
+  letter-spacing: -0.02em; /* tracking-tight */
 }
 
 .logoLink:hover {
-  color: var(--accent-hover);
-  text-shadow: 0 0 8px rgba(245, 189, 161, 0.4);
+  /* Keep subtle glow on hover without changing gradient */
+  text-shadow: 0 1px 12px rgba(245, 189, 161, 0.15); /* very subtle glow */
 }
 
 .navigation {
@@ -101,11 +95,12 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .headerContent {
-    padding: var(--space-2xs) var(--space-sm);
+    /* Add a touch more horizontal padding so the logo doesn't hug the edge */
+    padding: var(--space-2xs) calc(var(--space-sm) + 8px);
   }
 
   .logo {
-    margin-left: 5%;
+    margin-left: 0;
   }
 
   .navigation {
@@ -128,7 +123,7 @@
 
 @media (max-width: 480px) {
   .logo {
-    margin-left: 3%;
+    margin-left: 0;
   }
 
   .mobileNavigation {
@@ -141,13 +136,40 @@
   }
 }
 
+/* Boost logo size for common small device widths */
+@media (max-width: 768px) and (min-width: 360px) {
+  .logoLink {
+    font-size: 1.375rem; /* ~22px */
+  }
+}
+
+@media (max-width: 768px) and (min-width: 414px) {
+  .logoLink {
+    font-size: 1.5rem; /* ~24px */
+  }
+}
+
+/* Scale brand on larger screens for a more premium feel */
+@media (min-width: 1024px) {
+  .logoLink {
+    font-size: 1.5rem; /* ~24px */
+  }
+}
+
+@media (min-width: 1280px) {
+  .logoLink {
+    font-size: 1.75rem; /* ~28px */
+  }
+}
+
+@media (min-width: 1536px) {
+  .logoLink {
+    font-size: 2rem; /* ~32px */
+  }
+}
+
 /* High contrast support */
 @media (prefers-contrast: high) {
-  .header::after {
-    background: var(--accent);
-    opacity: 0.8;
-  }
-
   .navLink {
     color: var(--fg);
   }

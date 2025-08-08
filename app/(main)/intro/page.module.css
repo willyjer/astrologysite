@@ -5,11 +5,13 @@
 .introContainer {
   /* Override PageLayout margin */
   margin-top: 0;
+  /* Remove extra bottom space so footer sits tighter on small screens */
+  padding-bottom: 0;
 }
 
 .introContent {
   /* Mobile content styles */
-  padding: var(--space-sm) var(--space-sm);
+  padding: var(--space-sm) var(--space-sm) var(--space-3xs);
   animation: var(--animation-float);
 }
 
@@ -17,5 +19,12 @@
 @media (prefers-reduced-motion: reduce) {
   .introContent {
     animation: none;
+  }
+}
+
+/* Restore comfortable bottom padding on larger screens */
+@media (min-width: 768px) {
+  .introContent {
+    padding-bottom: var(--space-sm);
   }
 }
