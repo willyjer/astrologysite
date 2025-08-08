@@ -3,16 +3,30 @@
 
 /* ===== HEADLINE ===== */
 .title {
+  /* Typography */
   font-family: var(--font-display);
-  font-size: clamp(30px, 6vw, 44px);
   font-weight: 700;
-  letter-spacing: -0.5px;
-  line-height: 1.1;
+  letter-spacing: -0.15px;
+  line-height: 1.2;
   color: var(--fg);
-  margin-bottom: var(--space-2xs);
+  
+  /* Base mobile size */
+  font-size: 24px;
+  
+  /* Spacing */
+  margin-bottom: var(--space-3xs);
+  padding-bottom: var(--space-3xs);
+  
+  /* Effects */
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   position: relative;
-  padding-bottom: var(--space-2xs);
+
+  /* Responsive font sizes */
+  @media (min-width: 375px) { font-size: 30px; }
+  @media (min-width: 414px) { font-size: 34px; }
+  @media (min-width: 768px) { font-size: 48px; }
+  @media (min-width: 1024px) { font-size: 64px; }
+  @media (min-width: 1440px) { font-size: 72px; }
 }
 
 .title::after {
@@ -32,16 +46,27 @@
 
 /* ===== SUB-HEADLINE ===== */
 .description {
-  margin: var(--space-2xs) 0 var(--space-md);
+  /* Typography */
   font-family: var(--font-sans);
-  font-size: clamp(16px, 4vw, 22px);
   font-weight: 400;
-  color: var(--fg-muted);
+  letter-spacing: -0.1px;
   line-height: 1.5;
-  max-width: 540px;
+  color: var(--fg-muted);
+  
+  /* Base mobile size */
+  font-size: 16px;
+  
+  /* Spacing */
+  margin: var(--space-xs) 0 var(--space-sm);
   margin-left: auto;
   margin-right: auto;
-  padding-top: var(--space-2xs);
+
+  /* Responsive font sizes */
+  @media (min-width: 375px) { font-size: 19px; }
+  @media (min-width: 414px) { font-size: 22px; }
+  @media (min-width: 768px) { font-size: 24px; }
+  @media (min-width: 1024px) { font-size: 28px; }
+  @media (min-width: 1440px) { font-size: 32px; }
 }
 
 /* ===== BUTTON LAYOUT ===== */
@@ -50,40 +75,23 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: var(--space-xs);
-  margin-top: var(--space-sm);
+  gap: var(--space-4xs);
 }
 
-/* Custom styling for primary button text */
-.buttonRowCentered button:first-child {
+/* Base button styles */
+.buttonRowCentered button {
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .title {
-    font-size: 32px;
-    line-height: 1.2;
-    margin-bottom: var(--space-xs);
-  }
-
-  .description {
+.orDivider {
+  color: var(--fg-subtle);
+  font-size: 14px;
+  opacity: 0.7;
+  margin: calc(var(--space-4xs) * -0.5) 0;
+  
+  /* Scale divider text with screen size */
+  @media (min-width: 768px) {
     font-size: 16px;
-    line-height: 1.6;
-    margin: var(--space-xs) 0 var(--space-sm);
-    padding-top: var(--space-3xs);
-  }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 28px;
-    line-height: 1.3;
-  }
-
-  .description {
-    font-size: 16px;
-    line-height: 1.5;
   }
 }

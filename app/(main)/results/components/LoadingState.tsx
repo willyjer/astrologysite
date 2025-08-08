@@ -24,7 +24,7 @@ export default function LoadingState({
       case 'loading':
         return 'Please wait while we set up your personalized astrology readings...';
       case 'processing':
-        return 'Our AI is crafting your personalized astrology readings. This may take a minute...';
+        return 'Our AI Agents are crafting your personalized Astrology readings. This may take a few moments, thank you for your patience';
       default:
         return 'Please wait...';
     }

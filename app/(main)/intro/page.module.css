@@ -3,16 +3,15 @@
 
 /* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
 .introContainer {
-  /* Mobile container styles */
+  /* Override PageLayout margin */
   margin-top: 0;
 }
 
 .introContent {
   /* Mobile content styles */
+  padding: var(--space-sm) var(--space-sm);
   animation: var(--animation-float);
 }
-
-
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {

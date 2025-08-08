@@ -1,78 +1,34 @@
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-sm);
-  background: var(--gradient-space);
-  overflow: hidden;
-  position: relative;
+/* ===== QUALIFIED READINGS PAGE STYLES ===== */
+/* This file contains only qualified-readings page specific styles */
+
+/* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
+.qualifiedReadingsContainer {
+  margin-top: var(--space-sm);
+  justify-content: flex-start;
 }
 
-.content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
+.qualifiedReadingsContent {
+  padding: var(--space-2xs) 0; /* Only top and bottom padding, no left/right */
   max-width: 640px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-xs);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.bottomCartContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: var(--gradient-card);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(205, 163, 73, 0.15),
-    0 0 60px rgba(205, 163, 73, 0.08),
-    0 0 80px rgba(205, 163, 73, 0.04);
-  transition: all 0.3s ease;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
-  animation: var(--animation-float);
-  margin: var(--space-2xs) auto;
-}
-
-.content::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  width: 120%;
-  height: 80%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 225, 200, 0.06),
-    transparent 70%
-  );
-  filter: blur(2px);
-}
-
-.content:hover,
-.content:focus-within {
-  box-shadow:
-    0 8px 48px rgba(0, 0, 0, 0.4),
-    0 0 50px rgba(205, 163, 73, 0.25),
-    0 0 70px rgba(205, 163, 73, 0.15),
-    0 0 90px rgba(205, 163, 73, 0.08);
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+  padding: var(--space-sm);
 }
 
 .header {
   text-align: center;
-  margin-bottom: 0;
+  margin-bottom: var(--space-xs);
   animation: fadeInDown 0.6s ease-out;
 }
 
@@ -88,24 +44,29 @@
 }
 
 .title {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 28px; 
+  font-weight: 700;
   color: var(--text-white);
   margin: var(--space-3xs) 0 var(--space-4xs) 0;
   letter-spacing: 0.5px;
-  line-height: 1.2;
+  line-height: 1.1;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  text-align: center;
 }
 
-.subtitle {
+.categoryDescription {
+  text-align: center;
+  margin-bottom: var(--space-md);
+  padding: 0 var(--space-sm);
+}
+
+.categoryDescription p {
   font-family: 'Inter', sans-serif;
   font-size: 15px;
-  color: rgba(230, 225, 240, 0.9);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
   margin: 0;
-  line-height: 1.4;
-  font-weight: 400;
-  text-shadow: 0 0 10px rgba(230, 225, 240, 0.1);
 }
 
 .unifiedContainer {
@@ -179,68 +140,8 @@
   }
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .container {
-    padding: var(--space-xs);
-    padding-bottom: 140px;
-  }
-
-  .content {
-    padding: var(--space-sm) var(--space-xs);
-  }
-
-  .title {
-    font-size: 26px;
-    letter-spacing: 0.3px;
-  }
-
-  .subtitle {
-    font-size: 15px;
-  }
-
-  .section {
-    padding: var(--space-sm);
-  }
-
-  .header {
-    margin-bottom: var(--space-2xs);
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: var(--space-2xs);
-    padding-bottom: 120px;
-  }
-
-  .content {
-    padding: var(--space-xs) var(--space-2xs);
-  }
-
-  .title {
-    font-size: 24px;
-    letter-spacing: 0.3px;
-  }
-
-  .subtitle {
-    font-size: 14.5px;
-  }
-
-  .section {
-    padding: var(--space-xs);
-    margin-top: 0;
-  }
-
-  .header {
-    margin-bottom: 0;
-  }
-}
-
-/* Accessibility */
+/* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .content,
-  .spinner,
   .header,
   .section {
     animation: none;

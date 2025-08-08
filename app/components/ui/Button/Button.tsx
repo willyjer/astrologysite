@@ -21,7 +21,12 @@ export function Button({
       className={`
         ${styles.button}
         ${variant === 'primary' ? styles.primary : variant === 'secondary' ? styles.secondary : styles.tertiary}
-        ${size === 'sm' ? styles.sm : size === 'md' ? styles.md : styles.lg}
+        ${
+          size === 'sm' ? styles.sm :
+          size === 'md' ? styles.md :
+          size === 'lg' ? styles.lg :
+          styles.xl
+        }
         ${fullWidth ? styles.fullWidth : ''}
         ${isLoading ? styles.loading : ''}
         ${className || ''}

@@ -25,11 +25,11 @@ export function ActionButtons({
       >
         <span className={styles.desktopText}>
           {isLoading
-            ? 'Fetching Your Chart...'
+            ? 'Fetching Your Reading List'
             : 'View My Personalized Readings List'}
         </span>
         <span className={styles.mobileText}>
-          {isLoading ? 'Fetching Your Chart...' : 'View My Readings List'}
+          {isLoading ? 'Fetching Your Reading List' : 'View My Readings List'}
         </span>
       </Button>
     </div>

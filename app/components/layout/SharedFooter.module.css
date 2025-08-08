@@ -1,7 +1,7 @@
 /* SharedFooter styles */
 
 .footer {
-  margin-top: var(--space-sm);
+  margin-top: var(--space-4xs);
   padding: var(--space-2xs) 0 var(--space-xs);
   font-size: 15px;
   color: var(--fg-muted);

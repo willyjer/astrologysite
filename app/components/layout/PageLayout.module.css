@@ -14,9 +14,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: var(--space-4xs) var(--space-sm);
-  margin-top: var(--header-height);
+  padding: var(--space-sm) var(--space-sm);
+  margin-top: var(--space-2xs);
   position: relative;
   overflow: hidden;
 }
@@ -27,7 +26,7 @@
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding: var(--space-sm) var(--space-sm);
+  /* Removed padding - individual pages will control their own padding */
   text-align: center;
   background: var(--gradient-card);
   border: 1px solid rgba(255, 255, 255, 0.05);

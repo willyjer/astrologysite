@@ -40,14 +40,10 @@
   color: var(--accent);
 }
 
-/* REMOVED: .cart - unused button variant */
-/* REMOVED: .learn - unused button variant */
-/* REMOVED: .text - unused button variant */
-
 /* Sizes */
 .sm {
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 10px 20px;
+  font-size: 15px;
 }
 
 .md {
@@ -60,7 +56,10 @@
   font-size: 18px;
 }
 
-/* REMOVED: .cta - unused button variant */
+.xl {
+  padding: 20px 40px;
+  font-size: 20px;
+}
 
 /* Icon Button */
 .iconButton {

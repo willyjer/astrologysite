@@ -4,7 +4,7 @@ import './styles/design-system.css';
 import './styles/layout.css';
 import PerformanceTracker from './components/ui/PerformanceMonitor';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
-import ProductionMonitoringDashboard from './components/ui/ProductionMonitoringDashboard';
+// import ProductionMonitoringDashboard from './components/ui/ProductionMonitoringDashboard';
 import ServiceWorkerProvider from './components/ServiceWorkerProvider';
 
 const inter = Inter({
@@ -62,9 +62,9 @@ export default function RootLayout({
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
-        {process.env.NODE_ENV === 'development' && (
+        {/* {process.env.NODE_ENV === 'development' && (
           <ProductionMonitoringDashboard showInDevelopment={true} />
-        )}
+        )} */}
       </body>
     </html>
   );

@@ -21,9 +21,19 @@ export function CategorySelector({
     (cat) => cat.id === selectedCategory
   );
 
+  // Define which categories are ready for use
+  const readyCategories = ['self-identity'];
+  
+  const isCategoryReady = (categoryId: string) => {
+    return readyCategories.includes(categoryId);
+  };
+
   const handleCategorySelect = (categoryId: string) => {
-    onCategoryChange(categoryId);
-    setIsDropdownOpen(false);
+    // Only allow selection of ready categories
+    if (isCategoryReady(categoryId)) {
+      onCategoryChange(categoryId);
+      setIsDropdownOpen(false);
+    }
   };
 
   const toggleDropdown = () => {
@@ -41,14 +51,9 @@ export function CategorySelector({
         >
           <span className={styles.selectedCategory}>
             {selectedCategoryData ? (
-              <>
-                <span className={styles.categoryIcon}>
-                  {selectedCategoryData.icon}
-                </span>
-                <span className={styles.categoryName}>
-                  {selectedCategoryData.name}
-                </span>
-              </>
+              <span className={styles.categoryName}>
+                {selectedCategoryData.name}
+              </span>
             ) : (
               <span className={styles.placeholder}>Choose a Category</span>
             )}
@@ -62,29 +67,22 @@ export function CategorySelector({
 
         {isDropdownOpen && (
           <div className={styles.dropdown}>
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                className={`${styles.dropdownItem} ${selectedCategory === category.id ? styles.selected : ''}`}
-                onClick={() => handleCategorySelect(category.id)}
-              >
-                <span className={styles.categoryIcon}>{category.icon}</span>
-                <span className={styles.categoryName}>{category.name}</span>
-              </button>
-            ))}
+            {categories.map((category) => {
+              const isReady = isCategoryReady(category.id);
+              return (
+                <button
+                  key={category.id}
+                  className={`${styles.dropdownItem} ${selectedCategory === category.id ? styles.selected : ''} ${!isReady ? styles.disabled : ''}`}
+                  onClick={() => handleCategorySelect(category.id)}
+                  disabled={!isReady}
+                >
+                  <span className={styles.categoryName}>
+                    {category.name}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-        )}
-      </div>
-
-      <div className={styles.description}>
-        {selectedCategoryData ? (
-          <p>{selectedCategoryData.description}</p>
-        ) : (
-          <p>
-            Select a category above to explore personalized readings crafted for
-            your unique astrological journey. Each category offers insights into
-            different aspects of your life and personality.
-          </p>
         )}
       </div>
     </div>

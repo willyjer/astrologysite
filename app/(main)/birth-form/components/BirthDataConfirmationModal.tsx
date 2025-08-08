@@ -115,7 +115,7 @@ export function BirthDataConfirmationModal({
                 <Loader2 size={32} className={styles.spinnerIcon} />
               </div>
               <p className={styles.loadingText}>
-                Fetching your astrological chart...
+                Fetching Your Personalized Reading List
               </p>
             </div>
           )}

@@ -3,21 +3,19 @@
 /* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
 .resultsContainer {
   /* Mobile container styles */
-  margin-top: var(
-    --space-md
-  ) !important; /* 5 - CRITICAL: Overrides PageLayout spacing */
-  justify-content: flex-start !important; /* 5 - CRITICAL: Prevents vertical centering */
+  margin-top: var(--space-md);
+  justify-content: flex-start;
 }
 
 .resultsContent {
   /* Mobile content styles */
-  display: flex; /* 4 - IMPORTANT: Layout structure */
-  flex-direction: column; /* 4 - IMPORTANT: Vertical stacking */
-  gap: var(--space-md); /* 3 - MODERATE: Spacing between elements */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
   width: 100%;
-  max-width: clamp(320px, 95vw, 1200px); /* Expanded max-width for reading content */
+  max-width: clamp(320px, 95vw, 1200px);
   margin: 0 auto;
-  padding: var(--space-lg) 0; /* Removed horizontal padding for full width */
+  padding: var(--space-lg) 0; /* Only top and bottom padding, no left/right */
   background: var(--gradient-card);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-xl);
@@ -71,7 +69,7 @@
 
 .successTitle {
   font-family: 'Playfair Display', serif;
-  font-size: 28px; /* 3 - MODERATE: Smaller title for mobile */
+  font-size: 28px;
   font-weight: 700;
   color: var(--fg);
   margin: 0 0 var(--space-sm) 0;
@@ -84,12 +82,12 @@
 .successTitle::after {
   content: '';
   position: absolute;
-  bottom: -8px; /* 3 - MODERATE: Closer underline for mobile */
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px; /* 3 - MODERATE: Smaller underline for mobile */
+  width: 120px;
   height: 1.5px;
-  border-radius: 1px; /* Keep 1px for progress bar */
+  border-radius: 1px;
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -105,27 +103,27 @@
 .successSubtitle {
   font-family: 'Playfair Display', serif;
   color: var(--fg-muted);
-  font-size: 16px; /* 3 - MODERATE: Smaller subtitle for mobile */
+  font-size: 16px;
   font-weight: 400;
   font-style: italic;
   line-height: 1.4;
   margin: 0;
-  max-width: 100%; /* 3 - MODERATE: Full width on mobile */
+  max-width: 100%;
 }
 
 /* ===== READINGS CONTAINER STYLES ===== */
 .readingsContainer {
-  display: flex; /* 4 - IMPORTANT: Layout structure */
-  flex-direction: column; /* 4 - IMPORTANT: Vertical stacking */
-  gap: var(--space-md); /* 3 - MODERATE: Spacing between elements */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
   position: relative;
   z-index: 2;
   width: 100%;
 }
 
 .readingsContent {
-  display: flex; /* 4 - IMPORTANT: Layout structure */
-  flex-direction: column; /* 4 - IMPORTANT: Vertical stacking */
-  gap: var(--space-sm); /* 3 - MODERATE: Spacing between readings */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
   width: 100%;
 }
