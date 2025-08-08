@@ -26,21 +26,18 @@
 
 .logoLink {
   font-family: var(--font-display);
-  font-size: 1.375rem; /* ~22px for a tighter brand size */
-  font-weight: 700; /* bolder for stronger presence */
+  /* Responsive brand size without many breakpoints */
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem);
+  font-weight: 700;
   /* Gradient brand: accent → white */
-  background: linear-gradient(
-    90deg,
-    rgba(245, 189, 161, 0.95) 0%,
-    rgba(255, 255, 255, 0.95) 100%
-  );
+  background: linear-gradient(90deg, rgba(245, 189, 161, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent; /* fallback */
+  color: transparent;
   text-decoration: none;
-  transition: all 0.2s var(--ease-fast);
-  letter-spacing: -0.02em; /* tracking-tight */
+  transition: color 0.2s var(--ease-fast), text-shadow 0.2s var(--ease-fast);
+  letter-spacing: -0.02em;
 }
 
 .logoLink:hover {
@@ -51,14 +48,14 @@
 .navigation {
   display: flex;
   gap: var(--space-md);
-  margin-right: 5%; /* Moved even further right */
+  margin-right: 0;
   align-items: center;
 }
 
 .mobileNavigation {
   display: none;
   align-items: center;
-  margin-right: 5%;
+  margin-right: 0;
 }
 
 .navLink {
@@ -109,11 +106,7 @@
 
   .mobileNavigation {
     display: flex; /* Show mobile navigation */
-    margin-right: 2%;
-  }
-
-  .logoLink {
-    font-size: 1.25rem;
+    margin-right: 0;
   }
 
   .navLink {
@@ -121,52 +114,7 @@
   }
 }
 
-@media (max-width: 480px) {
-  .logo {
-    margin-left: 0;
-  }
-
-  .mobileNavigation {
-    margin-right: 1%;
-  }
-
-  .navLink {
-    font-size: 0.85rem;
-    padding: var(--space-4xs) var(--space-3xs);
-  }
-}
-
-/* Boost logo size for common small device widths */
-@media (max-width: 768px) and (min-width: 360px) {
-  .logoLink {
-    font-size: 1.375rem; /* ~22px */
-  }
-}
-
-@media (max-width: 768px) and (min-width: 414px) {
-  .logoLink {
-    font-size: 1.5rem; /* ~24px */
-  }
-}
-
-/* Scale brand on larger screens for a more premium feel */
-@media (min-width: 1024px) {
-  .logoLink {
-    font-size: 1.5rem; /* ~24px */
-  }
-}
-
-@media (min-width: 1280px) {
-  .logoLink {
-    font-size: 1.75rem; /* ~28px */
-  }
-}
-
-@media (min-width: 1536px) {
-  .logoLink {
-    font-size: 2rem; /* ~32px */
-  }
-}
+/* No additional breakpoints needed for logo size due to clamp() above */
 
 /* High contrast support */
 @media (prefers-contrast: high) {
