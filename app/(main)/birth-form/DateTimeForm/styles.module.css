@@ -41,7 +41,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 14px 16px; /* 4 - IMPORTANT: Larger padding for better touch targets */
-  padding-right: 40px; /* room for the icon */
+  padding-right: 48px; /* room for the icon */
   background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -60,7 +60,7 @@
 
 /* Show text caret on iOS by forcing text selectability */
 .input::-webkit-datetime-edit { color: var(--fg); opacity: 1; }
-.input::-webkit-calendar-picker-indicator { filter: invert(0.8); opacity: 0.9; }
+.input::-webkit-calendar-picker-indicator { display: none; }
 .input::-webkit-clear-button { display: none; }
 .input::-ms-clear { display: none; }
 
