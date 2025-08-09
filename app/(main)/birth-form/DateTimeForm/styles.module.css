@@ -26,6 +26,8 @@
   flex-direction: column;
   gap: var(--space-4xs); /* 3 - MODERATE: Tighter spacing on mobile */
   flex: 1;
+  position: relative; /* for icon positioning */
+  width: 100%;
 }
 
 .label {
@@ -35,7 +37,11 @@
 }
 
 .input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
   padding: 14px 16px; /* 4 - IMPORTANT: Larger padding for better touch targets */
+  padding-right: 40px; /* room for the icon */
   background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -57,6 +63,16 @@
 .input::-webkit-calendar-picker-indicator { filter: invert(0.8); opacity: 0.9; }
 .input::-webkit-clear-button { display: none; }
 .input::-ms-clear { display: none; }
+
+/* Decorative icon inside the input */
+.inputIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fg-muted);
+  pointer-events: none;
+}
 
 /* Provide hint placeholders for date/time */
 #birthDate::placeholder { color: var(--fg-muted); }

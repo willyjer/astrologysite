@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { DateTimeFormProps } from './types';
+import { Calendar, Clock } from '@/components/ui/icons';
 
 export function DateTimeForm({
   date,
@@ -24,6 +25,9 @@ export function DateTimeForm({
               className={styles.input}
               placeholder="YYYY-MM-DD"
             />
+            <span className={styles.inputIcon} aria-hidden="true">
+              <Calendar size={18} />
+            </span>
           </div>
 
           <div className={styles.inputWrapper}>
@@ -38,6 +42,9 @@ export function DateTimeForm({
               className={styles.input}
               placeholder="HH:MM"
             />
+            <span className={styles.inputIcon} aria-hidden="true">
+              <Clock size={18} />
+            </span>
           </div>
         </div>
       </div>
