@@ -52,6 +52,16 @@
   box-shadow: 0 0 0 3px rgba(205, 163, 73, 0.2);
 }
 
+/* Show text caret on iOS by forcing text selectability */
+.input::-webkit-datetime-edit { color: var(--fg); opacity: 1; }
+.input::-webkit-calendar-picker-indicator { filter: invert(0.8); opacity: 0.9; }
+.input::-webkit-clear-button { display: none; }
+.input::-ms-clear { display: none; }
+
+/* Provide hint placeholders for date/time */
+#birthDate::placeholder { color: var(--fg-muted); }
+#birthTime::placeholder { color: var(--fg-muted); }
+
 /* REMOVED: .inputError - unused class */
 
 .errorMessage {

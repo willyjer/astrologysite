@@ -7,7 +7,7 @@ export function DateTimeForm({
   time,
   onDateChange,
   onTimeChange,
-}: DateTimeFormProps) {
+}: Readonly<DateTimeFormProps>) {
   return (
     <div className={styles.form}>
       <div className={styles.fieldGroup}>
@@ -22,6 +22,7 @@ export function DateTimeForm({
               value={date}
               onChange={(e) => onDateChange(e.target.value)}
               className={styles.input}
+              placeholder="YYYY-MM-DD"
             />
           </div>
 
@@ -35,6 +36,7 @@ export function DateTimeForm({
               value={time}
               onChange={(e) => onTimeChange(e.target.value)}
               className={styles.input}
+              placeholder="HH:MM"
             />
           </div>
         </div>

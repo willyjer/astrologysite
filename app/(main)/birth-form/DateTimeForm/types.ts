@@ -1,7 +1,7 @@
 export interface DateTimeFormProps {
-  date: string;
-  time: string;
-  error: string;
-  onDateChange: (value: string) => void;
-  onTimeChange: (value: string) => void;
+  readonly date: string;
+  readonly time: string;
+  readonly error: string;
+  readonly onDateChange: (value: string) => void;
+  readonly onTimeChange: (value: string) => void;
 }

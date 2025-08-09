@@ -5,13 +5,12 @@
 .introContainer {
   /* Override PageLayout margin */
   margin-top: 0;
-  /* Remove extra bottom space so footer sits tighter on small screens */
-  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .introContent {
   /* Mobile content styles */
-  padding: var(--space-sm) var(--space-sm) var(--space-3xs);
+  padding: var(--space-sm) var(--space-2xs);
   animation: var(--animation-float);
 }
 
@@ -22,9 +21,10 @@
   }
 }
 
-/* Restore comfortable bottom padding on larger screens */
-@media (min-width: 768px) {
+/* Reduce horizontal padding on small phones so the headline sits closer to edges */
+@media (max-width: 414px) {
   .introContent {
-    padding-bottom: var(--space-sm);
+    padding-left: var(--space-xs);
+    padding-right: var(--space-xs);
   }
 }

@@ -14,7 +14,7 @@
   font-size: 24px;
   
   /* Spacing */
-  margin-bottom: var(--space-2xs);
+  margin-bottom: var(--space-sm);
   padding-bottom: var(--space-3xs);
   
   /* Effects */
@@ -22,7 +22,7 @@
   position: relative;
 
   /* Responsive font sizes */
-  @media (min-width: 375px) { font-size: 31px; }
+  @media (min-width: 375px) { font-size: 32px; }
   @media (min-width: 414px) { font-size: 34px; }
   @media (min-width: 768px) { font-size: 48px; }
   @media (min-width: 1024px) { font-size: 64px; }
@@ -62,7 +62,7 @@
   margin-right: auto;
 
   /* Responsive font sizes */
-  @media (min-width: 375px) { font-size: 20px; }
+  @media (min-width: 375px) { font-size: 21px; }
   @media (min-width: 414px) { font-size: 22px; }
   @media (min-width: 768px) { font-size: 24px; }
   @media (min-width: 1024px) { font-size: 28px; }
