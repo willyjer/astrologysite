@@ -6,19 +6,9 @@ import styles from '../page.module.css';
 import { DateTimeForm } from '../DateTimeForm/index';
 import { useBirthFormStorage } from '../hooks/useBirthFormStorage';
 import { useFormSubmission } from '../hooks/useFormSubmission';
-import {
-  BirthDataConfirmationModal,
-  BirthFormErrorBoundary,
-} from './index';
+import { BirthFormErrorBoundary, FormHeader, LocationSection, BrowserWarning, ErrorDisplay, ActionButtons } from './index';
 import { PageLayout } from '../../../components/layout';
 import { checkBrowserSupport } from '../utils/browserSupport';
-import {
-  FormHeader,
-  LocationSection,
-  BrowserWarning,
-  ErrorDisplay,
-  ActionButtons,
-} from './index';
 
 export default function BirthFormPageContent() {
   const router = useRouter();
@@ -38,7 +28,6 @@ export default function BirthFormPageContent() {
   });
   const [error, setError] = React.useState('');
   const [showErrors, setShowErrors] = React.useState(false);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [browserSupport, setBrowserSupport] = useState<ReturnType<
     typeof checkBrowserSupport
@@ -128,8 +117,8 @@ export default function BirthFormPageContent() {
       return;
     }
 
-    // Show confirmation modal
-    setShowConfirmationModal(true);
+    // Directly submit and navigate (removed confirmation modal)
+    void handleConfirmSubmission();
   };
 
   const handleConfirmSubmission = async () => {
@@ -165,9 +154,7 @@ export default function BirthFormPageContent() {
       const parsedSession = JSON.parse(sessionData);
 
       // Navigate to qualified readings with session ID only
-      await router.push(
-        `/qualified-readings?sessionId=${parsedSession.sessionId}`
-      );
+      router.push(`/qualified-readings?sessionId=${parsedSession.sessionId}`);
     } catch (submissionError) {
       // Error is handled by the submission hook
       // Form submission failed
@@ -226,6 +213,7 @@ export default function BirthFormPageContent() {
         <ActionButtons
           handleNext={handleNext}
           isLoading={isLoading}
+          isNavigating={isNavigating}
           showErrors={showErrors}
           error={error}
         />
@@ -257,21 +245,7 @@ export default function BirthFormPageContent() {
           </div>
         )}
 
-        {/* Confirmation Modal */}
-        <BirthDataConfirmationModal
-          isOpen={showConfirmationModal}
-          onClose={() => setShowConfirmationModal(false)}
-          onConfirm={handleConfirmSubmission}
-          birthData={{
-            birthDate: date,
-            birthTime: time,
-            birthPlace: location.name,
-            lat: location.lat,
-            lon: location.lon,
-            timezone: location.timezone,
-          }}
-          isLoading={isLoading || isNavigating}
-        />
+        {/* Confirmation modal removed */}
       </PageLayout>
     </BirthFormErrorBoundary>
   );

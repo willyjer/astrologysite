@@ -55,7 +55,7 @@
 
 .helpText {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 13px; /* slightly smaller */
   color: var(--fg-muted);
   margin: 0;
 }

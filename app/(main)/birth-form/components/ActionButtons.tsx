@@ -4,6 +4,7 @@ import styles from '../page.module.css';
 interface ActionButtonsProps {
   handleNext: () => void;
   isLoading: boolean;
+  isNavigating?: boolean;
   showErrors: boolean;
   error: string;
 }
@@ -11,25 +12,26 @@ interface ActionButtonsProps {
 export function ActionButtons({
   handleNext,
   isLoading,
+  isNavigating = false,
   showErrors,
   error,
-}: ActionButtonsProps) {
+}: Readonly<ActionButtonsProps>) {
   return (
     <div className={styles.buttons}>
       <Button
         variant="primary"
         size="md"
         onClick={handleNext}
-        disabled={isLoading || (showErrors && !!error)}
+        disabled={isLoading || isNavigating || (showErrors && !!error)}
         className={`${showErrors && error ? styles.buttonDisabled : ''} ${styles.responsiveButton}`}
       >
         <span className={styles.desktopText}>
-          {isLoading
+          {isLoading || isNavigating
             ? 'Fetching Your Reading List'
             : 'View My Personalized Readings List'}
         </span>
         <span className={styles.mobileText}>
-          {isLoading ? 'Fetching Your Reading List' : 'View My Readings List'}
+          {isLoading || isNavigating ? 'Fetching Your Reading List' : 'View My Readings List'}
         </span>
       </Button>
     </div>
