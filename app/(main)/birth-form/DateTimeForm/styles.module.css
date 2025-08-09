@@ -46,10 +46,13 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--fg);
-  font-size: 15px; /* 3 - MODERATE: Smaller font for mobile */
+  font-size: 16px; /* Prevent iOS zoom on focus */
+  min-height: 44px; /* Comfortable touch target */
   transition: all 0.2s ease;
   backdrop-filter: blur(4px);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .input:focus {
@@ -64,6 +67,21 @@
 .input::-webkit-clear-button { display: none; }
 .input::-ms-clear { display: none; }
 
+/* Stronger UA indicator suppression (scoped to our input class for CSS Modules) */
+.input::-webkit-calendar-picker-indicator {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  right: -9999px !important;
+}
+
+/* Hide time spinners on some UAs */
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* Decorative icon inside the input */
 .inputIcon {
   position: absolute;
@@ -77,6 +95,13 @@
 /* Provide hint placeholders for date/time */
 #birthDate::placeholder { color: var(--fg-muted); }
 #birthTime::placeholder { color: var(--fg-muted); }
+
+/* Subtle hint text under inputs */
+.hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
 
 /* REMOVED: .inputError - unused class */
 

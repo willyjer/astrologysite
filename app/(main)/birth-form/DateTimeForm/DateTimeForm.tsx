@@ -24,10 +24,12 @@ export function DateTimeForm({
               onChange={(e) => onDateChange(e.target.value)}
               className={styles.input}
               placeholder="YYYY-MM-DD"
+              aria-describedby="birthDateHint"
             />
             <span className={styles.inputIcon} aria-hidden="true">
               <Calendar size={18} />
             </span>
+            <small id="birthDateHint" className={styles.hint}>Tap to pick</small>
           </div>
 
           <div className={styles.inputWrapper}>
@@ -41,10 +43,12 @@ export function DateTimeForm({
               onChange={(e) => onTimeChange(e.target.value)}
               className={styles.input}
               placeholder="HH:MM"
+              aria-describedby="birthTimeHint"
             />
             <span className={styles.inputIcon} aria-hidden="true">
               <Clock size={18} />
             </span>
+            <small id="birthTimeHint" className={styles.hint}>Tap to pick</small>
           </div>
         </div>
       </div>
