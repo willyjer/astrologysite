@@ -20,7 +20,7 @@ export function ActionButtons({
     <div className={styles.buttons}>
       <Button
         variant="primary"
-        size="md"
+        size="sm"
         onClick={handleNext}
         disabled={isLoading || isNavigating || (showErrors && !!error)}
         className={`${showErrors && error ? styles.buttonDisabled : ''} ${styles.responsiveButton}`}

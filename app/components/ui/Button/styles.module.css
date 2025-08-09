@@ -17,8 +17,10 @@
   color: var(--bg);
 }
 
-.primary:hover:not(:disabled) {
-  background: var(--accent-hover);
+@media (hover: hover) {
+  .primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
 }
 
 .secondary {
@@ -27,8 +29,10 @@
   border: 1px solid var(--accent);
 }
 
-.secondary:hover:not(:disabled) {
-  background: rgba(205, 163, 73, 0.1);
+@media (hover: hover) {
+  .secondary:hover:not(:disabled) {
+    background: rgba(205, 163, 73, 0.1);
+  }
 }
 
 .tertiary {
@@ -36,8 +40,10 @@
   color: var(--fg);
 }
 
-.tertiary:hover:not(:disabled) {
-  color: var(--accent);
+@media (hover: hover) {
+  .tertiary:hover:not(:disabled) {
+    color: var(--accent);
+  }
 }
 
 /* Sizes */

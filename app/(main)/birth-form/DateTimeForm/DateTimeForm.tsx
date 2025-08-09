@@ -17,34 +17,38 @@ export function DateTimeForm({
             <label htmlFor="birthDate" className={styles.label}>
               Birth Date
             </label>
-            <input
-              id="birthDate"
-              type="date"
-              value={date}
-              onChange={(e) => onDateChange(e.target.value)}
-              className={styles.input}
-              placeholder="YYYY-MM-DD"
-            />
-            <span className={styles.inputIcon} aria-hidden="true">
-              <Calendar size={18} />
-            </span>
+            <div className={styles.inputInner}>
+              <input
+                id="birthDate"
+                type="date"
+                value={date}
+                onChange={(e) => onDateChange(e.target.value)}
+                className={styles.input}
+                placeholder="YYYY-MM-DD"
+              />
+              <span className={styles.inputIcon} aria-hidden="true">
+                <Calendar size={18} />
+              </span>
+            </div>
           </div>
 
           <div className={styles.inputWrapper}>
             <label htmlFor="birthTime" className={styles.label}>
               Birth Time
             </label>
-            <input
-              id="birthTime"
-              type="time"
-              value={time}
-              onChange={(e) => onTimeChange(e.target.value)}
-              className={styles.input}
-              placeholder="HH:MM"
-            />
-            <span className={styles.inputIcon} aria-hidden="true">
-              <Clock size={18} />
-            </span>
+            <div className={styles.inputInner}>
+              <input
+                id="birthTime"
+                type="time"
+                value={time}
+                onChange={(e) => onTimeChange(e.target.value)}
+                className={styles.input}
+                placeholder="HH:MM"
+              />
+              <span className={styles.inputIcon} aria-hidden="true">
+                <Clock size={18} />
+              </span>
+            </div>
           </div>
         </div>
       </div>

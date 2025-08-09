@@ -40,9 +40,11 @@
   letter-spacing: -0.02em;
 }
 
-.logoLink:hover {
-  /* Keep subtle glow on hover without changing gradient */
-  text-shadow: 0 1px 12px rgba(245, 189, 161, 0.15); /* very subtle glow */
+@media (hover: hover) {
+  .logoLink:hover {
+    /* Keep subtle glow on hover without changing gradient */
+    text-shadow: 0 1px 12px rgba(245, 189, 161, 0.15); /* very subtle glow */
+  }
 }
 
 .navigation {
@@ -72,9 +74,11 @@
   opacity: 0.6;
 }
 
-.navLink:hover {
-  color: rgba(244, 244, 245, 0.8);
-  background: transparent;
+@media (hover: hover) {
+  .navLink:hover {
+    color: rgba(244, 244, 245, 0.8);
+    background: transparent;
+  }
 }
 
 .navLink::after {

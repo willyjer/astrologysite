@@ -26,7 +26,11 @@
   flex-direction: column;
   gap: var(--space-4xs); /* 3 - MODERATE: Tighter spacing on mobile */
   flex: 1;
-  position: relative; /* for icon positioning */
+  width: 100%;
+}
+
+.inputInner {
+  position: relative; /* ensure icon positions relative to the input container, not the label */
   width: 100%;
 }
 
