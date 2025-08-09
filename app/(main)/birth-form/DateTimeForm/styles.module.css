@@ -18,7 +18,7 @@
 .inputRow {
   display: flex;
   flex-direction: column; /* 4 - IMPORTANT: Stack vertically on mobile */
-  gap: var(--space-2xs); /* 3 - MODERATE: Tighter spacing on mobile */
+  gap: var(--space-4xs); /* 3 - MODERATE: Tighter spacing on mobile */
 }
 
 .inputWrapper {
@@ -39,7 +39,7 @@
   color: var(--fg);
   font-size: 14px; /* slightly smaller */
   text-align: left;
-  margin-bottom: 6px; /* bring closer to field */
+  margin-bottom: 4px; /* tighter label-to-field spacing */
 }
 
 .input {

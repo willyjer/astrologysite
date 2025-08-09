@@ -1,4 +1,5 @@
 import { Button } from '../../../components/ui/Button';
+import { useButtonSize } from '../../../hooks/useButtonSize';
 import styles from '../page.module.css';
 
 interface ActionButtonsProps {
@@ -16,23 +17,19 @@ export function ActionButtons({
   showErrors,
   error,
 }: Readonly<ActionButtonsProps>) {
+  const buttonSize = useButtonSize();
   return (
     <div className={styles.buttons}>
       <Button
         variant="primary"
-        size="sm"
+        size={buttonSize}
         onClick={handleNext}
         disabled={isLoading || isNavigating || (showErrors && !!error)}
-        className={`${showErrors && error ? styles.buttonDisabled : ''} ${styles.responsiveButton}`}
+        className={`${showErrors && error ? styles.buttonDisabled : ''}`}
       >
-        <span className={styles.desktopText}>
-          {isLoading || isNavigating
-            ? 'Fetching Your Reading List'
-            : 'View My Personalized Readings List'}
-        </span>
-        <span className={styles.mobileText}>
-          {isLoading || isNavigating ? 'Fetching Your Reading List' : 'View My Readings List'}
-        </span>
+        {isLoading || isNavigating
+          ? 'Fetching Your Reading List'
+          : 'View Readings'}
       </Button>
     </div>
   );

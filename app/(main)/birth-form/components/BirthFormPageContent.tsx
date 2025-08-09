@@ -33,25 +33,7 @@ export default function BirthFormPageContent() {
     typeof checkBrowserSupport
   > | null>(null);
 
-  // Development bypass for easier testing
-  const handleDevBypass = () => {
-    const mockSessionData = {
-      sessionId: 'dev-session-' + Date.now(),
-      birthData: {
-        birthDate: '1990-01-01',
-        birthTime: '12:00',
-        birthPlace: 'New York, NY',
-        lat: 40.7128,
-        lon: -74.0060,
-        timezone: -5,
-      },
-      chartData: { /* mock chart data */ },
-      timestamp: Date.now(),
-    };
-    
-    sessionStorage.setItem('astroSession', JSON.stringify(mockSessionData));
-    router.push('/qualified-readings?sessionId=' + mockSessionData.sessionId);
-  };
+  
 
   // Update local state when formData changes
   useEffect(() => {
@@ -218,32 +200,7 @@ export default function BirthFormPageContent() {
           error={error}
         />
 
-        {/* Development bypass button - only in development */}
-        {process.env.NODE_ENV === 'development' && (
-          <div style={{ 
-            textAlign: 'center', 
-            marginTop: '20px',
-            padding: '10px',
-            background: 'rgba(255, 193, 7, 0.1)',
-            border: '1px solid rgba(255, 193, 7, 0.3)',
-            borderRadius: '8px'
-          }}>
-            <button
-              onClick={handleDevBypass}
-              style={{
-                background: 'transparent',
-                border: '1px solid #ffc107',
-                color: '#ffc107',
-                padding: '8px 16px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '12px'
-              }}
-            >
-              🚀 DEV: Skip to Qualified Readings
-            </button>
-          </div>
-        )}
+        
 
         {/* Confirmation modal removed */}
       </PageLayout>

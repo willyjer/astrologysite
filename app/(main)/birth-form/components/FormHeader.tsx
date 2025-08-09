@@ -5,7 +5,7 @@ export function FormHeader() {
     <div className={styles.titleGroup}>
       <h1 className={styles.title}>Birth Information</h1>
       <p className={styles.helpText}>
-        For the most accurate readings, please enter your birth time.
+         For the most personalized and accurate readings, please enter your birth time.
       </p>
     </div>
   );
