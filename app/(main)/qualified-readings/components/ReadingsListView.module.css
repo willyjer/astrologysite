@@ -2,13 +2,10 @@
 
 .pageContainer {
   min-height: 100vh;
-  height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   background: var(--gradient-space);
   overflow: hidden;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .header {
@@ -79,6 +76,7 @@
   padding: 0;
   overflow: hidden;
   background: transparent;
+  min-height: 0; /* Allow flex item to shrink */
 }
 
 /* Readings List - Left Side */
