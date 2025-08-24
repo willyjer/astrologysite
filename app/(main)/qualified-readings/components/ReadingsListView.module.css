@@ -1,11 +1,14 @@
 /* ===== READINGS LIST VIEW STYLES ===== */
 
 .pageContainer {
+  min-height: 100vh;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   background: var(--gradient-space);
   overflow: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .header {
