@@ -1,11 +1,11 @@
 /* ===== READINGS LIST VIEW STYLES ===== */
 
 .pageContainer {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--gradient-space);
-  overflow: hidden;
+  overflow: hidden; /* Prevent page-level scrolling */
 }
 
 .header {
@@ -20,6 +20,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0; /* Header always visible */
 }
 
 .pageTitle {
@@ -74,9 +75,9 @@
   flex: 1;
   position: relative;
   padding: 0;
-  overflow: hidden;
   background: transparent;
   min-height: 0; /* Allow flex item to shrink */
+  overflow: hidden; /* Prevent container from growing beyond viewport */
 }
 
 /* Readings List - Left Side */
@@ -89,6 +90,7 @@
   text-align: left;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  max-height: 100%; /* Constrain to container height */
 }
 
 .readingsList::-webkit-scrollbar {
