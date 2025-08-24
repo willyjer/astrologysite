@@ -1,11 +1,13 @@
 /* ===== READINGS LIST VIEW STYLES ===== */
 
 .pageContainer {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   background: var(--gradient-space);
   overflow: hidden; /* Prevent page-level scrolling */
+  padding-bottom: env(safe-area-inset-bottom); /* Account for mobile safe area */
 }
 
 .header {
