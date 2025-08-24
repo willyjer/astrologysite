@@ -9,8 +9,8 @@ type SizeBreakpoint = {
 };
 
 const defaultBreakpoints: SizeBreakpoint[] = [
-  { breakpoint: 414, size: 'xl' },
-  { breakpoint: 375, size: 'lg' },
+  { breakpoint: 390, size: 'xl' },
+  { breakpoint: 320, size: 'md' },
 ];
 
 export function useButtonSize(
@@ -26,9 +26,6 @@ export function useButtonSize(
       // Find the first breakpoint that matches
       const matchingBreakpoint = breakpoints.find(bp => width >= bp.breakpoint);
       const newSize = (matchingBreakpoint?.size ?? defaultSize) as ButtonSize;
-      
-      // Debug log
-      console.log('Window width:', width, 'Button size:', newSize);
       
       setSize(newSize);
     }

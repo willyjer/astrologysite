@@ -2,8 +2,8 @@ import type {
   GeneratedReading,
   Reading,
   BirthFormData,
-  Category,
 } from '../types';
+import { getReadingConfig, getAllReadingConfigs } from '../../../lib/readings/config';
 
 /**
  * Process birth data for reading generation
@@ -39,43 +39,31 @@ export function processBirthData(birthFormData: BirthFormData): {
 }
 
 /**
- * Filter readings by selected category
- */
-export function filterReadingsByCategory(
-  readings: GeneratedReading[],
-  category: string
-): GeneratedReading[] {
-  return readings.filter((reading) => reading.category === category);
-}
-
-/**
- * Get reading titles mapping
+ * Get reading titles mapping from config
  */
 export function getReadingTitles(): Record<string, string> {
-  return {
-    'core-self': 'Core Self & Personality Blueprint',
-    'chart-ruler': 'Your Guiding Energy',
-    'inner-warrior': 'Confidence & Drive',
-    'self-belief': 'Self-Belief & Inner Light',
-  };
+  const configs = getAllReadingConfigs();
+  const titles: Record<string, string> = {};
+  
+  configs.forEach(config => {
+    titles[config.id] = config.name;
+  });
+  
+  return titles;
 }
 
 /**
- * Get reading categories mapping
+ * Get reading categories mapping from config
  */
 export function getReadingCategories(): Record<string, string> {
-  return {
-    'core-self': 'self-identity',
-    'chart-ruler': 'self-identity',
-    'inner-warrior': 'self-identity',
-    'self-belief': 'self-identity',
-    'growth-mindset': 'mindset',
-    'mental-clarity': 'mindset',
-    'love-patterns': 'love',
-    'soulmate-compatibility': 'love',
-    'career-path': 'career',
-    'leadership-style': 'career',
-  };
+  const configs = getAllReadingConfigs();
+  const categories: Record<string, string> = {};
+  
+  configs.forEach(config => {
+    categories[config.id] = config.category;
+  });
+  
+  return categories;
 }
 
 /**
@@ -123,6 +111,13 @@ export function areAllReadingsComplete(readings: GeneratedReading[]): boolean {
 }
 
 /**
+ * Get reading config for a specific reading
+ */
+export function getReadingConfigById(readingId: string) {
+  return getReadingConfig(readingId);
+}
+
+/**
  * Get reading statistics
  */
 export function getReadingStats(readings: GeneratedReading[]): {
@@ -137,31 +132,6 @@ export function getReadingStats(readings: GeneratedReading[]): {
     loading: readings.filter((r) => r.loading).length,
     error: readings.filter((r) => r.error).length,
   };
-}
-
-/**
- * Filter categories to show only allowed ones
- */
-export function filterAllowedCategories(
-  categories: Category[],
-  allowedKeys: string[]
-): Category[] {
-  return categories.filter((category) => allowedKeys.includes(category.key));
-}
-
-/**
- * Get categories that have readings
- */
-export function getCategoriesWithReadings(
-  categories: Category[],
-  readings: GeneratedReading[]
-): Category[] {
-  return categories.filter((category) => {
-    const categoryReadings = readings.filter(
-      (reading) => reading.category === category.key
-    );
-    return categoryReadings.length > 0;
-  });
 }
 
 /**
@@ -207,15 +177,4 @@ export function sortReadings(readings: GeneratedReading[]): GeneratedReading[] {
     // Then sort by title alphabetically
     return a.title.localeCompare(b.title);
   });
-}
-
-/**
- * Get unique categories from readings
- */
-export function getUniqueCategories(readings: GeneratedReading[]): string[] {
-  const categories = readings
-    .map((reading) => reading.category)
-    .filter((category): category is string => !!category);
-
-  return Array.from(new Set(categories));
 }

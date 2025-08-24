@@ -46,15 +46,32 @@
   }
 }
 
+.close {
+  background: #ffffff;
+  color: #212529;
+  border: 1px solid #212529;
+}
+
+@media (hover: hover) {
+  .close:hover:not(:disabled) {
+    background: #f8f9fa;
+  }
+}
+
 /* Sizes */
+.xs {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
 .sm {
   padding: 10px 20px;
   font-size: 15px;
 }
 
 .md {
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 16px 32px;
+  font-size: 18px;
 }
 
 .lg {
@@ -72,6 +89,11 @@
   padding: 8px;
   border-radius: 50%;
   aspect-ratio: 1;
+}
+
+.iconButton.xs {
+  width: 28px;
+  height: 28px;
 }
 
 .iconButton.sm {

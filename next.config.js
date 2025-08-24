@@ -103,7 +103,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com https://api.timezonedb.com https://json.astrologyapi.com https://nominatim.openstreetmap.org https://*.ingest.sentry.io https://*.ingest.us.sentry.io wss: ws:; frame-ancestors 'none'; object-src 'none'; base-uri 'none';",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com https://api.timezonedb.com https://json.astrologyapi.com https://nominatim.openstreetmap.org wss: ws:; frame-ancestors 'none'; object-src 'none'; base-uri 'none';",
           },
         ],
       },
@@ -148,43 +148,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
-
-// Injected content via Sentry wizard below
-
-const { withSentryConfig } = require("@sentry/nextjs");
-
-module.exports = withSentryConfig(
-  module.exports,
-  {
-    // For all available options, see:
-    // https://www.npmjs.com/package/@sentry/webpack-plugin#options
-
-    org: "astroanew",
-    project: "javascript-nextjs",
-
-    // Only print logs for uploading source maps in CI
-    silent: !process.env.CI,
-
-    // For all available options, see:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-    // Upload a larger set of source maps for prettier stack traces (increases build time)
-    widenClientFileUpload: true,
-
-    // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-    // This can increase your server load as well as your hosting bill.
-    // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-    // side errors will fail.
-    // tunnelRoute: "/monitoring",
-
-    // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
-
-    // DISABLE performance monitoring features to reduce bundle size
-    hideSourceMaps: true,
-    
-    // Disable Vercel monitors to reduce bundle size
-    automaticVercelMonitors: false,
-  }
-);

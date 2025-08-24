@@ -15,7 +15,7 @@ export function CartSummary({
   onProceed,
   isLoading = false,
 }: CartSummaryProps) {
-  const { totalReadings, totalPrice } = cartSummary;
+  const { totalReadings } = cartSummary;
 
   return (
     <div className={styles.container}>
@@ -25,10 +25,6 @@ export function CartSummary({
             <span className={styles.readingCount}>
               {totalReadings} reading{totalReadings !== 1 ? 's' : ''} selected
             </span>
-            <span className={styles.separator}>•</span>
-            <span className={styles.totalPrice}>
-              Total: ${totalPrice.toFixed(2)}
-            </span>
           </div>
         </div>
 
@@ -36,7 +32,7 @@ export function CartSummary({
           className={`${styles.proceedButton} ${totalReadings === 0 ? styles.disabled : ''}`}
           onClick={onProceed}
           disabled={totalReadings === 0 || isLoading}
-          aria-label={`Proceed to payment with ${totalReadings} readings selected`}
+          aria-label={`Proceed with ${totalReadings} readings selected`}
         >
           {isLoading ? (
             <>
@@ -45,7 +41,7 @@ export function CartSummary({
             </>
           ) : (
             <>
-              <span className={styles.buttonText}>Continue to Payment</span>
+              <span className={styles.buttonText}>Continue</span>
               <span className={styles.buttonIcon}>→</span>
             </>
           )}

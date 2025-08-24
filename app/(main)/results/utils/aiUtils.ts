@@ -35,6 +35,7 @@ export async function generateReading(
           title: '', // Will be set by caller
           content: response.formattedReading,
           loading: false,
+          extractedData: extractedData, // Store the extracted data for debugging
         },
       };
     } else {
@@ -86,7 +87,11 @@ export async function generateMultipleReadings(
           reading,
           result.reading.content
         );
-        return updatedReading;
+        // Store the extracted data for debugging
+        return {
+          ...updatedReading,
+          extractedData: result.reading.extractedData,
+        };
       } else {
         console.error(
           `❌ Failed to generate reading ${reading.id}:`,
@@ -226,20 +231,12 @@ export async function retryAIGeneration(
  */
 export async function checkAIServiceHealth(): Promise<boolean> {
   try {
-    // Try a simple test request
+    // Simple health check - just verify the endpoint exists
     const testResponse = await fetch('/api/ai/generate-reading', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        readingId: 'test',
-        extractedData: {},
-        prompt: 'test',
-      }),
+      method: 'HEAD',
     });
 
-    return testResponse.ok;
+    return testResponse.status !== 404;
   } catch (healthCheckError) {
     // AI Service health check failed
     return false;

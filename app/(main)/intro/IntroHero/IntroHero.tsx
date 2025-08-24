@@ -24,7 +24,7 @@ export default function IntroHero({
       {/* Sub-headline */}
       <p className={styles.description}>
         We offer personalized astrology readings with deep psychological insight
-        — grounded in your birth chart, and attuned to your inner life.
+        — grounded in your birth chart, and tuned to your inner life.
       </p>
 
       {/* Button Row Centered */}
@@ -48,6 +48,8 @@ export default function IntroHero({
           Learn More
         </Button>
       </div>
+
+
     </div>
   );
 }

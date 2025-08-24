@@ -29,15 +29,15 @@ export function useFormSubmission(): UseFormSubmissionReturn {
         throw new Error(timeValidation.error || 'Invalid time format');
       }
 
-      // Parse birth date and time
-      const birthDate = new Date(data.birthDate);
+      // Parse birth date and time (avoid timezone issues with new Date())
+      const [year, month, day] = data.birthDate.split('-').map(Number);
       const [hour, minute] = data.birthTime.split(':').map(Number);
 
       // Prepare chart request data
       const chartRequest = {
-        day: birthDate.getDate(),
-        month: birthDate.getMonth() + 1,
-        year: birthDate.getFullYear(),
+        day: day,
+        month: month,
+        year: year,
         hour: hour,
         min: minute,
         lat: data.lat,

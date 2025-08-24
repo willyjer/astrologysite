@@ -21,7 +21,11 @@ const SharedHeader: React.FC = () => {
 
         {/* Mobile Navigation */}
         <nav className={styles.mobileNavigation}>
-          <span className={styles.navLink}>What We Do</span>
+          <button className={styles.hamburgerButton} aria-label="Menu">
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+          </button>
         </nav>
       </div>
     </header>

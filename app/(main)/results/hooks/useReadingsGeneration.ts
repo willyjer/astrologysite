@@ -8,6 +8,7 @@ import type {
 } from '../types';
 import { cacheGeneratedReadings } from '../utils/storageUtils';
 import { AIWorkerManager, MESSAGE_TYPES } from '../utils/workerUtils';
+import { ReadingExtractor } from '../../../lib/readings';
 
 export interface UseReadingsGenerationProps {
   birthFormData: BirthFormData | null;
@@ -47,21 +48,17 @@ export function useReadingsGeneration({
           
           // Set up message handlers
           workerRef.current.onMessage(MESSAGE_TYPES.PROGRESS_UPDATE, (data) => {
-            console.log('📊 Progress update:', data.progress);
             if (data.readings) {
               setGeneratedReadings(data.readings);
             }
           });
 
-          workerRef.current.onMessage(MESSAGE_TYPES.READING_COMPLETE, (data) => {
-            console.log('✅ Reading complete:', data.reading.id, `${data.progress}%`);
-            
+          workerRef.current.onMessage(MESSAGE_TYPES.READING_COMPLETE, () => {
             // Note: We'll rely on the ALL_READINGS_COMPLETE message to update state
             // Individual updates could cause race conditions with the current API
           });
 
           workerRef.current.onMessage(MESSAGE_TYPES.ALL_READINGS_COMPLETE, (data) => {
-            console.log('🎉 All readings complete!');
             setGeneratedReadings(data.readings);
             
             // Cache the generated readings in sessionStorage
@@ -73,7 +70,6 @@ export function useReadingsGeneration({
           });
 
           workerRef.current.onMessage(MESSAGE_TYPES.ERROR, (data) => {
-            console.error('❌ Worker error:', data.error);
             setError(data.error || 'Failed to generate readings. Please try again.');
             setStatus('error');
             isGeneratingRef.current = false;
@@ -82,7 +78,6 @@ export function useReadingsGeneration({
           // Initialize the worker
           await workerRef.current.initialize();
           setIsWorkerInitialized(true);
-          console.log('🔧 AI Worker initialized successfully');
         }
       } catch (error) {
         console.error('❌ Failed to initialize AI worker:', error);
@@ -126,18 +121,15 @@ export function useReadingsGeneration({
 
         // Use Web Worker if available, otherwise fallback to main thread
         if (isWorkerInitialized && workerRef.current && !workerError) {
-          console.log('🚀 Starting reading generation with Web Worker');
+          // Send data to worker for AI processing
           workerRef.current.generateReadings(selectedReadings, chartData);
         } else {
-          console.log('⚠️ Fallback to main thread processing');
           
           // Fallback to original main thread processing
           const [
-            { ReadingExtractor },
             { initializeGeneratedReadings },
             { generateMultipleReadings },
           ] = await Promise.all([
-            import('../../../lib/readings'),
             import('../utils/readingUtils'),
             import('../utils/aiUtils'),
           ]);

@@ -4,8 +4,7 @@ import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
 const BirthFormPageContent = dynamic(
-  () => import('./components/BirthFormPageContent'),
-  { ssr: false }
+  () => import('./components/BirthFormPageContent')
 );
 
 export default function BirthFormPage() {

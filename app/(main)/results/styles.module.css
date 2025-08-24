@@ -1,121 +1,68 @@
 /* ===== RESULTS PAGE - MOBILE FIRST STYLES ===== */
 
 /* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
+
+/* Override PageLayout mainContainer padding for full screen */
 .resultsContainer {
-  /* Mobile container styles */
-  margin-top: var(--space-md);
+  margin: 0 !important;
+  padding: var(--space-sm) 0;
   justify-content: flex-start;
+  height: 100vh;
+  width: 100%;
 }
 
 .resultsContent {
-  /* Mobile content styles */
+  /* Mobile content styles - full screen */
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   width: 100%;
-  max-width: clamp(320px, 95vw, 1200px);
-  margin: 0 auto;
-  padding: var(--space-lg) 0; /* Only top and bottom padding, no left/right */
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  padding: var(--space-md) 0 0 0; /* Add top padding for headline spacing */
   background: var(--gradient-card);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   transition: box-shadow 0.2s var(--ease-fast);
   backdrop-filter: blur(8px);
-  animation: float 6s ease-in-out infinite;
+  animation: none; /* Remove float animation for full screen */
   position: relative;
-}
-
-.resultsContent::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  width: 120%;
-  height: 80%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 225, 200, 0.06),
-    transparent 70%
-  );
-  filter: blur(2px);
-}
-
-.resultsContent:hover,
-.resultsContent:focus-within {
-  box-shadow: var(--shadow-xl);
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
 }
 
 /* ===== SUCCESS HEADER STYLES ===== */
 .successHeader {
   text-align: center;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-xs);
+  padding: 0 var(--space-sm);
   position: relative;
   z-index: 2;
 }
 
 .successTitle {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
+  font-family: var(--font-display);
+  font-size: 20px;
   font-weight: 700;
   color: var(--fg);
-  margin: 0 0 var(--space-sm) 0;
-  letter-spacing: 0.025em;
-  line-height: 1.1;
-  text-shadow: var(--shadow-glow);
+  margin: 0 0 var(--space-xs) 0;
+  line-height: 1.2;
   position: relative;
 }
 
-.successTitle::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 1.5px;
-  border-radius: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--accent) 30%,
-    #fffbe6 50%,
-    var(--accent) 70%,
-    transparent 100%
-  );
-  box-shadow: none;
-  opacity: 0.7;
-}
-
-.successSubtitle {
-  font-family: 'Playfair Display', serif;
-  color: var(--fg-muted);
-  font-size: 16px;
+.successSubheadline {
+  font-family: var(--font-sans);
+  font-size: 14px;
   font-weight: 400;
-  font-style: italic;
-  line-height: 1.4;
+  color: var(--fg-muted);
   margin: 0;
-  max-width: 100%;
+  line-height: 1.4;
 }
 
 /* ===== READINGS CONTAINER STYLES ===== */
 .readingsContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
   position: relative;
   z-index: 2;
   width: 100%;
@@ -126,4 +73,150 @@
   flex-direction: column;
   gap: var(--space-sm);
   width: 100%;
+}
+
+/* ===== DIAGNOSTIC MODAL STYLES ===== */
+.diagnosticOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.diagnosticModal {
+  background: var(--gradient-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.diagnosticHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.diagnosticHeader h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fg);
+  margin: 0;
+}
+
+.diagnosticCloseButton {
+  background: none;
+  border: none;
+  color: var(--fg-muted);
+  font-size: 24px;
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s var(--ease-fast);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diagnosticCloseButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg);
+}
+
+.diagnosticContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-lg);
+}
+
+.diagnosticLoading,
+.diagnosticError {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--fg-muted);
+}
+
+.diagnosticError {
+  color: var(--error);
+}
+
+.diagnosticSections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.diagnosticSection {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.diagnosticSection h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+  margin: 0 0 var(--space-md) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.promptContainer {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.promptText {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===== DIAGNOSTIC BUTTON STYLES ===== */
+.diagnosticButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  color: var(--fg-muted);
+  font-size: 12px;
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-fast);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.diagnosticButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg);
+  border-color: rgba(255, 255, 255, 0.2);
 }

@@ -6,8 +6,9 @@ export type ButtonVariant =
   | 'tertiary'
   | 'cart'
   | 'learn'
-  | 'text';
-export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+  | 'text'
+  | 'close';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /**
  * Base props for all button components

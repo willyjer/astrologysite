@@ -8,6 +8,7 @@ import { useBirthFormStorage } from '../hooks/useBirthFormStorage';
 import { useFormSubmission } from '../hooks/useFormSubmission';
 import { BirthFormErrorBoundary, FormHeader, LocationSection, BrowserWarning, ErrorDisplay, ActionButtons } from './index';
 import { PageLayout } from '../../../components/layout';
+import layoutStyles from '../../../components/layout/PageLayout.module.css';
 import { checkBrowserSupport } from '../utils/browserSupport';
 
 export default function BirthFormPageContent() {
@@ -149,60 +150,61 @@ export default function BirthFormPageContent() {
     <BirthFormErrorBoundary>
       <PageLayout
         containerClassName={styles.birthFormContainer}
-        contentClassName={styles.birthFormContent}
       >
-        {/* Form Header */}
-        <FormHeader />
+        <div className={`${layoutStyles.contentContainer} ${styles.birthFormContent}`}>
+          {/* Form Header */}
+          <FormHeader />
 
-        <div className={styles.form}>
-          <div className={styles.section}>
-            {/* Date and Time */}
-            <DateTimeForm
-              date={date}
-              time={time}
-              error=""
-              onDateChange={(value) => {
-                setDate(value);
-                if (showErrors) setError('');
-              }}
-              onTimeChange={(value) => {
-                setTime(value);
-                if (showErrors) setError('');
-              }}
-            />
+          <div className={styles.form}>
+            <div className={styles.section}>
+              {/* Date and Time */}
+              <DateTimeForm
+                date={date}
+                time={time}
+                error=""
+                onDateChange={(value) => {
+                  setDate(value);
+                  if (showErrors) setError('');
+                }}
+                onTimeChange={(value) => {
+                  setTime(value);
+                  if (showErrors) setError('');
+                }}
+              />
 
-            {/* Location */}
-            <LocationSection
-              setLocation={setLocation}
-              showErrors={showErrors}
-              setError={setError}
-              birthDate={getBirthDate()}
-            />
+              {/* Location */}
+              <LocationSection
+                setLocation={setLocation}
+                showErrors={showErrors}
+                setError={setError}
+                birthDate={getBirthDate()}
+              />
+            </div>
           </div>
+
+          {/* Browser Compatibility Warning */}
+          <BrowserWarning browserSupport={browserSupport} />
+
+          {/* Centralized Error Display */}
+          <ErrorDisplay
+            showErrors={showErrors}
+            error={error}
+            submissionError={submissionError}
+          />
+
+          {/* Action Buttons */}
+          <ActionButtons
+            handleNext={handleNext}
+            isLoading={isLoading}
+            isNavigating={isNavigating}
+            showErrors={showErrors}
+            error={error}
+          />
+
+          
+
+          {/* Confirmation modal removed */}
         </div>
-
-        {/* Browser Compatibility Warning */}
-        <BrowserWarning browserSupport={browserSupport} />
-
-        {/* Centralized Error Display */}
-        <ErrorDisplay
-          showErrors={showErrors}
-          error={error}
-          submissionError={submissionError}
-        />
-
-        {/* Action Buttons */}
-        <ActionButtons
-          handleNext={handleNext}
-          isLoading={isLoading}
-          isNavigating={isNavigating}
-          showErrors={showErrors}
-          error={error}
-        />
-
-        
-
-        {/* Confirmation modal removed */}
       </PageLayout>
     </BirthFormErrorBoundary>
   );

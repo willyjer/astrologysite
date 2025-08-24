@@ -1,7 +1,6 @@
 'use client';
 
 import React, { Component, ReactNode } from 'react';
-import * as Sentry from '@sentry/nextjs';
 import { Button } from './Button';
 import styles from './ErrorBoundary.module.css';
 
@@ -58,16 +57,22 @@ export class ErrorBoundary extends Component<
       console.error('Component stack:', errorInfo.componentStack);
     }
 
-    // Send error to Sentry in production
+    // Log error in production
     if (process.env.NODE_ENV === 'production') {
-      Sentry.captureException(error, {
-        extra: {
-          componentStack: errorInfo.componentStack,
-          errorBoundary: 'RootErrorBoundary',
+      console.error('[ROOT ERROR BOUNDARY]', {
+        error: {
+          message: error.message,
+          name: error.name,
+          stack: error.stack,
         },
-        tags: {
-          errorBoundary: 'root',
+        errorInfo: {
+          componentStack: errorInfo.componentStack,
+        },
+        context: {
+          errorBoundary: 'RootErrorBoundary',
           component: 'ErrorBoundary',
+          timestamp: new Date().toISOString(),
+          url: typeof window !== 'undefined' ? window.location.href : 'server',
         },
       });
     }

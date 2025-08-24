@@ -4,25 +4,21 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   QualifiedReadingsPageState,
-  Category,
   CartSummary,
+  Reading,
 } from '../types';
-import {
-  categories,
-  getReadingsByCategory,
-  getCategoryById,
-} from '../data/readings';
+import { readings } from '../data/readings';
 
 export function useQualifiedReadings() {
   const router = useRouter();
 
   // State management
   const [state, setState] = useState<QualifiedReadingsPageState>({
-    selectedCategory: '', // No default category selected
     selectedReadings: [],
-    expandedReadings: [],
     isLoading: true,
     hasSessionData: false,
+    detailViewReading: null,
+    isDetailViewVisible: false,
   });
 
   // Check for session data on mount
@@ -66,39 +62,23 @@ export function useQualifiedReadings() {
     checkSessionData();
   }, [router]);
 
-  // Computed values
+  // Computed values - now returns all readings
   const currentReadings = useMemo(() => {
-    if (!state.selectedCategory) return [];
-    return getReadingsByCategory(state.selectedCategory);
-  }, [state.selectedCategory]);
+    return readings;
+  }, []);
 
   const cartSummary = useMemo((): CartSummary => {
     const selectedReadingObjects = currentReadings.filter((reading) =>
       state.selectedReadings.includes(reading.id)
     );
 
-    const totalPrice = selectedReadingObjects.reduce(
-      (sum, reading) => sum + reading.price,
-      0
-    );
-
     return {
       totalReadings: selectedReadingObjects.length,
-      totalPrice,
       selectedReadings: selectedReadingObjects,
     };
   }, [state.selectedReadings, currentReadings]);
 
   // Event handlers
-  const handleCategoryChange = useCallback((categoryId: string) => {
-    setState((prev) => ({
-      ...prev,
-      selectedCategory: categoryId,
-      // Clear expanded readings when changing category
-      expandedReadings: [],
-    }));
-  }, []);
-
   const handleToggleReading = useCallback((readingId: string) => {
     setState((prev) => ({
       ...prev,
@@ -108,14 +88,7 @@ export function useQualifiedReadings() {
     }));
   }, []);
 
-  const handleToggleExpansion = useCallback((readingId: string) => {
-    setState((prev) => ({
-      ...prev,
-      expandedReadings: prev.expandedReadings.includes(readingId)
-        ? prev.expandedReadings.filter((id) => id !== readingId)
-        : [...prev.expandedReadings, readingId],
-    }));
-  }, []);
+
 
   const handleProceed = useCallback(() => {
     if (cartSummary.totalReadings === 0) return;
@@ -142,6 +115,22 @@ export function useQualifiedReadings() {
     router.push(finalUrl);
   }, [cartSummary.totalReadings, state.selectedReadings, router]);
 
+  // Detail view handlers
+  const handleOpenDetail = useCallback((reading: Reading) => {
+    setState((prev) => ({
+      ...prev,
+      detailViewReading: reading,
+      isDetailViewVisible: true,
+    }));
+  }, []);
+
+  const handleCloseDetail = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      isDetailViewVisible: false,
+    }));
+  }, []);
+
   // Utility functions
   const isReadingSelected = useCallback(
     (readingId: string) => {
@@ -150,37 +139,24 @@ export function useQualifiedReadings() {
     [state.selectedReadings]
   );
 
-  const isReadingExpanded = useCallback(
-    (readingId: string) => {
-      return state.expandedReadings.includes(readingId);
-    },
-    [state.expandedReadings]
-  );
 
-  const getCurrentCategory = useCallback((): Category | undefined => {
-    if (!state.selectedCategory) return undefined;
-    return getCategoryById(state.selectedCategory);
-  }, [state.selectedCategory]);
 
   return {
     // State
     state,
     currentReadings,
     cartSummary,
-    currentCategory: getCurrentCategory(),
 
     // Actions
-    handleCategoryChange,
     handleToggleReading,
-    handleToggleExpansion,
     handleProceed,
+    handleOpenDetail,
+    handleCloseDetail,
 
     // Utilities
     isReadingSelected,
-    isReadingExpanded,
 
     // Data
-    categories,
     isLoading: state.isLoading,
     hasSessionData: state.hasSessionData,
   };

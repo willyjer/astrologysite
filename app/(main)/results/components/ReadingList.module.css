@@ -1,0 +1,97 @@
+/* ===== READING TABLE STYLES ===== */
+
+.readingTableContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.tableBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableRow {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-fast);
+}
+
+.tableRow:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.readingNameCell {
+  flex: 1;
+  padding: var(--space-xs) var(--space-xs);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg);
+  line-height: 1.4;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tableRow:hover .readingNameCell {
+  color: var(--accent);
+}
+
+.actionsCell {
+  flex: 0 0 auto;
+  width: 80px;
+  padding: var(--space-xs);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.downloadButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.downloadButton:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.downloadButton:active {
+  transform: translateY(0);
+}
+
+/* Focus styles for accessibility */
+.tableRow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.downloadButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

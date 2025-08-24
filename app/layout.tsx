@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './styles/design-system.css';
 import './styles/layout.css';
+import './styles/utilities.css';
 import PerformanceTracker from './components/ui/PerformanceMonitor';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
-// import ProductionMonitoringDashboard from './components/ui/ProductionMonitoringDashboard';
 import ServiceWorkerProvider from './components/ServiceWorkerProvider';
 
 const inter = Inter({
@@ -62,9 +62,6 @@ export default function RootLayout({
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
-        {/* {process.env.NODE_ENV === 'development' && (
-          <ProductionMonitoringDashboard showInDevelopment={true} />
-        )} */}
       </body>
     </html>
   );

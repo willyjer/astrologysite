@@ -1,7 +1,6 @@
 'use client';
 
 import React, { Component, ReactNode } from 'react';
-import * as Sentry from '@sentry/nextjs';
 import { Button } from '../../../components/ui/Button';
 import styles from './ResultsErrorBoundary.module.css';
 
@@ -53,18 +52,23 @@ class ResultsErrorBoundaryClass extends Component<
       this.props.onError(error, errorInfo);
     }
 
-    // Send error to Sentry in production
+    // Log error in production
     if (process.env.NODE_ENV === 'production') {
-      Sentry.captureException(error, {
-        extra: {
+      console.error('[RESULTS ERROR]', {
+        error: {
+          message: error.message,
+          name: error.name,
+          stack: error.stack,
+        },
+        errorInfo: {
           componentStack: errorInfo.componentStack,
+        },
+        context: {
           retryCount: this.state.retryCount,
           errorBoundary: 'ResultsErrorBoundary',
-        },
-        tags: {
-          errorBoundary: 'results',
-          component: 'ResultsErrorBoundary',
-          retryCount: this.state.retryCount.toString(),
+          component: 'results',
+          timestamp: new Date().toISOString(),
+          url: typeof window !== 'undefined' ? window.location.href : 'server',
         },
       });
     }

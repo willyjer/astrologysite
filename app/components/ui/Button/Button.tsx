@@ -22,6 +22,7 @@ export function Button({
         ${styles.button}
         ${variant === 'primary' ? styles.primary : variant === 'secondary' ? styles.secondary : styles.tertiary}
         ${
+          size === 'xs' ? styles.xs :
           size === 'sm' ? styles.sm :
           size === 'md' ? styles.md :
           size === 'lg' ? styles.lg :

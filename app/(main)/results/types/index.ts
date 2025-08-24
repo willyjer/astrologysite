@@ -25,7 +25,8 @@ export type GeneratedReading = {
   content: string;
   loading: boolean;
   error?: string;
-  category?: string;
+  category?: string; // Keep for future reference
+  extractedData?: ExtractedReadingData; // Store the extracted astrological data for debugging
 };
 
 export type ResultsPageState = 'loading' | 'processing' | 'complete' | 'error';
@@ -43,43 +44,12 @@ export type ShareData = {
   platform: string;
 };
 
-// Category Types
-export type Category = {
-  key: string;
-  label: string;
-  shortLabel: string;
-  overview: string;
-  readings: Array<{
-    id: string;
-    name: string;
-    description: string;
-    universal: boolean;
-    conditional: boolean;
-  }>;
-};
 
-// Tab Navigation Types
-export type TabNavigationProps = {
-  categories: Category[];
-  selectedCategory: string;
-  onCategoryChange: (category: string) => void;
-  generatedReadings: GeneratedReading[];
-};
-
-// Progress Data Types
-export type ProgressData = {
-  totalReadings: number;
-  completedReadings: number;
-  currentReading?: string;
-  isWorkerEnabled?: boolean;
-};
 
 // Loading State Types
 export type LoadingStateProps = {
   status: ResultsPageState;
   message?: string;
-  showProgress?: boolean;
-  progressData?: ProgressData | null;
 };
 
 // Error State Types
@@ -88,13 +58,7 @@ export type ErrorStateProps = {
   onRetry: () => void;
 };
 
-// Reading Accordion Types
-export type ReadingAccordionProps = {
-  reading: GeneratedReading;
-  index: number;
-  isOpen: boolean;
-  onToggle: () => void;
-};
+
 
 // URL Parameter Types
 export type URLParams = {

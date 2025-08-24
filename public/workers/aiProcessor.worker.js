@@ -1,4 +1,4 @@
-// AI Processing Web Worker
+// AI Processing Web Worker - Minimal Version
 // This worker handles heavy AI processing off the main thread to improve TBT
 
 // Worker state
@@ -13,131 +13,8 @@ const MESSAGE_TYPES = {
   PROGRESS_UPDATE: 'PROGRESS_UPDATE'
 };
 
-// Import necessary functions (for worker context)
-// Note: We'll need to re-implement some functions that rely on imports
-
 /**
- * Reading Extractor - Simplified version for worker
- */
-class WorkerReadingExtractor {
-  static extract(readingId, chartData) {
-    switch (readingId) {
-      case 'core-self':
-        return this.extractCoreSelf(chartData);
-      case 'chart-ruler':
-        return this.extractChartRuler(chartData);
-      case 'inner-warrior':
-        return this.extractInnerWarrior(chartData);
-      case 'self-belief':
-      case 'self-belief-inner-light':
-        return this.extractSelfBelief(chartData, readingId);
-      default:
-        return null;
-    }
-  }
-
-  static extractMultiple(readingIds, chartData) {
-    return readingIds.map(id => ({
-      readingId: id,
-      ...this.extract(id, chartData)
-    })).filter(Boolean);
-  }
-
-  // Simplified extraction methods (implement the core logic)
-  static extractCoreSelf(chartData) {
-    if (!chartData?.planets?.Sun || !chartData?.houses) {
-      return null;
-    }
-    
-    return {
-      readingId: 'core-self',
-      sun: chartData.planets.Sun,
-      ascendant: chartData.houses[1],
-      extractedData: {
-        sunSign: chartData.planets.Sun.sign,
-        sunHouse: chartData.planets.Sun.house,
-        ascendantSign: chartData.houses[1].sign
-      }
-    };
-  }
-
-  static extractChartRuler(chartData) {
-    if (!chartData?.planets || !chartData?.houses) {
-      return null;
-    }
-    
-    // Find the chart ruler based on ascendant
-    const ascendantSign = chartData.houses[1]?.sign;
-    let ruler = null;
-    
-    // Basic ruler mapping
-    const rulerMap = {
-      'Aries': 'Mars',
-      'Taurus': 'Venus',
-      'Gemini': 'Mercury',
-      'Cancer': 'Moon',
-      'Leo': 'Sun',
-      'Virgo': 'Mercury',
-      'Libra': 'Venus',
-      'Scorpio': 'Mars',
-      'Sagittarius': 'Jupiter',
-      'Capricorn': 'Saturn',
-      'Aquarius': 'Saturn',
-      'Pisces': 'Jupiter'
-    };
-    
-    const rulerPlanet = rulerMap[ascendantSign];
-    if (rulerPlanet && chartData.planets[rulerPlanet]) {
-      ruler = chartData.planets[rulerPlanet];
-    }
-    
-    return {
-      readingId: 'chart-ruler',
-      ruler,
-      ascendantSign,
-      extractedData: {
-        rulerPlanet,
-        rulerSign: ruler?.sign,
-        rulerHouse: ruler?.house
-      }
-    };
-  }
-
-  static extractInnerWarrior(chartData) {
-    if (!chartData?.planets?.Mars) {
-      return null;
-    }
-    
-    return {
-      readingId: 'inner-warrior',
-      mars: chartData.planets.Mars,
-      extractedData: {
-        marsSign: chartData.planets.Mars.sign,
-        marsHouse: chartData.planets.Mars.house,
-        marsAspects: chartData.planets.Mars.aspects || []
-      }
-    };
-  }
-
-  static extractSelfBelief(chartData, readingId) {
-    if (!chartData?.planets?.Jupiter) {
-      return null;
-    }
-    
-    return {
-      readingId,
-      jupiter: chartData.planets.Jupiter,
-      extractedData: {
-        jupiterSign: chartData.planets.Jupiter.sign,
-        jupiterHouse: chartData.planets.Jupiter.house,
-        jupiterAspects: chartData.planets.Jupiter.aspects || []
-      }
-    };
-  }
-}
-
-/**
- * AI Service for worker context
+ * Simple AI Service for worker context
  */
 class WorkerAIService {
   static async generateReading(request) {
@@ -186,13 +63,6 @@ class WorkerAIService {
         };
       }
 
-      // Generate editor refinement
-      const editorRequest = {
-        readingId,
-        rawReading: writerResponse.content,
-        prompt: editorPrompt,
-      };
-
       // For now, we'll skip the editor step to simplify
       // In a full implementation, you'd call a separate editor endpoint
       
@@ -212,27 +82,44 @@ class WorkerAIService {
 }
 
 /**
- * Get prompt for reading (simplified)
+ * Get prompt for reading from the main prompts system
  */
-function getPrompt(readingId) {
-  const prompts = {
-    'core-self': 'Generate a detailed core self reading based on the astrological data.',
-    'chart-ruler': 'Generate a chart ruler reading based on the astrological data.',
-    'inner-warrior': 'Generate an inner warrior reading based on Mars placement.',
-    'self-belief': 'Generate a self-belief reading based on Jupiter placement.',
-    'self-belief-inner-light': 'Generate a self-belief inner light reading based on Jupiter placement.',
-  };
-  
-  return prompts[readingId] || 'Generate an astrological reading based on the provided data.';
+async function getPrompt(readingId) {
+  try {
+    // Fetch the actual prompts from the main application
+    const response = await fetch('/api/prompts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ readingId }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch prompt: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.prompt || 'Generate an astrological reading based on the provided data.';
+  } catch (error) {
+    console.error('Error fetching prompt:', error);
+    // Fallback to basic prompts if the API fails
+    const fallbackPrompts = {
+      'core-self-life-path': 'Generate a detailed core self life path reading based on the astrological data.',
+      'editor-core-self-life-path': 'Format the core self life path reading into professional HTML.',
+    };
+    
+    return fallbackPrompts[readingId] || 'Generate an astrological reading based on the provided data.';
+  }
 }
 
 /**
- * Generate a single reading
+ * Generate a single reading using AI
  */
 async function generateSingleReading(readingId, extractedData) {
   try {
-    const writerPrompt = getPrompt(readingId);
-    const editorPrompt = getPrompt(`editor-${readingId}`);
+    const writerPrompt = await getPrompt(readingId);
+    const editorPrompt = await getPrompt(`editor-${readingId}`);
 
     const response = await WorkerAIService.generateCompleteReading(
       readingId,
@@ -249,6 +136,7 @@ async function generateSingleReading(readingId, extractedData) {
           content: response.formattedReading,
           loading: false,
           error: null,
+          extractedData: extractedData,
         },
       };
     } else {
@@ -266,34 +154,7 @@ async function generateSingleReading(readingId, extractedData) {
 }
 
 /**
- * Update reading with content
- */
-function updateReadingWithContent(reading, content, error = null) {
-  return {
-    ...reading,
-    content: content || '',
-    error: error,
-    loading: false,
-  };
-}
-
-/**
- * Initialize generated readings
- */
-function initializeGeneratedReadings(selectedReadings) {
-  return selectedReadings.map(reading => ({
-    id: reading.id,
-    title: reading.title,
-    category: reading.category,
-    description: reading.description,
-    content: '',
-    loading: true,
-    error: null,
-  }));
-}
-
-/**
- * Main processing function
+ * Main processing function - simplified but functional
  */
 async function processReadingsGeneration(data) {
   try {
@@ -301,17 +162,16 @@ async function processReadingsGeneration(data) {
     
     const { selectedReadings, chartData } = data;
     
-    // Extract reading IDs
-    const selectedReadingIds = selectedReadings.map(reading => reading.id);
-    
-    // Extract data for all readings
-    const extractedReadings = WorkerReadingExtractor.extractMultiple(
-      selectedReadingIds,
-      chartData
-    );
-    
-    // Initialize readings
-    const initialReadings = initializeGeneratedReadings(selectedReadings);
+    // Initialize readings inline
+    const initialReadings = selectedReadings.map(reading => ({
+      id: reading.id,
+      title: reading.title,
+      category: reading.category,
+      description: reading.description,
+      content: '',
+      loading: true,
+      error: null,
+    }));
     
     // Send initial readings to main thread
     self.postMessage({
@@ -329,31 +189,27 @@ async function processReadingsGeneration(data) {
     
     for (let i = 0; i < selectedReadings.length; i++) {
       const reading = selectedReadings[i];
-      const extractedData = extractedReadings.find(er => er.readingId === reading.id);
       
-      if (!extractedData) {
-        // Handle missing extracted data
-        completedReadings[i] = updateReadingWithContent(
-          reading,
-          '',
-          `No extracted data found for reading: ${reading.id}`
-        );
+      // Generate the reading using AI
+      const result = await generateSingleReading(reading.id, { readingId: reading.id });
+      
+      if (result.success && result.reading) {
+        // Update reading inline
+        completedReadings[i] = {
+          ...reading,
+          content: result.reading.content,
+          error: null,
+          loading: false,
+          extractedData: { readingId: reading.id }
+        };
       } else {
-        // Generate the reading
-        const result = await generateSingleReading(reading.id, extractedData);
-        
-        if (result.success && result.reading) {
-          completedReadings[i] = updateReadingWithContent(
-            reading,
-            result.reading.content
-          );
-        } else {
-          completedReadings[i] = updateReadingWithContent(
-            reading,
-            '',
-            result.error
-          );
-        }
+        // Update reading with error inline
+        completedReadings[i] = {
+          ...reading,
+          content: '',
+          error: result.error,
+          loading: false,
+        };
       }
       
       // Send individual reading completion

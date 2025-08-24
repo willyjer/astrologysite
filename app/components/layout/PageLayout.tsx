@@ -6,7 +6,6 @@ interface PageLayoutProps {
   children: React.ReactNode;
   className?: string;
   containerClassName?: string;
-  contentClassName?: string;
   showHeader?: boolean;
   showFooter?: boolean;
 }
@@ -15,7 +14,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   children,
   className = '',
   containerClassName = '',
-  contentClassName = '',
   showHeader = true,
   showFooter = true,
 }) => {
@@ -34,10 +32,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
         className={`${styles.mainContainer} ${containerClassName}`}
         id="main-content"
       >
-        {/* Shared Content Container */}
-        <div className={`${styles.contentContainer} ${contentClassName}`}>
-          {children}
-        </div>
+        {children}
       </main>
 
       {/* Footer */}

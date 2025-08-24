@@ -14,12 +14,27 @@ export function IconButton({
   disabled,
   ...props
 }: IconButtonProps) {
+  const getVariantClass = () => {
+    switch (variant) {
+      case 'primary':
+        return styles.primary;
+      case 'secondary':
+        return styles.secondary;
+      case 'tertiary':
+        return styles.tertiary;
+      case 'close':
+        return styles.close;
+      default:
+        return styles.primary;
+    }
+  };
+
   return (
     <button
       className={`
         ${styles.button}
-        ${variant === 'primary' ? styles.primary : variant === 'secondary' ? styles.secondary : styles.tertiary}
-        ${size === 'sm' ? styles.sm : size === 'md' ? styles.md : styles.lg}
+        ${getVariantClass()}
+        ${size === 'xs' ? styles.xs : size === 'sm' ? styles.sm : size === 'md' ? styles.md : styles.lg}
         ${styles.iconButton}
         ${isLoading ? styles.loading : ''}
         ${className || ''}

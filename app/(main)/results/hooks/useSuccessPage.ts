@@ -6,7 +6,6 @@ import type {
   GeneratedReading,
   ResultsPageState,
   AstrologyChartResponse,
-  ProgressData,
 } from '../types';
 import {
   getSessionData,
@@ -29,12 +28,9 @@ export interface UseResultsPageReturn {
 
   error: string;
   openAccordion: number | null;
-  selectedCategory: string;
-  progressData: ProgressData | null;
 
   // Actions
   setOpenAccordion: (index: number | null) => void;
-  setSelectedCategory: (category: string) => void;
   setError: (error: string) => void;
   setStatus: (status: ResultsPageState) => void;
   setGeneratedReadings: (readings: GeneratedReading[]) => void;
@@ -56,11 +52,6 @@ export function useResultsPage(): UseResultsPageReturn {
 
   const [error, setError] = useState<string>('');
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>('self-identity');
-  
-  // Progress tracking state
-  const [progressData, setProgressData] = useState<ProgressData | null>(null);
 
   const searchParams = useSearchParams();
 
@@ -127,22 +118,7 @@ export function useResultsPage(): UseResultsPageReturn {
     }
   }, [searchParams]);
 
-  // Update progress data based on readings
-  useEffect(() => {
-    if (status === 'processing' && selectedReadings.length > 0) {
-      const completedReadings = generatedReadings.filter(
-        reading => !reading.loading && reading.content
-      ).length;
-      
-      setProgressData({
-        totalReadings: selectedReadings.length,
-        completedReadings,
-        isWorkerEnabled: true, // We'll detect this in the hook
-      });
-    } else {
-      setProgressData(null);
-    }
-  }, [status, selectedReadings, generatedReadings]);
+
 
   return {
     // State
@@ -154,12 +130,9 @@ export function useResultsPage(): UseResultsPageReturn {
 
     error,
     openAccordion,
-    selectedCategory,
-    progressData,
 
     // Actions
     setOpenAccordion,
-    setSelectedCategory,
     setError,
     setStatus,
     setGeneratedReadings,

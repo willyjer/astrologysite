@@ -14,19 +14,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-sm) var(--space-sm);
+  padding: var(--space-sm) 0; /* Only top/bottom padding, no left/right */
   margin-top: var(--space-2xs);
   position: relative;
   overflow: hidden;
 }
 
+/* ===== CONTENT CONTAINER STYLES ===== */
+/* Available for import by individual pages */
 .contentContainer {
   position: relative;
   z-index: 2;
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  /* Removed padding - individual pages will control their own padding */
   text-align: center;
   background: var(--gradient-card);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -55,10 +56,7 @@
   filter: blur(2px);
 }
 
-.contentContainer:hover,
-.contentContainer:focus-within {
-  box-shadow: var(--shadow-xl);
-}
+/* Removed hover effects for mobile-first design */
 
 /* ===== SKIP LINK ===== */
 .skipLink {

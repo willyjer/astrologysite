@@ -36,40 +36,12 @@
   margin-bottom: var(--space-md);
 }
 
-.progressBar {
-  width: 200px; /* 3 - MODERATE: Smaller progress bar for mobile */
-  height: 6px; /* 3 - MODERATE: Thinner progress bar for mobile */
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: var(--space-sm);
-}
-
-.progressFill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 3px;
-  animation: progress 2s ease-in-out infinite;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes progress {
-  0% {
-    width: 0%;
-  }
-  50% {
-    width: 70%;
-  }
-  100% {
-    width: 100%;
   }
 }
 
@@ -94,9 +66,7 @@
     height: 50px; /* 3 - MODERATE: Larger spinner on tablet */
   }
 
-  .progressBar {
-    width: 250px; /* 3 - MODERATE: Larger progress bar on tablet */
-  }
+
 }
 
 /* ===== DESKTOP BREAKPOINT (1024px+) ===== */
@@ -120,8 +90,5 @@
     border-width: 4px; /* 3 - MODERATE: Thicker border on desktop */
   }
 
-  .progressBar {
-    width: 300px; /* 3 - MODERATE: Largest progress bar on desktop */
-    height: 8px; /* 3 - MODERATE: Thicker progress bar on desktop */
-  }
+
 }

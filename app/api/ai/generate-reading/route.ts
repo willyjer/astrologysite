@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     const isEditorRequest = !!rawReading;
 
     // Choose model based on request type
-    const model = isEditorRequest ? 'gpt-4o-mini' : 'gpt-4o-mini'; // Writers use 4.1-mini, editors use 4o-mini
+    const model = isEditorRequest ? 'gpt-4.1-mini' : 'gpt-4.1-mini'; // Writers use gpt-4.1-mini, editors use 4.1-mini
 
     // Import sanitization utilities
     const { sanitizeReadingId, sanitizePrompt, sanitizeString } = await import(

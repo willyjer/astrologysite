@@ -4,7 +4,6 @@ import styles from './LoadingState.module.css';
 export default function LoadingState({
   status,
   message,
-  showProgress = false,
 }: LoadingStateProps) {
   const getTitle = () => {
     switch (status) {
@@ -35,13 +34,6 @@ export default function LoadingState({
       <div className={styles.loadingSpinner}></div>
       <h1>{getTitle()}</h1>
       <p>{getMessage()}</p>
-      
-      {/* Simple progress bar only */}
-      {showProgress && (
-        <div className={styles.progressBar}>
-          <div className={styles.progressFill}></div>
-        </div>
-      )}
     </div>
   );
 }
