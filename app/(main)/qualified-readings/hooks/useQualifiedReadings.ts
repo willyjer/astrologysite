@@ -24,7 +24,7 @@ export function useQualifiedReadings() {
   // Check for session data on mount
   useEffect(() => {
     const checkSessionData = () => {
-      const sessionData = sessionStorage.getItem('astroSession');
+      const sessionData = localStorage.getItem('astroSession');
 
       if (!sessionData) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -93,7 +93,7 @@ export function useQualifiedReadings() {
   const handleProceed = useCallback(() => {
     if (cartSummary.totalReadings === 0) return;
 
-    const sessionData = sessionStorage.getItem('astroSession');
+    const sessionData = localStorage.getItem('astroSession');
     if (!sessionData) {
       console.error('❌ Session data not found');
       router.push('/birth-form');
@@ -109,7 +109,7 @@ export function useQualifiedReadings() {
       updatedAt: Date.now(),
     };
 
-    sessionStorage.setItem('astroSession', JSON.stringify(updatedSession));
+    localStorage.setItem('astroSession', JSON.stringify(updatedSession));
 
     const finalUrl = `/results?sessionId=${parsedSession.sessionId}`;
     router.push(finalUrl);

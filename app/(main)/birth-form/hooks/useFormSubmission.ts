@@ -95,7 +95,7 @@ export function useFormSubmission(): UseFormSubmissionReturn {
       // Clear any cached generated readings from previous sessions
       clearCachedGeneratedReadings();
 
-      // Store all data in sessionStorage with session ID
+      // Store all data in localStorage with session ID
       const sessionData = {
         sessionId,
         birthData: data,
@@ -126,7 +126,7 @@ export function useFormSubmission(): UseFormSubmissionReturn {
   // Helper function for safe storage operations
   const safeSetStorage = (key: string, value: string): boolean => {
     try {
-      sessionStorage.setItem(key, value);
+      localStorage.setItem(key, value);
       return true;
     } catch (storageError) {
       return false;

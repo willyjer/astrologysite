@@ -10,7 +10,7 @@ export interface AstroSession {
 }
 
 /**
- * Get session data from sessionStorage
+ * Get session data from localStorage
  */
 export function getSessionData(): AstroSession | null {
   if (typeof window === 'undefined') {
@@ -18,7 +18,7 @@ export function getSessionData(): AstroSession | null {
   }
 
   try {
-    const sessionData = sessionStorage.getItem('astroSession');
+    const sessionData = localStorage.getItem('astroSession');
     if (!sessionData) {
       return null;
     }
@@ -93,7 +93,7 @@ export function clearSessionData(): void {
   }
 
   try {
-    sessionStorage.removeItem('astroSession');
+    localStorage.removeItem('astroSession');
   } catch (error) {
     console.error('❌ Error clearing session data:', error);
   }
