@@ -4,6 +4,7 @@
 /* ===== MOBILE FIRST - BASE STYLES (320px+) ===== */
 .pageLayout {
   min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   background: var(--gradient-space);

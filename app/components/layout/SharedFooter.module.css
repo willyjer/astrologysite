@@ -3,6 +3,7 @@
 .footer {
   margin-top: var(--space-4xs);
   padding: var(--space-2xs) 0 var(--space-xs);
+  padding-bottom: calc(var(--space-xs) + env(safe-area-inset-bottom)); /* Safe area padding */
   font-size: 15px;
   color: var(--fg-muted);
   background: transparent;
