@@ -66,7 +66,7 @@ export function clearStoredReviews(): void {
 }
 
 /**
- * Get natal chart data from localStorage
+ * Get natal chart data from sessionStorage
  */
 export function getNatalChartData(): any | null {
   if (!isClient) {
@@ -74,7 +74,7 @@ export function getNatalChartData(): any | null {
   }
 
   try {
-    const stored = window.localStorage.getItem(NATAL_CHART_KEY);
+    const stored = window.sessionStorage.getItem(NATAL_CHART_KEY);
     if (!stored) {
       return null;
     }
@@ -87,7 +87,7 @@ export function getNatalChartData(): any | null {
 }
 
 /**
- * Set natal chart data in localStorage
+ * Set natal chart data in sessionStorage
  */
 export function setNatalChartData(chartData: any): void {
   if (!isClient) {
@@ -95,14 +95,14 @@ export function setNatalChartData(chartData: any): void {
   }
 
   try {
-    window.localStorage.setItem(NATAL_CHART_KEY, JSON.stringify(chartData));
+    window.sessionStorage.setItem(NATAL_CHART_KEY, JSON.stringify(chartData));
   } catch (storageError) {
     // Error setting natal chart data
   }
 }
 
 /**
- * Clear natal chart data from localStorage
+ * Clear natal chart data from sessionStorage
  */
 export function clearNatalChartData(): void {
   if (!isClient) {
@@ -110,14 +110,14 @@ export function clearNatalChartData(): void {
   }
 
   try {
-    window.localStorage.removeItem(NATAL_CHART_KEY);
+    window.sessionStorage.removeItem(NATAL_CHART_KEY);
   } catch (clearError) {
     // Error clearing natal chart data
   }
 }
 
 /**
- * Get generated readings from localStorage
+ * Get generated readings from sessionStorage
  */
 export function getCachedGeneratedReadings(): GeneratedReading[] {
   if (!isClient) {
@@ -125,7 +125,7 @@ export function getCachedGeneratedReadings(): GeneratedReading[] {
   }
 
   try {
-    const stored = window.localStorage.getItem(GENERATED_READINGS_KEY);
+    const stored = window.sessionStorage.getItem(GENERATED_READINGS_KEY);
     if (!stored) {
       return [];
     }
@@ -139,7 +139,7 @@ export function getCachedGeneratedReadings(): GeneratedReading[] {
 }
 
 /**
- * Cache generated readings in localStorage
+ * Cache generated readings in sessionStorage
  */
 export function cacheGeneratedReadings(readings: GeneratedReading[]): void {
   if (!isClient) {
@@ -147,7 +147,7 @@ export function cacheGeneratedReadings(readings: GeneratedReading[]): void {
   }
 
   try {
-    window.localStorage.setItem(
+    window.sessionStorage.setItem(
       GENERATED_READINGS_KEY,
       JSON.stringify(readings)
     );
@@ -158,7 +158,7 @@ export function cacheGeneratedReadings(readings: GeneratedReading[]): void {
 }
 
 /**
- * Clear cached generated readings from localStorage
+ * Clear cached generated readings from sessionStorage
  */
 export function clearCachedGeneratedReadings(): void {
   if (!isClient) {
@@ -166,7 +166,7 @@ export function clearCachedGeneratedReadings(): void {
   }
 
   try {
-    window.localStorage.removeItem(GENERATED_READINGS_KEY);
+    window.sessionStorage.removeItem(GENERATED_READINGS_KEY);
     // Cleared cached generated readings
   } catch (clearError) {
     console.error('❌ Error clearing cached generated readings:', clearError);

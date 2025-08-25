@@ -95,9 +95,9 @@ class ResultsErrorBoundaryClass extends Component<
     // Clear any stored session data that might be corrupted
     try {
       if (typeof window !== 'undefined') {
-        window.localStorage.removeItem('astroSession');
-        window.localStorage.removeItem('natalChartData');
-        window.localStorage.removeItem('birthFormData');
+        window.sessionStorage.removeItem('astroSession');
+        window.sessionStorage.removeItem('natalChartData');
+        window.sessionStorage.removeItem('birthFormData');
       }
     } catch (storageError) {
       // Failed to clear storage
