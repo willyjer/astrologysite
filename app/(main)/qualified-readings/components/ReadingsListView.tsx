@@ -15,6 +15,13 @@ interface ReadingsListViewProps {
   isLoading: boolean;
 }
 
+// Trial readings configuration
+const TRIAL_READING_IDS = [
+  'love-intimacy',
+  'meaning-spiritual-growth', 
+  'roots-security'
+];
+
 export function ReadingsListView({
   readings,
   onSelectReading,
@@ -32,6 +39,27 @@ export function ReadingsListView({
     // TODO: Implement menu functionality
 
   };
+
+  const isTrialReading = (readingId: string) => {
+    return TRIAL_READING_IDS.includes(readingId);
+  };
+
+  const handleReadingClick = (reading: Reading) => {
+    if (isTrialReading(reading.id)) {
+      onSelectReading(reading);
+    }
+    // If not a trial reading, do nothing (disabled)
+  };
+
+  // Sort readings: trial readings first, then others
+  const sortedReadings = [...readings].sort((a, b) => {
+    const aIsTrial = isTrialReading(a.id);
+    const bIsTrial = isTrialReading(b.id);
+    
+    if (aIsTrial && !bIsTrial) return -1;
+    if (!aIsTrial && bIsTrial) return 1;
+    return 0;
+  });
 
   return (
     <div className={styles.pageContainer}>
@@ -73,24 +101,27 @@ export function ReadingsListView({
         {/* Readings List */}
         <div className={styles.readingsList}>
           <div className={styles.readingsContainer}>
-            {readings.map((reading) => (
-              <div
-                key={reading.id}
-                className={styles.readingItem}
-                onClick={() => onSelectReading(reading)}
-                role="button"
-                tabIndex={0}
-                aria-label={`View details for ${reading.name}`}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onSelectReading(reading);
-                  }
-                }}
-              >
-                <span className={styles.readingName}>{reading.name}</span>
-              </div>
-            ))}
+            {sortedReadings.map((reading) => {
+              const isTrial = isTrialReading(reading.id);
+              return (
+                <div
+                  key={reading.id}
+                  className={`${styles.readingItem} ${isTrial ? '' : styles.readingItemDisabled}`}
+                  onClick={() => handleReadingClick(reading)}
+                  role="button"
+                  tabIndex={isTrial ? 0 : -1}
+                  aria-label={`${isTrial ? 'View details for' : 'Coming soon:'} ${reading.name}`}
+                  onKeyDown={(e) => {
+                    if (isTrial && (e.key === 'Enter' || e.key === ' ')) {
+                      e.preventDefault();
+                      handleReadingClick(reading);
+                    }
+                  }}
+                >
+                  <span className={styles.readingName}>{reading.name}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 

@@ -115,6 +115,13 @@
   margin: 3px 8px;                      /* ⬅️ spacing between items */
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.readingItem:hover {
+  background: rgba(245, 189, 161, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .readingItem::after {
@@ -129,6 +136,42 @@
   font-size: 18px;
   font-weight: 600;
   color: var(--text-white);
+}
+
+/* Disabled reading item styles */
+.readingItemDisabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background: rgba(128, 128, 128, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.readingItemDisabled:hover {
+  background: rgba(128, 128, 128, 0.1);
+  transform: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.readingItemDisabled::after {
+  opacity: 0.2;
+}
+
+.readingItemDisabled .readingName {
+  color: var(--fg-muted);
+}
+
+/* Coming Soon badge */
+.comingSoonBadge {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  background: rgba(245, 189, 161, 0.15);
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 189, 161, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Miniaturized Detail View - Carousel Style Preview */

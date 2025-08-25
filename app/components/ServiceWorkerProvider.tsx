@@ -8,7 +8,7 @@ export default function ServiceWorkerProvider() {
     // Register service worker on mount
     registerServiceWorker().then((registered) => {
       if (registered) {
-        console.log('[SW] Service worker registration initiated');
+      
       }
     });
   }, []);

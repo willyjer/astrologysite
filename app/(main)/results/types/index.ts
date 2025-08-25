@@ -89,15 +89,6 @@ export type ReadingGenerationResult = {
 // Storage Types
 export type StoredReviews = ReviewData[];
 
-// Buy Me A Coffee Types
-export type BuyMeACoffeeConfig = {
-  url: string;
-  imageUrl: string;
-  altText: string;
-  height: number;
-  width: number;
-};
-
 // Export all types for easy importing
 export type {
   AstrologyChartResponse,

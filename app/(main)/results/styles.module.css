@@ -34,7 +34,7 @@
 /* ===== SUCCESS HEADER STYLES ===== */
 .successHeader {
   text-align: center;
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-2xs);
   padding: 0 var(--space-sm);
   position: relative;
   z-index: 2;
@@ -42,10 +42,10 @@
 
 .successTitle {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--fg);
-  margin: 0 0 var(--space-xs) 0;
+  margin: 0 0 var(--space-2xs) 0;
   line-height: 1.2;
   position: relative;
 }

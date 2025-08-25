@@ -103,7 +103,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com https://api.timezonedb.com https://json.astrologyapi.com https://nominatim.openstreetmap.org wss: ws:; frame-ancestors 'none'; object-src 'none'; base-uri 'none';",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.buymeacoffee.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com https://api.timezonedb.com https://json.astrologyapi.com https://nominatim.openstreetmap.org wss: ws:; frame-ancestors 'none'; object-src 'none'; base-uri 'none';",
           },
         ],
       },

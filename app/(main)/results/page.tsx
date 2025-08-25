@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import styles from './styles.module.css';
-import { LoadingState, ErrorState, ReadingList, ReadingModal } from './components';
+import { LoadingState, ErrorState, ReadingList, ReadingModal, DonationWidget } from './components';
 import { PageLayout } from '../../components/layout';
 import layoutStyles from '../../components/layout/PageLayout.module.css';
 import { useResultsPage } from './hooks';
@@ -100,7 +100,7 @@ function ResultsPageContent() {
         <div className={`${layoutStyles.contentContainer} ${styles.resultsContent}`}>
           <div className={styles.successHeader}>
             <h1 className={styles.successTitle}>Your Readings Are Ready!</h1>
-            <p className={styles.successSubheadline}>View and Download your personalized readings below</p>
+            <p className={styles.successSubheadline}>View your readings by clicking on them below</p>
           </div>
 
           <div className={styles.readingsContainer}>
@@ -109,6 +109,9 @@ function ResultsPageContent() {
               onReadingClick={handleReadingClick}
             />
           </div>
+
+          {/* Donation Widget */}
+          <DonationWidget />
         </div>
       </PageLayout>
 

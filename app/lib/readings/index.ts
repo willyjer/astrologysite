@@ -24,6 +24,9 @@ export type BirthData = {
 
 export type ExtractedReadingData = BaseReadingData;
 
+// Flag to track if we've already logged the input data
+let hasLoggedInputData = false;
+
 // Register all available extractors
 const registerExtractors = () => {
 
@@ -65,6 +68,16 @@ registerExtractors();
 
 export class ReadingExtractor {
   /**
+   * Log input chart data (only once)
+   */
+  private static logInputData(_chartData: AstrologyChartResponse) {
+    if (hasLoggedInputData) return;
+
+    
+    hasLoggedInputData = true;
+  }
+
+  /**
    * Extract data for a specific reading
    */
   static extract(
@@ -72,6 +85,9 @@ export class ReadingExtractor {
     chartData: AstrologyChartResponse,
     opts?: ReadingExtractorOptions
   ): ExtractedReadingData | null {
+    // Log input data once
+    this.logInputData(chartData);
+    
     const extractor = readingRegistry.get(readingId);
     if (!extractor) {
       return null;
@@ -79,8 +95,10 @@ export class ReadingExtractor {
     
     try {
       const result = extractor.extract(chartData, opts);
+      
       return result;
     } catch (error) {
+      console.error(`❌ Error extracting ${readingId}:`, error);
       return null;
     }
   }

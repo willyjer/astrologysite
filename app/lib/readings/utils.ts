@@ -65,21 +65,28 @@ export function findPlanetAspects(
 
   const { aspects } = chartData;
   
-  return aspects.filter(aspect => {
+  // Find all aspects involving this planet
+  const allInvolvingAspects = aspects.filter(aspect => {
     const isInvolved = aspect.aspected_planet === planetName || aspect.aspecting_planet === planetName;
-    if (!isInvolved) return false;
-
+    return isInvolved;
+  });
+  
+  const filteredAspects = allInvolvingAspects.filter(aspect => {
     const isMajorAspect = majorTypes.includes(aspect.type);
     const isMinorAspect = minorTypes.includes(aspect.type);
     
     if (isMajorAspect) {
-      return aspect.orb <= majorOrb;
+      const passes = aspect.orb <= majorOrb;
+      return passes;
     } else if (isMinorAspect && includeMinor) {
-      return aspect.orb <= minorOrb;
+      const passes = aspect.orb <= minorOrb;
+      return passes;
     }
     
     return false;
   });
+  
+  return filteredAspects;
 }
 
 // Get chart ruler based on ascendant sign

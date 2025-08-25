@@ -8,13 +8,13 @@ export const registerServiceWorker = async (): Promise<boolean> => {
   }
 
   try {
-    console.log('[SW] Registering service worker...');
+  
     
     const registration = await navigator.serviceWorker.register('/sw.js', {
       scope: '/'
     });
 
-    console.log('[SW] Service worker registered successfully');
+    
 
     // Listen for service worker updates
     registration.addEventListener('updatefound', () => {
@@ -23,7 +23,7 @@ export const registerServiceWorker = async (): Promise<boolean> => {
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
             // New service worker installed, notify user
-            console.log('[SW] New version available, will activate on next page load');
+    
             
             // Optionally show a notification to user
             if (window.confirm('A new version of the app is available. Reload to update?')) {
@@ -37,7 +37,7 @@ export const registerServiceWorker = async (): Promise<boolean> => {
     // Handle service worker messages
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'SW_VERSION') {
-        console.log('[SW] Service worker version:', event.data.version);
+
       }
     });
 
@@ -57,7 +57,7 @@ export const unregisterServiceWorker = async (): Promise<boolean> => {
     const registration = await navigator.serviceWorker.getRegistration();
     if (registration) {
       await registration.unregister();
-      console.log('[SW] Service worker unregistered');
+
       return true;
     }
     return false;

@@ -4,3 +4,4 @@ export { default as ErrorState } from './ErrorState';
 export { ResultsErrorBoundary } from './ResultsErrorBoundary';
 export { ReadingList } from './ReadingList';
 export { ReadingModal } from './ReadingModal';
+export { DonationWidget } from './DonationWidget';

@@ -36,12 +36,12 @@ const CACHE_DURATION = {
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing service worker');
+
   
   event.waitUntil(
     caches.open(STATIC_CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] Caching static assets');
+
         return cache.addAll(STATIC_ASSETS);
       })
       .catch((error) => {
@@ -55,7 +55,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating service worker');
+
   
   event.waitUntil(
     caches.keys()
@@ -68,7 +68,7 @@ self.addEventListener('activate', (event) => {
                      !['astroanon-v1', 'astroanon-static-v1', 'astroanon-dynamic-v1'].includes(cacheName);
             })
             .map((cacheName) => {
-              console.log('[SW] Deleting old cache:', cacheName);
+  
               return caches.delete(cacheName);
             })
         );
@@ -121,7 +121,7 @@ async function handleApiRequest(request) {
     // If network fails, try cache
     return await getCachedResponse(request, cacheName);
   } catch (error) {
-    console.log('[SW] Network failed for API request, trying cache');
+    
     return await getCachedResponse(request, cacheName);
   }
 }
@@ -171,7 +171,7 @@ async function handlePageRequest(request) {
         return networkResponse;
       })
       .catch((error) => {
-        console.log('[SW] Background update failed:', error);
+  
       });
     
     // Return cached version immediately if available, otherwise wait for network
@@ -207,7 +207,7 @@ if ('sync' in self.registration) {
 }
 
 async function handleBackgroundSync() {
-  console.log('[SW] Handling background sync');
+  
   // Implementation for offline form submission handling
   // This would be used for birth form submissions when offline
 }
@@ -223,4 +223,3 @@ self.addEventListener('message', (event) => {
   }
 });
 
-console.log('[SW] Service worker loaded successfully');

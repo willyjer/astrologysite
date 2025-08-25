@@ -69,14 +69,20 @@ export class LoveIntimacyExtractor implements IReadingExtractor {
     const planetsInFifthHouse = fifthHouse?.planets?.map(planet => planet.name) ?? [];
 
     // Find Moon-Venus aspects
-    const moonVenusAspects = venusPlacement ? formatAspects(findPlanetAspects(chartData, 'Moon', aspectCfg).filter(aspect => 
-      aspect.aspected_planet === 'Venus' || aspect.aspecting_planet === 'Venus'
-    )) : [];
+    const moonAspects = findPlanetAspects(chartData, 'Moon', aspectCfg);
+    
+    const moonVenusAspects = venusPlacement ? formatAspects(moonAspects.filter(aspect => {
+      const involvesVenus = aspect.aspected_planet === 'Venus' || aspect.aspecting_planet === 'Venus';
+      return involvesVenus;
+    })) : [];
 
     // Find Sun-Venus aspects
-    const sunVenusAspects = venusPlacement ? formatAspects(findPlanetAspects(chartData, 'Sun', aspectCfg).filter(aspect => 
-      aspect.aspected_planet === 'Venus' || aspect.aspecting_planet === 'Venus'
-    )) : [];
+    const sunAspects = findPlanetAspects(chartData, 'Sun', aspectCfg);
+    
+    const sunVenusAspects = venusPlacement ? formatAspects(sunAspects.filter(aspect => {
+      const involvesVenus = aspect.aspected_planet === 'Venus' || aspect.aspecting_planet === 'Venus';
+      return involvesVenus;
+    })) : [];
 
     const extractedData: LoveIntimacyData = {
       readingId: 'love-intimacy' as const,
