@@ -21,8 +21,13 @@ export class PDFService {
     const container = document.createElement('div');
     container.innerHTML = reading.content;
     
+    // Add a wrapper div to ensure proper spacing
+    const wrapper = document.createElement('div');
+    wrapper.appendChild(container);
+    wrapper.className = 'pdf-content-wrapper';
+    
     // Apply PDF-specific styling
-    container.style.cssText = `
+    wrapper.style.cssText = `
       position: absolute;
       left: -9999px;
       top: -9999px;
@@ -30,7 +35,7 @@ export class PDFService {
       background: white;
       color: #1a1a1a;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 40px;
+      padding: 60px 40px 80px 40px;
       line-height: 1.6;
       font-size: 14px;
       border-radius: 0;
@@ -43,11 +48,13 @@ export class PDFService {
       h1, h2, h3, h4, h5, h6 {
         color: #1a1a1a !important;
         font-weight: 600 !important;
-        margin-top: 32px !important;
-        margin-bottom: 20px !important;
+        margin-top: 40px !important;
+        margin-bottom: 24px !important;
         line-height: 1.3 !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
       }
       
       h1 { font-size: 24px !important; }
@@ -56,14 +63,15 @@ export class PDFService {
       h4 { font-size: 16px !important; }
       
       p {
-        margin-bottom: 20px !important;
+        margin-bottom: 24px !important;
         text-align: left !important;
         color: #1a1a1a !important;
         line-height: 1.7 !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        orphans: 3 !important;
-        widows: 3 !important;
+        orphans: 4 !important;
+        widows: 4 !important;
+        margin-top: 0 !important;
       }
       
       strong {
@@ -77,21 +85,21 @@ export class PDFService {
       }
       
       ul, ol {
-        margin: 20px 0 !important;
+        margin: 24px 0 !important;
         padding-left: 24px !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
       
       li {
-        margin-bottom: 12px !important;
+        margin-bottom: 16px !important;
         color: #1a1a1a !important;
         line-height: 1.6 !important;
       }
       
       blockquote {
-        margin: 24px 0 !important;
-        padding: 20px 24px !important;
+        margin: 32px 0 !important;
+        padding: 24px 28px !important;
         background: #f8f9fa !important;
         border-left: 4px solid #e9ecef !important;
         border-radius: 4px !important;
@@ -104,19 +112,40 @@ export class PDFService {
       * {
         box-sizing: border-box !important;
       }
+      
+      /* Add extra spacing before page breaks */
+      .page-break-before {
+        page-break-before: always !important;
+        break-before: page !important;
+        margin-top: 40px !important;
+      }
+      
+      /* Ensure proper spacing at the end of content */
+      .content-end {
+        margin-bottom: 60px !important;
+      }
+      
+      /* PDF content wrapper */
+      .pdf-content-wrapper {
+        padding-bottom: 40px !important;
+      }
+      
+      .pdf-content-wrapper > div:last-child {
+        margin-bottom: 40px !important;
+      }
     `;
     
-    container.appendChild(style);
-    document.body.appendChild(container);
+    wrapper.appendChild(style);
+    document.body.appendChild(wrapper);
     
     try {
       // Wait for fonts to load
       await document.fonts.ready;
       
       // Generate canvas from HTML
-      const canvas = await html2canvas(container, {
+      const canvas = await html2canvas(wrapper, {
         width: 800,
-        height: container.scrollHeight,
+        height: wrapper.scrollHeight,
         scale: 2, // Higher resolution
         useCORS: true,
         backgroundColor: '#ffffff',
@@ -128,15 +157,15 @@ export class PDFService {
       const imgData = canvas.toDataURL('image/png', 1.0);
       const pdf = new jsPDF('p', 'mm', 'a4');
       
-      // Calculate dimensions with better margins
-      const imgWidth = 180; // A4 width minus larger margins (20mm each side)
-      const pageHeight = 250; // A4 height minus margins (top: 20mm, bottom: 40mm for footer)
+      // Calculate dimensions with better margins and spacing
+      const imgWidth = 180; // A4 width minus margins (20mm each side)
+      const pageHeight = 240; // A4 height minus margins (top: 20mm, bottom: 20mm)
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
       let position = 0;
       let pageNumber = 1;
       
-      // Add first content page (no title page)
+      // Add first content page
       pdf.addImage(imgData, 'PNG', 15, 20, imgWidth, imgHeight);
       heightLeft -= pageHeight;
       position = pageHeight;
@@ -150,9 +179,9 @@ export class PDFService {
         pageNumber++;
       }
       
-      // Add footer with AstroAnew and date to all pages
-      for (let i = 1; i <= pageNumber; i++) {
-        pdf.setPage(i);
+      // Add footer only to the last page
+      if (pageNumber > 0) {
+        pdf.setPage(pageNumber);
         pdf.setFontSize(9);
         pdf.setFont('helvetica', 'normal');
         
@@ -168,7 +197,7 @@ export class PDFService {
       return pdf.output('blob');
     } finally {
       // Clean up
-      document.body.removeChild(container);
+      document.body.removeChild(wrapper);
     }
   }
   
