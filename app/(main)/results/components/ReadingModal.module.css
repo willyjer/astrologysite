@@ -38,6 +38,12 @@
   flex-shrink: 0;
 }
 
+.modalActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
 .modalTitle {
   font-family: var(--font-display);
   font-size: 20px;
@@ -46,6 +52,49 @@
   margin: 0;
   line-height: 1.2;
   flex: 1;
+}
+
+.downloadButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.downloadButton:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.downloadButton:active {
+  transform: translateY(0);
+}
+
+.downloadButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.downloadButton:disabled:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--fg);
+  transform: none;
 }
 
 .closeButton {

@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { GeneratedReading } from '../types';
+import { PDFService } from '../../../lib/pdf-service';
 import styles from './ReadingList.module.css';
 
 interface ReadingListProps {
@@ -10,14 +11,42 @@ interface ReadingListProps {
 }
 
 export function ReadingList({ readings, onReadingClick }: ReadingListProps) {
+  const [downloadingPDFs, setDownloadingPDFs] = useState<Set<string>>(new Set());
+
   const handleReadingClick = (reading: GeneratedReading) => {
     onReadingClick(reading);
   };
 
-  const handleDownloadPDF = (_reading: GeneratedReading, e: React.MouseEvent) => {
+  const handleDownloadPDF = async (reading: GeneratedReading, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent opening the modal
-    // TODO: Implement PDF download functionality
-    // PDF download functionality will be implemented in a future update
+    
+    // Don't allow multiple downloads of the same reading
+    if (downloadingPDFs.has(reading.id)) {
+      return;
+    }
+    
+    try {
+      // Add to downloading set
+      setDownloadingPDFs(prev => new Set(prev).add(reading.id));
+      
+      // Generate PDF
+      const pdfBlob = await PDFService.generateReadingPDF(reading);
+      
+      // Generate filename and download
+      const filename = PDFService.generateFilename(reading);
+      PDFService.downloadBlob(pdfBlob, filename);
+      
+    } catch (error) {
+      console.error('PDF generation failed:', error);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      // Remove from downloading set
+      setDownloadingPDFs(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(reading.id);
+        return newSet;
+      });
+    }
   };
 
   return (
@@ -45,9 +74,10 @@ export function ReadingList({ readings, onReadingClick }: ReadingListProps) {
               <button
                 className={styles.downloadButton}
                 onClick={(e) => handleDownloadPDF(reading, e)}
+                disabled={downloadingPDFs.has(reading.id)}
                 aria-label={`Download ${reading.title} as PDF`}
               >
-                📄
+                {downloadingPDFs.has(reading.id) ? '⏳' : '📄'}
               </button>
             </div>
           </div>

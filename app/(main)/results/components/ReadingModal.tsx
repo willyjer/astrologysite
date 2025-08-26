@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GeneratedReading } from '../types';
+import { PDFService } from '../../../lib/pdf-service';
 import styles from './ReadingModal.module.css';
 
 interface ReadingModalProps {
@@ -11,6 +12,8 @@ interface ReadingModalProps {
 }
 
 export function ReadingModal({ reading, isVisible, onClose }: ReadingModalProps) {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -31,6 +34,22 @@ export function ReadingModal({ reading, isVisible, onClose }: ReadingModalProps)
     };
   }, [isVisible, onClose]);
 
+  const handleDownloadPDF = async () => {
+    if (!reading || isDownloading) return;
+    
+    try {
+      setIsDownloading(true);
+      const pdfBlob = await PDFService.generateReadingPDF(reading);
+      const filename = PDFService.generateFilename(reading);
+      PDFService.downloadBlob(pdfBlob, filename);
+    } catch (error) {
+      console.error('PDF generation failed:', error);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   if (!reading || !isVisible) return null;
 
 
@@ -41,13 +60,23 @@ export function ReadingModal({ reading, isVisible, onClose }: ReadingModalProps)
         {/* Header */}
         <header className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>{reading.title}</h2>
-          <button
-            className={styles.closeButton}
-            onClick={onClose}
-            aria-label="Close reading"
-          >
-            ×
-          </button>
+          <div className={styles.modalActions}>
+            <button
+              className={styles.downloadButton}
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              aria-label="Download PDF"
+            >
+              {isDownloading ? '⏳' : '📄'}
+            </button>
+            <button
+              className={styles.closeButton}
+              onClick={onClose}
+              aria-label="Close reading"
+            >
+              ×
+            </button>
+          </div>
         </header>
 
         {/* Content */}

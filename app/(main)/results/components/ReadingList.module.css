@@ -85,6 +85,19 @@
   transform: translateY(0);
 }
 
+.downloadButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.downloadButton:disabled:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--fg);
+  transform: none;
+}
+
 /* Focus styles for accessibility */
 .tableRow:focus-visible {
   outline: 2px solid var(--accent);
